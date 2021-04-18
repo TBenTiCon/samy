@@ -29,4 +29,4 @@ const cRouter = require('./Routes/auth');
 app.use(cRouter);
 
 const pSettings = require('./Routes/pSettings');
-app.use(auth.authGeneral, pSettings);
+app.use(pSettings);

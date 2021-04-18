@@ -57,6 +57,12 @@ module.exports.handleError = (err, res) => {
 		res.status(401).json({ status: 'wrong token format' });
 	}
 
+	//token format error
+	else if (err.message.includes('jwt must be provided')) {
+		console.log('jwt must be provided');
+		res.status(401).json({ status: 'Invalid Token' });
+	}
+
 	//check for permission
 	else {
 		console.log(err);
