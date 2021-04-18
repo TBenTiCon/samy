@@ -124,19 +124,21 @@ const retrieveTokenInfo = async (req, res) => {
 	let token;
 
 	try {
-		const bearer = req.headers.authorization;
-		token = bearer.slice(7, bearer.length);
-	} catch (err) {
-		console.log(err);
-		throw Error('Missing Token');
-	}
+		try {
+			const bearer = req.headers.authorization;
+			token = bearer.slice(7, bearer.length);
+		} catch (err) {
+			throw Error('Missing Token');
+		}
 
-	try {
-		const verifyToken = await jwt.verify(token, 'dajlka123jadhkejo842324afnds');
-		return verifyToken;
+		try {
+			const verifyToken = await jwt.verify(token, 'dajlka123jadhkejo842324afnds');
+			return verifyToken;
+		} catch (err) {
+			throw Error('Invalid Token');
+		}
 	} catch (err) {
-		console.log(err);
-		throw Error('Invalid Token');
+		handleError(err, res);
 	}
 };
 

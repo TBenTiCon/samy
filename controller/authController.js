@@ -92,27 +92,23 @@ module.exports.adminDel_post = async (req, res) => {
 };
 
 module.exports.profileDel_post = async (req, res) => {
-	try {
-		retrieveTokenInfo(req, res)
-			.then((token) => {
-				User.deleteOne({ userID: token.id }, function (err, result) {
-					if (err) {
-						console.log(err);
-						res.json({ status: 'could not find user in DB' });
-					} else {
-						console.log('deleted');
-					}
-				});
-
-				res.cookie('jwt', '', { maxAge: 0 });
-				res.status(200).json({ status: `${token.id} was deleted` });
-			})
-			.catch((err) => {
-				handleError(err, res);
+	retrieveTokenInfo(req, res)
+		.then((token) => {
+			User.deleteOne({ userID: token.id }, function (err, result) {
+				if (err) {
+					console.log(err);
+					res.json({ status: 'could not find user in DB' });
+				} else {
+					console.log('deleted');
+				}
 			});
-	} catch (err) {
-		handleError(err, res);
-	}
+
+			res.cookie('jwt', '', { maxAge: 0 });
+			res.status(200).json({ status: `${token.id} was deleted` });
+		})
+		.catch((err) => {
+			handleError(err, res);
+		});
 };
 
 module.exports.login_post = async (req, res) => {
