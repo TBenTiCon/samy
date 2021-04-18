@@ -36,16 +36,24 @@ module.exports.createUser_post = async (req, res, userType) => {
 	try {
 		hashPassword(password)
 			.then((pw) => {
-				setID().then(async (id) => {
-					const user = await User.create({ userID: id, email, password: pw, type: userType });
+				setID()
+					.then(async (id) => {
+						await User.create({ userID: id, email, password: pw, type: userType }, function (err, user) {
+							if (err) {
+								console.log('error!');
+							}
 
-					if (userType === 'student') {
-						const jwt = createJWT(user.userID, 'student');
-						res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
-					}
+							if (userType === 'student') {
+								const jwt = createJWT(user.userID, 'student');
+								res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+							}
 
-					res.status(200).json({ status: `${userType}_created` });
-				});
+							res.status(200).json({ status: `${userType}_created` });
+						});
+					})
+					.catch((err) => {
+						handleError(err, res);
+					});
 			})
 			.catch((err) => {
 				handleError(err, res);
@@ -61,8 +69,7 @@ module.exports.adminDel_post = async (req, res) => {
 	try {
 		User.deleteOne({ userID: id }, function (err, result) {
 			if (err) {
-				console.log(err);
-				res.json({ status: 'could not find user in DB' });
+				handleError(err, res);
 			} else {
 				console.log('Deleted as Admin');
 				res.status(200).json({ status: `${id} was deleted` });
@@ -78,15 +85,12 @@ module.exports.profileDel_post = async (req, res) => {
 		.then((token) => {
 			User.deleteOne({ userID: token.id }, function (err, result) {
 				if (err) {
-					console.log(err);
-					res.json({ status: 'could not find user in DB' });
+					handleError(err, res);
 				} else {
-					console.log('deleted');
+					res.cookie('jwt', '', { maxAge: 0 });
+					res.status(200).json({ status: `${token.id} was deleted` });
 				}
 			});
-
-			res.cookie('jwt', '', { maxAge: 0 });
-			res.status(200).json({ status: `${token.id} was deleted` });
 		})
 		.catch((err) => {
 			handleError(err, res);
