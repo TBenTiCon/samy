@@ -30,39 +30,21 @@ const setID = async () => {
 	return `UD_${maxID}`;
 };
 
-module.exports.createStudent_post = async (req, res) => {
+module.exports.createUser_post = async (req, res, userType) => {
 	const { email, password } = req.body;
 
 	try {
 		hashPassword(password)
 			.then((pw) => {
 				setID().then(async (id) => {
-					const user = await User.create({ userID: id, email, password: pw, type: 'student' });
+					const user = await User.create({ userID: id, email, password: pw, type: userType });
 
-					const jwt = createJWT(user.userID, 'student');
+					if (userType === 'student') {
+						const jwt = createJWT(user.userID, 'student');
+						res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+					}
 
-					res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
-
-					res.status(200).json({ status: 'student_created' });
-				});
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.createTutor_post = async (req, res) => {
-	const { email, password } = req.body;
-
-	try {
-		hashPassword(password)
-			.then((pw) => {
-				setID().then(async (id) => {
-					await User.create({ userID: id, email, password: pw, type: 'tutor' });
-					res.status(200).json({ status: 'tutor_created' });
+					res.status(200).json({ status: `${userType}_created` });
 				});
 			})
 			.catch((err) => {

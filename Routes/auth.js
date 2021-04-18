@@ -13,10 +13,10 @@ router.post('/user/create', (req, res) => {
 
 	if (type == 'tutor') {
 		checkAdmin(req, res).then(() => {
-			controller.createTutor_post(req, res);
+			controller.createUser_post(req, res, 'tutor');
 		});
 	} else {
-		controller.createStudent_post(req, res);
+		controller.createUser_post(req, res, 'student');
 	}
 });
 
