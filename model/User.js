@@ -80,7 +80,7 @@ userSchema.statics.changeInfo = async function (userID, changes) {
 					return true;
 				})
 				.catch((err) => {
-					throw Error('Unable to hash password');
+					throw Error('hashingError');
 				});
 		} else {
 			user.save();

@@ -1,21 +1,31 @@
-const handleError = (err, res) => {
+module.exports.handleError = (err, res) => {
+	//check if Email already exists
 	if (err.code === 11000) {
 		console.log('Email is already registered');
 		res.json({ status: 'that email is already registered' });
+	} else if (err.message.includes('hashingError')) {
+		console.log('Failed to hash Password');
+		res.status(401).json({ status: 'hashingFailed' });
 	}
 
-	if (err.message.includes('no permission')) {
+	//check for permission & Token validation
+	else if (err.message.includes('no permission')) {
 		console.log('No permission to access Resource');
 		res.status(401).json({ status: 'No Permission' });
-	}
-
-	if (err.message.includes('missing token')) {
+	} else if (err.message.includes('missing token')) {
 		console.log('Missing Token');
 		res.status(401).json({ status: 'No Permission' });
-	}
-
-	if (err.message.includes('invalid token')) {
+	} else if (err.message.includes('invalid token')) {
 		console.log('Invalid Token');
 		res.status(401).json({ status: 'Invalid Token' });
+	} else if (err.message.includes('invalid signature')) {
+		console.log('Invalid Signature');
+		res.status(401).json({ status: 'Invalid Token' });
+	}
+
+	//check for permission
+	else {
+		console.log(err);
+		res.status(401).json({ status: err.message });
 	}
 };
