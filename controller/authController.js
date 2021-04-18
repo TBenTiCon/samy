@@ -59,6 +59,32 @@ module.exports.createUser_post = async (req, res, userType) => {
 	}
 };
 
+module.exports.delProfile_post = async (req, res, type) => {
+	retrieveTokenInfo(req, res)
+		.then((token) => {
+			let id = token.id;
+
+			if (type === 'admin') {
+				id = req.query.id;
+			}
+
+			User.deleteOne({ userID: id }, function (err, result) {
+				if (err) {
+					handleError(err, res);
+				} else {
+					if (type === 'student') {
+						res.cookie('jwt', '', { maxAge: 0 });
+					}
+
+					res.status(200).json({ status: `profile was deleted` });
+				}
+			});
+		})
+		.catch((err) => {
+			handleError(err, res);
+		});
+};
+
 module.exports.adminDel_post = async (req, res) => {
 	const id = req.query.id;
 
