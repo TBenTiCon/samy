@@ -1,91 +1,123 @@
 const jwt = require('jsonwebtoken');
+const { handleError } = require('./errorHandler');
 
 const authStudent = async (req, res, next) => {
 	let token;
 
 	try {
-		const bearer = req.headers.authorization;
-		token = bearer.slice(7, bearer.length);
-	} catch (err) {
-		throw Error('missing token');
-	}
-
-	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
-		if (err) {
-			throw Error('invalid token');
-		} else {
-			if (decodedToken.type === 'student') {
-				next();
-			} else {
-				throw Error('no permission');
-			}
+		try {
+			const bearer = req.headers.authorization;
+			token = bearer.slice(7, bearer.length);
+		} catch (err) {
+			throw Error('missing token');
 		}
-	});
+
+		try {
+			const dkt = await jwt.verify(token, 'dajlka123jadhkejo842324afnds');
+
+			if (!dkt) {
+				throw Error('invalid token');
+			} else {
+				if (dkt.type === 'student') {
+					next();
+				} else {
+					throw Error('no permission');
+				}
+			}
+		} catch (err) {
+			handleError(err, res);
+		}
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 const authTutor = async (req, res, next) => {
 	let token;
 
 	try {
-		const bearer = req.headers.authorization;
-		token = bearer.slice(7, bearer.length);
-	} catch (err) {
-		throw Error('missing token');
-	}
-
-	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
-		if (err) {
-			throw Error('invalid token');
-		} else {
-			if (decodedToken.type === 'tutor') {
-				next();
-			} else {
-				throw Error('no permission');
-			}
+		try {
+			const bearer = req.headers.authorization;
+			token = bearer.slice(7, bearer.length);
+		} catch (err) {
+			throw Error('missing token');
 		}
-	});
+
+		try {
+			const dkt = await jwt.verify(token, 'dajlka123jadhkejo842324afnds');
+
+			if (!dkt) {
+				throw Error('invalid token');
+			} else {
+				if (dkt.type === 'tutor') {
+					next();
+				} else {
+					throw Error('no permission');
+				}
+			}
+		} catch (err) {
+			handleError(err, res);
+		}
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 const authAdmin = async (req, res, next) => {
 	let token;
 
 	try {
-		const bearer = req.headers.authorization;
-		token = bearer.slice(7, bearer.length);
-	} catch (err) {
-		throw Error('missing token');
-	}
-
-	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
-		if (err) {
-			throw Error('invalid token');
-		} else {
-			if (decodedToken.type === 'admin') {
-				next();
-			} else {
-				throw Error('no permission');
-			}
+		try {
+			const bearer = req.headers.authorization;
+			token = bearer.slice(7, bearer.length);
+		} catch (err) {
+			throw Error('missing token');
 		}
-	});
+
+		try {
+			const dkt = await jwt.verify(token, 'dajlka123jadhkejo842324afnds');
+
+			if (!dkt) {
+				throw Error('invalid token');
+			} else {
+				if (dkt.type === 'admin') {
+					next();
+				} else {
+					throw Error('no permission');
+				}
+			}
+		} catch (err) {
+			handleError(err, res);
+		}
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 const authGeneral = async (req, res, next) => {
 	let token;
 
 	try {
-		const bearer = req.headers.authorization;
-		token = bearer.slice(7, bearer.length);
-	} catch (err) {
-		throw Error('missing token');
-	}
-
-	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
-		if (err) {
-			throw Error('invalid token');
-		} else {
-			next();
+		try {
+			const bearer = req.headers.authorization;
+			token = bearer.slice(7, bearer.length);
+		} catch (err) {
+			throw Error('missing token');
 		}
-	});
+		try {
+			const dkt = await jwt.verify(token, 'dajlka123jadhkejo842324afnds');
+
+			if (!dkt) {
+				throw Error('invalid token');
+			} else {
+				next();
+			}
+		} catch (err) {
+			handleError(err, res);
+		}
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 const retrieveTokenInfo = async (req, res) => {

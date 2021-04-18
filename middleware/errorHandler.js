@@ -45,6 +45,12 @@ module.exports.handleError = (err, res) => {
 		res.status(401).json({ status: 'Could not find User in DB' });
 	}
 
+	//token format error
+	else if (err.message.includes('jwt malformed')) {
+		console.log('jwt malformed');
+		res.status(401).json({ status: 'wrong token format' });
+	}
+
 	//check for permission
 	else {
 		console.log(err);
