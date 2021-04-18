@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const User = require('../model/User');
 
 module.exports.hashPassword = async (pw) => {
 	let password;

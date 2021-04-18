@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports.checkAdmin = (req) => {
 	let token;
 
@@ -5,7 +7,7 @@ module.exports.checkAdmin = (req) => {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
 	} catch (err) {
-		throw Error('Missing Token');
+		throw Error('missing token');
 	}
 
 	const verifyToken = async () => {
@@ -15,10 +17,10 @@ module.exports.checkAdmin = (req) => {
 			if (decodedToken.type == 'admin') {
 				return true;
 			} else {
-				throw Error('No Permission');
+				throw Error('no permission');
 			}
 		} else {
-			throw Error('Invalid Token');
+			throw Error('invalid token');
 		}
 	};
 

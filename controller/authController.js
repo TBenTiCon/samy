@@ -30,35 +30,30 @@ const setID = async () => {
 };
 
 module.exports.createStudent_post = async (req, res) => {
-	try {
-		const { email, password } = req.body;
+	const { email, password } = req.body;
 
-		hashPassword(password)
-			.then((pw) => {
-				setID()
-					.then(async (id) => {
-						const user = await User.create({ userID: id, email, password: pw, type: 'student' });
+	hashPassword(password)
+		.then((pw) => {
+			setID()
+				.then(async (id) => {
+					const user = await User.create({ userID: id, email, password: pw, type: 'student' });
 
-						const jwt = createJWT(user.userID, 'student');
+					const jwt = createJWT(user.userID, 'student');
 
-						res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+					res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
 
-						res.status(200).json({ status: 'student_created' });
-					})
-					.catch((err) => {
-						console.log(err);
-						console.log('failed at creating ID');
-						res.json({ status: 'failed to create Account' });
-					});
-			})
-			.catch((err) => {
-				console.log('failed at hashing password');
-				res.json({ status: 'failed to create Account' });
-			});
-	} catch (err) {
-		console.log(err);
-		res.json({ status: 'failed to create Account' });
-	}
+					res.status(200).json({ status: 'student_created' });
+				})
+				.catch((err) => {
+					console.log(err);
+					console.log('failed at creating ID');
+					res.json({ status: 'failed to create Account' });
+				});
+		})
+		.catch((err) => {
+			console.log('failed at hashing password');
+			res.json({ status: 'failed to create Account' });
+		});
 };
 
 module.exports.createTutor_post = async (req, res) => {
