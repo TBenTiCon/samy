@@ -33,36 +33,44 @@ const setID = async () => {
 module.exports.createStudent_post = async (req, res) => {
 	const { email, password } = req.body;
 
-	hashPassword(password)
-		.then((pw) => {
-			setID().then(async (id) => {
-				const user = await User.create({ userID: id, email, password: pw, type: 'student' });
+	try {
+		hashPassword(password)
+			.then((pw) => {
+				setID().then(async (id) => {
+					const user = await User.create({ userID: id, email, password: pw, type: 'student' });
 
-				const jwt = createJWT(user.userID, 'student');
+					const jwt = createJWT(user.userID, 'student');
 
-				res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+					res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
 
-				res.status(200).json({ status: 'student_created' });
+					res.status(200).json({ status: 'student_created' });
+				});
+			})
+			.catch((err) => {
+				handleError(err, res);
 			});
-		})
-		.catch((err) => {
-			handleError(err, res);
-		});
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 module.exports.createTutor_post = async (req, res) => {
 	const { email, password } = req.body;
 
-	hashPassword(password)
-		.then((pw) => {
-			setID().then(async (id) => {
-				await User.create({ userID: id, email, password: pw, type: 'tutor' });
-				res.status(200).json({ status: 'tutor_created' });
+	try {
+		hashPassword(password)
+			.then((pw) => {
+				setID().then(async (id) => {
+					await User.create({ userID: id, email, password: pw, type: 'tutor' });
+					res.status(200).json({ status: 'tutor_created' });
+				});
+			})
+			.catch((err) => {
+				handleError(err, res);
 			});
-		})
-		.catch((err) => {
-			handleError(err, res);
-		});
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 module.exports.adminDel_post = async (req, res) => {
@@ -84,23 +92,27 @@ module.exports.adminDel_post = async (req, res) => {
 };
 
 module.exports.profileDel_post = async (req, res) => {
-	retrieveTokenInfo(req, res)
-		.then((token) => {
-			User.deleteOne({ userID: token.id }, function (err, result) {
-				if (err) {
-					console.log(err);
-					res.json({ status: 'could not find user in DB' });
-				} else {
-					console.log('deleted');
-				}
-			});
+	try {
+		retrieveTokenInfo(req, res)
+			.then((token) => {
+				User.deleteOne({ userID: token.id }, function (err, result) {
+					if (err) {
+						console.log(err);
+						res.json({ status: 'could not find user in DB' });
+					} else {
+						console.log('deleted');
+					}
+				});
 
-			res.cookie('jwt', '', { maxAge: 0 });
-			res.status(200).json({ status: `${token.id} was deleted` });
-		})
-		.catch((err) => {
-			handleError(err, res);
-		});
+				res.cookie('jwt', '', { maxAge: 0 });
+				res.status(200).json({ status: `${token.id} was deleted` });
+			})
+			.catch((err) => {
+				handleError(err, res);
+			});
+	} catch (err) {
+		handleError(err, res);
+	}
 };
 
 module.exports.login_post = async (req, res) => {

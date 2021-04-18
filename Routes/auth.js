@@ -12,17 +12,21 @@ router.post('/user/create', (req, res) => {
 	console.log(type);
 
 	if (type == 'tutor') {
-		checkAdmin(req)
-			.then((data) => {
-				if (data == true) {
-					controller.createTutor_post(req, res);
-				} else {
-					throw Error('no permission');
-				}
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
+		try {
+			checkAdmin(req)
+				.then((data) => {
+					if (data == true) {
+						controller.createTutor_post(req, res);
+					} else {
+						throw Error('no permission');
+					}
+				})
+				.catch((err) => {
+					handleError(err, res);
+				});
+		} catch (err) {
+			handleError(err, res);
+		}
 	} else {
 		controller.createStudent_post(req, res);
 	}
@@ -32,17 +36,22 @@ router.post('/user/delete', (req, res) => {
 	const action = req.query.action;
 
 	if (action == 'adminDEL') {
-		checkAdmin(req)
-			.then((data) => {
-				if (data == true) {
-					controller.adminDel_post(req, res);
-				} else {
-					throw Error('no permission');
-				}
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
+		try {
+			checkAdmin(req)
+				.then((data) => {
+					if (data == true) {
+						controller.adminDel_post(req, res);
+					} else {
+						throw Error('no permission');
+					}
+				})
+				.catch((err) => {
+					console.log('err: ' + err.message);
+					handleError(err, res);
+				});
+		} catch (err) {
+			handleError(err, res);
+		}
 	} else {
 		controller.profileDel_post(req, res);
 	}

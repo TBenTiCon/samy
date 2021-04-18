@@ -1,4 +1,6 @@
 module.exports.handleError = (err, res) => {
+	console.log('error handler reached!');
+
 	//check if Email already exists
 	if (err.code === 11000) {
 		console.log('Email is already registered');
@@ -35,6 +37,12 @@ module.exports.handleError = (err, res) => {
 	} else if (err.message.includes('invalid signature')) {
 		console.log('Invalid Signature');
 		res.status(401).json({ status: 'Invalid Token' });
+	}
+
+	//search User error
+	else if (err.message.includes('findUserErr')) {
+		console.log('Could not find User in DB');
+		res.status(401).json({ status: 'Could not find User in DB' });
 	}
 
 	//check for permission

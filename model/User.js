@@ -87,7 +87,7 @@ userSchema.statics.changeInfo = async function (userID, changes) {
 			return true;
 		}
 	} else {
-		throw Error('Invalid UserID');
+		throw Error('findUserErr');
 	}
 };
 

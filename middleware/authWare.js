@@ -1,87 +1,87 @@
 const jwt = require('jsonwebtoken');
 
-const authStudent = (req, res, next) => {
+const authStudent = async (req, res, next) => {
 	let token;
 
 	try {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
 	} catch (err) {
-		res.status(401).json({ status: 'invalid or missing Token' });
+		throw Error('missing token');
 	}
 
-	jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
+	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
 		if (err) {
-			res.status(401).json({ status: 'token unverified' });
+			throw Error('invalid token');
 		} else {
 			if (decodedToken.type === 'student') {
 				next();
 			} else {
-				res.status(401).json({ status: 'not authorized' });
+				throw Error('no permission');
 			}
 		}
 	});
 };
 
-const authTutor = (req, res, next) => {
+const authTutor = async (req, res, next) => {
 	let token;
 
 	try {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
 	} catch (err) {
-		res.status(401).json({ status: 'invalid or missing Token' });
+		throw Error('missing token');
 	}
 
-	jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
+	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
 		if (err) {
-			res.status(401).json({ status: 'token unverified' });
+			throw Error('invalid token');
 		} else {
 			if (decodedToken.type === 'tutor') {
 				next();
 			} else {
-				res.status(401).json({ status: 'not authorized' });
+				throw Error('no permission');
 			}
 		}
 	});
 };
 
-const authAdmin = (req, res, next) => {
+const authAdmin = async (req, res, next) => {
 	let token;
 
 	try {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
 	} catch (err) {
-		res.status(401).json({ status: 'invalid or missing Token' });
+		throw Error('missing token');
 	}
 
-	jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
+	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
 		if (err) {
-			res.status(401).json({ status: 'token unverified' });
+			throw Error('invalid token');
 		} else {
 			if (decodedToken.type === 'admin') {
 				next();
 			} else {
-				res.status(401).json({ status: 'not authorized' });
+				throw Error('no permission');
 			}
 		}
 	});
 };
 
-const authGeneral = (req, res, next) => {
+const authGeneral = async (req, res, next) => {
 	let token;
 
 	try {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
 	} catch (err) {
-		res.status(401).json({ status: 'invalid or missing Token' });
+		throw Error('missing token');
 	}
 
-	jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
+	await jwt.verify(token, 'dajlka123jadhkejo842324afnds', async (err, decodedToken) => {
 		if (err) {
-			res.status(401).json({ status: 'token unverified' });
+			throw Error('invalid token');
 		} else {
 			next();
 		}
