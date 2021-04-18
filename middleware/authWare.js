@@ -1,5 +1,26 @@
 const jwt = require('jsonwebtoken');
 const { handleError } = require('./errorHandler');
+const { sliceToken } = require('../middleware/tokenValidation');
+
+const authPath = async (req, res, next, type) => {
+	try {
+		retrieveTokenInfo(req, res)
+			.then((token) => {
+				if (token.type == type) {
+					next();
+				} else if (type == '*') {
+					next();
+				} else {
+					throw Error('no permission');
+				}
+			})
+			.catch((err) => {
+				handleError(err, res);
+			});
+	} catch (err) {
+		handleError(err, res);
+	}
+};
 
 const authStudent = async (req, res, next) => {
 	let token;
@@ -142,4 +163,4 @@ const retrieveTokenInfo = async (req, res) => {
 	}
 };
 
-module.exports = { authStudent, authTutor, authAdmin, authGeneral, retrieveTokenInfo };
+module.exports = { authStudent, authTutor, authAdmin, authGeneral, retrieveTokenInfo, authPath };

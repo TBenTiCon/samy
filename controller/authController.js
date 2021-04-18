@@ -38,18 +38,14 @@ module.exports.createUser_post = async (req, res, userType) => {
 			.then((pw) => {
 				setID()
 					.then(async (id) => {
-						await User.create({ userID: id, email, password: pw, type: userType }, function (err, user) {
-							if (err) {
-								console.log('error!');
-							}
+						const user = await User.create({ userID: id, email, password: pw, type: userType });
 
-							if (userType === 'student') {
-								const jwt = createJWT(user.userID, 'student');
-								res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
-							}
+						if (userType === 'student') {
+							const jwt = createJWT(user.userID, 'student');
+							res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+						}
 
-							res.status(200).json({ status: `${userType}_created` });
-						});
+						res.status(200).json({ status: `${userType}_created` });
 					})
 					.catch((err) => {
 						handleError(err, res);

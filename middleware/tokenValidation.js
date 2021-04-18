@@ -1,32 +1,25 @@
 const jwt = require('jsonwebtoken');
-const { handleError } = require('./errorHandler');
 
-const checkAdmin = async (req, res) => {
-	let token;
+const checkAdmin = async (req) => {
+	const decodedToken = await jwt.verify(await sliceToken(req), 'dajlka123jadhkejo842324afnds');
 
-	try {
-		try {
-			const bearer = req.headers.authorization;
-			token = bearer.slice(7, bearer.length);
-		} catch (err) {
-			throw Error('missing token');
+	if (decodedToken) {
+		if (decodedToken.type == 'admin') {
+			return true;
+		} else {
+			throw Error('no permission');
 		}
+	} else {
+		throw Error('invalid token');
+	}
+};
 
-		await jwt.verify(token, 'dajlka123jadhkejo842324afnds', function (err, decodedToken) {
-			if (err) {
-				handleError(err, res);
-			} else {
-				if (decodedToken.type == 'admin') {
-					return true;
-				} else {
-					handleError(Error('no permission'), res);
-				}
-			}
-
-			return false;
-		});
+const sliceToken = async (req) => {
+	try {
+		const bearer = req.headers.authorization;
+		token = bearer.slice(7, bearer.length);
 	} catch (err) {
-		handleError(err, res);
+		throw Error('missing token');
 	}
 };
 

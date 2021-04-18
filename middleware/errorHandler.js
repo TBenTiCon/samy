@@ -51,6 +51,12 @@ module.exports.handleError = (err, res) => {
 		res.status(401).json({ status: 'wrong token format' });
 	}
 
+	//token format error
+	else if (err.message.includes('Unexpected token')) {
+		console.log('Unexpected token');
+		res.status(401).json({ status: 'wrong token format' });
+	}
+
 	//check for permission
 	else {
 		console.log(err);
