@@ -3,9 +3,23 @@ module.exports.handleError = (err, res) => {
 	if (err.code === 11000) {
 		console.log('Email is already registered');
 		res.json({ status: 'that email is already registered' });
-	} else if (err.message.includes('hashingError')) {
+	}
+
+	//check for hashing Problems
+	else if (err.message.includes('hashingError')) {
 		console.log('Failed to hash Password');
 		res.status(401).json({ status: 'hashingFailed' });
+	}
+
+	//check for incorrect password
+	else if (err.message.includes('incorrect password')) {
+		console.log('incorrect password');
+		res.status(401).json({ status: 'incorrect password' });
+	}
+
+	//check for incorrect email
+	else if (err.message === 'incorrect email') {
+		res.status(401).json({ error: 'incorrect email' });
 	}
 
 	//check for permission & Token validation
