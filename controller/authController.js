@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 const secret = 'dajlka123jadhkejo842324afnds';
 const User = require('../model/User');
-const { retrieveTokenInfo } = require('../middleware/authWare');
 const { hashPassword } = require('../middleware/hashingPw');
 const { handleError } = require('../middleware/errorHandler');
+const { sanitize } = require('../middleware/preventInjection');
 
 const maxAge = 3 * 24 * 60 * 60;
 
@@ -30,26 +30,25 @@ const setID = async () => {
 	return `UD_${maxID}`;
 };
 
-module.exports.createUser_post = async (req, res, userType) => {
-	const { email, password } = req.body;
+module.exports.createUser_post = async (req, res, next, userType) => {
+	let { email, password } = req.body;
+
+	email = sanitize(email);
+	password = sanitize(password);
 
 	try {
-		hashPassword(password)
-			.then((pw) => {
-				setID()
-					.then(async (id) => {
-						const user = await User.create({ userID: id, email, password: pw, type: userType });
+		await hashPassword(password, req, next);
 
-						if (userType === 'student') {
-							const jwt = createJWT(user.userID, 'student');
-							res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
-						}
+		setID()
+			.then(async (id) => {
+				const user = await User.create({ userID: id, email, password: req.hash, type: userType });
 
-						res.status(200).json({ status: `${userType}_created` });
-					})
-					.catch((err) => {
-						handleError(err, res);
-					});
+				if (userType === 'student') {
+					const jwt = createJWT(user.userID, 'student');
+					res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+				}
+
+				res.status(200).json({ status: `${userType}_created` });
 			})
 			.catch((err) => {
 				handleError(err, res);
@@ -83,7 +82,7 @@ module.exports.login_post = async (req, res) => {
 	const { email, password } = req.body;
 
 	try {
-		const user = await User.checkLogin(email, password);
+		const user = await User.checkLogin(sanitize(email), sanitize(password));
 
 		const jwt = createJWT(user.userID, user.type);
 

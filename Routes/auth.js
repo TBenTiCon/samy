@@ -17,14 +17,14 @@ router.post(
 	(req, res, next) => {
 		checkType(req, res, next, 'admin');
 	},
-	(req, res) => {
+	(req, res, next) => {
 		const type = req.query.type;
 
 		if (type == 'tutor') {
-			if (req.typeChecked === true) controller.createUser_post(req, res, 'tutor');
+			if (req.typeChecked === true) controller.createUser_post(req, res, next, 'tutor');
 			else handleError(Error('no permission'), res);
 		} else {
-			controller.createUser_post(req, res, 'student');
+			controller.createUser_post(req, res, next, 'student');
 		}
 	}
 );

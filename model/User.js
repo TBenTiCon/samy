@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 const { isEmail } = require('validator');
 const { hashPassword } = require('../middleware/hashingPw');
 
+const { sanitize } = require('../middleware/preventInjection');
+
 const bcrypt = require('bcrypt');
+const { handleError } = require('../middleware/errorHandler');
 
 const userSchema = new Schema(
 	{
@@ -58,34 +61,43 @@ userSchema.statics.checkLogin = async function (email, password) {
 	throw Error('incorrect email');
 };
 
-userSchema.statics.changeInfo = async function (userID, changes, req) {
+userSchema.statics.changeInfo = async function (userID, changes, req, next) {
 	const user = await this.findOne({ userID });
 
 	if (user) {
-		if (changes.email) user.email = changes.email;
-		if (changes.address) user.address = changes.address;
-		if (changes.name) user.name = changes.name;
-		if (changes.phone) user.phone = changes.phone;
+		if (changes.email) user.email = sanitize(changes.email);
+
+		if (changes.address) user.address = sanitize(changes.address);
+		if (changes.name) user.name = sanitize(changes.name);
+		if (changes.phone) user.phone = sanitize(changes.phone);
 
 		//only send with Students
 		if (req.token.type === 'student') {
-			if (changes.schoolType) user.schoolType = changes.schoolType;
-			if (changes.class) user.class = changes.class;
+			if (changes.schoolType) user.schoolType = sanitize(changes.schoolType);
+			if (changes.class) user.class = sanitize(changes.class);
 		}
 
 		if (changes.password) {
-			hashPassword(changes.password)
-				.then((pw) => {
-					user.password = pw;
+			try {
+				await hashPassword(sanitize(changes.password), req, next);
 
-					user.save();
-					return true;
-				})
-				.catch((err) => {
-					throw Error('hashingError');
-				});
+				console.log('hash:' + req.hash);
+
+				user.password = req.hash;
+				user.save();
+
+				return true;
+			} catch (err) {
+				console.log('error');
+				throw Error(err.message);
+			}
 		} else {
-			user.save();
+			try {
+				await user.save();
+			} catch (err) {
+				throw Error(err.message);
+			}
+
 			return true;
 		}
 	} else {

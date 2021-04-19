@@ -3,12 +3,14 @@ const { handleError } = require('./errorHandler');
 
 const authPath = async (req, res, next, type) => {
 	try {
-		if (req.token.type == type) {
-			next();
-		} else if (type == '*') {
-			next();
-		} else {
-			throw Error('no permission');
+		if (req.token != undefined) {
+			if (req.token.type == type) {
+				next();
+			} else if (type == '*') {
+				next();
+			} else {
+				throw Error('no permission');
+			}
 		}
 	} catch (err) {
 		handleError(err, res);
@@ -24,12 +26,10 @@ const retrieveTokenInfo = async (req, res, next) => {
 		return next();
 	} catch (err) {
 		if (err.message === 'missing token' && req.type === 'student') {
-			console.log('Err at retrieve: missing token');
 			req.token = undefined;
 			return next();
 		}
 
-		console.log('Err at retrieve: ' + err.message);
 		handleError(err, res);
 	}
 };
