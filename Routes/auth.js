@@ -1,42 +1,51 @@
 const express = require('express');
-const { checkAdmin } = require('../middleware/tokenValidation');
 const { handleError } = require('../middleware/errorHandler');
+const { retrieveTokenInfo, checkType } = require('../middleware/authWare');
 
 const router = express.Router();
 
 const controller = require('../controller/authController');
 
-router.post('/user/create', (req, res) => {
-	const type = req.query.type;
+router.post(
+	'/user/create',
+	(req, res, next) => {
+		if (req.query.type) req.type = req.query.type;
+		else req.type = 'student';
+		next();
+	},
+	retrieveTokenInfo,
+	(req, res, next) => {
+		checkType(req, res, next, 'admin');
+	},
+	(req, res) => {
+		const type = req.query.type;
 
-	if (type == 'tutor') {
-		checkAdmin(req, res)
-			.then(() => {
-				controller.createUser_post(req, res, 'tutor');
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
-	} else {
-		controller.createUser_post(req, res, 'student');
+		if (type == 'tutor') {
+			if (req.typeChecked === true) controller.createUser_post(req, res, 'tutor');
+			else handleError(Error('no permission'), res);
+		} else {
+			controller.createUser_post(req, res, 'student');
+		}
 	}
-});
+);
 
-router.post('/user/delete', (req, res) => {
-	const action = req.query.action;
+router.post(
+	'/user/delete',
+	retrieveTokenInfo,
+	(req, res, next) => {
+		checkType(req, res, next, 'admin');
+	},
+	(req, res) => {
+		const action = req.query.action;
 
-	if (action == 'adminDEL') {
-		checkAdmin(req, res)
-			.then(() => {
-				controller.delProfile_post(req, res, 'admin');
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
-	} else {
-		controller.delProfile_post(req, res, 'student');
+		if (action == 'adminDEL') {
+			if (req.typeChecked === true) controller.delProfile_post(req, res, 'admin');
+			else handleError(Error('no permission'), res);
+		} else {
+			controller.delProfile_post(req, res, 'student');
+		}
 	}
-});
+);
 
 router.post('/login', controller.login_post);
 

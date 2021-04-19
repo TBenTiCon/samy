@@ -2,8 +2,9 @@ const express = require('express');
 const Router = express.Router();
 const gAuth = require('../middleware/authWare');
 const controller = require('../controller/settingsController');
+const { retrieveTokenInfo } = require('../middleware/authWare');
 
-Router.use((req, res, next) => {
+Router.use(retrieveTokenInfo, (req, res, next) => {
 	gAuth.authPath(req, res, next, '*');
 });
 

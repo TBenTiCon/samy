@@ -19,6 +19,12 @@ module.exports.handleError = (err, res) => {
 		res.status(401).json({ status: 'incorrect password' });
 	}
 
+	//check for valid email
+	else if (err.message.includes('user validation failed: email')) {
+		console.log('invalid email');
+		res.status(401).json({ status: 'invalid email' });
+	}
+
 	//check for incorrect email
 	else if (err.message === 'incorrect email') {
 		res.status(401).json({ error: 'incorrect email' });

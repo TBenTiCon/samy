@@ -58,7 +58,7 @@ userSchema.statics.checkLogin = async function (email, password) {
 	throw Error('incorrect email');
 };
 
-userSchema.statics.changeInfo = async function (userID, changes) {
+userSchema.statics.changeInfo = async function (userID, changes, req) {
 	const user = await this.findOne({ userID });
 
 	if (user) {
@@ -68,8 +68,10 @@ userSchema.statics.changeInfo = async function (userID, changes) {
 		if (changes.phone) user.phone = changes.phone;
 
 		//only send with Students
-		if (changes.schoolType) user.schoolType = changes.schoolType;
-		if (changes.class) user.class = changes.class;
+		if (req.token.type === 'student') {
+			if (changes.schoolType) user.schoolType = changes.schoolType;
+			if (changes.class) user.class = changes.class;
+		}
 
 		if (changes.password) {
 			hashPassword(changes.password)
