@@ -85,40 +85,6 @@ module.exports.delProfile_post = async (req, res, type) => {
 		});
 };
 
-module.exports.adminDel_post = async (req, res) => {
-	const id = req.query.id;
-
-	try {
-		User.deleteOne({ userID: id }, function (err, result) {
-			if (err) {
-				handleError(err, res);
-			} else {
-				console.log('Deleted as Admin');
-				res.status(200).json({ status: `${id} was deleted` });
-			}
-		});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.profileDel_post = async (req, res) => {
-	retrieveTokenInfo(req, res)
-		.then((token) => {
-			User.deleteOne({ userID: token.id }, function (err, result) {
-				if (err) {
-					handleError(err, res);
-				} else {
-					res.cookie('jwt', '', { maxAge: 0 });
-					res.status(200).json({ status: `${token.id} was deleted` });
-				}
-			});
-		})
-		.catch((err) => {
-			handleError(err, res);
-		});
-};
-
 module.exports.login_post = async (req, res) => {
 	const { email, password } = req.body;
 
@@ -126,8 +92,6 @@ module.exports.login_post = async (req, res) => {
 		const user = await User.checkLogin(email, password);
 
 		const jwt = createJWT(user.userID, user.type);
-
-		console.log('jwtType: ' + user.type);
 
 		res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
 

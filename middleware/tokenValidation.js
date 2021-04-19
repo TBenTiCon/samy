@@ -18,6 +18,7 @@ const sliceToken = async (req) => {
 	try {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
+		return token;
 	} catch (err) {
 		throw Error('missing token');
 	}

@@ -15,7 +15,6 @@ router.post('/user/create', (req, res) => {
 				controller.createUser_post(req, res, 'tutor');
 			})
 			.catch((err) => {
-				console.log('catched');
 				handleError(err, res);
 			});
 	} else {
@@ -29,13 +28,13 @@ router.post('/user/delete', (req, res) => {
 	if (action == 'adminDEL') {
 		checkAdmin(req, res)
 			.then(() => {
-				controller.adminDel_post(req, res);
+				controller.delProfile_post(req, res, 'admin');
 			})
 			.catch((err) => {
 				handleError(err, res);
 			});
 	} else {
-		controller.profileDel_post(req, res);
+		controller.delProfile_post(req, res, 'student');
 	}
 });
 
