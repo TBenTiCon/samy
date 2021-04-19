@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { handleError } = require('./errorHandler');
 
-const authPath = async (req, res, next, type) => {
+const authPath = (req, res, next, type) => {
 	try {
 		if (req.token != undefined) {
 			if (req.token.type == type) {
@@ -19,7 +19,7 @@ const authPath = async (req, res, next, type) => {
 
 const retrieveTokenInfo = async (req, res, next) => {
 	try {
-		const verifyToken = await jwt.verify(await sliceToken(req), 'dajlka123jadhkejo842324afnds');
+		const verifyToken = await jwt.verify(sliceToken(req), 'dajlka123jadhkejo842324afnds');
 
 		req.token = verifyToken;
 
@@ -34,7 +34,7 @@ const retrieveTokenInfo = async (req, res, next) => {
 	}
 };
 
-const sliceToken = async (req) => {
+const sliceToken = (req) => {
 	try {
 		const bearer = req.headers.authorization;
 		token = bearer.slice(7, bearer.length);
@@ -44,7 +44,7 @@ const sliceToken = async (req) => {
 	}
 };
 
-const checkType = async (req, res, next, type) => {
+const checkType = (req, res, next, type) => {
 	if (req.token === undefined) {
 		req.typeChecked = false;
 		return next();

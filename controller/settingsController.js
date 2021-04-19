@@ -22,7 +22,7 @@ module.exports.getSettingsInfo_post = async (req, res) => {
 
 module.exports.changeProfileInfo_post = async (req, res, next) => {
 	try {
-		User.changeInfo(req.token.id, req.body, req, next)
+		await User.changeInfo(req.token.id, req.body, req, next)
 			.then(() => {
 				res.status(200).json({ status: 'Info Changed' });
 			})

@@ -39,7 +39,7 @@ module.exports.createUser_post = async (req, res, next, userType) => {
 	try {
 		await hashPassword(password, req, next);
 
-		setID()
+		await setID()
 			.then(async (id) => {
 				const user = await User.create({ userID: id, email, password: req.hash, type: userType });
 
@@ -65,7 +65,7 @@ module.exports.delProfile_post = async (req, res, type) => {
 		id = req.query.id;
 	}
 
-	User.deleteOne({ userID: id }, function (err, result) {
+	await User.deleteOne({ userID: id }, function (err, result) {
 		if (err) {
 			handleError(err, res);
 		} else {
