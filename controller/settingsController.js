@@ -15,6 +15,8 @@ module.exports.getSettingsInfo_post = async (req, res) => {
 				phone: sanitize(user.phone),
 				name: sanitize(user.name),
 				credit: sanitize(user.credit),
+				schoolType: sanitize(user.schoolType),
+				class: sanitize(user.class),
 			});
 		}
 	});

@@ -14,6 +14,8 @@ module.exports.sanitize = (msg) => {
 				msg[key] = msg[key].replace(/</g, '&lt;').replace(/>/g, '&gt;');
 			}
 		});
+
+		return msg;
 	} else {
 		let cleanMsg = msg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 

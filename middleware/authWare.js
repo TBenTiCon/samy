@@ -25,8 +25,9 @@ const retrieveTokenInfo = async (req, res, next) => {
 
 		return next();
 	} catch (err) {
-		if (err.message === 'missing token' && req.type === 'student') {
+		if ((err.message === 'missing token') | (err.message === 'jwt malformed') && req.type === 'student') {
 			req.token = undefined;
+
 			return next();
 		}
 

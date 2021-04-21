@@ -3,16 +3,26 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
+var cors = require('cors');
 
 const app = express();
+
+var corsOptions = {
+	origin: 'http://localhost:3000',
+	optionsSuccessStatus: 200,
+	credentials: true, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser());
 
 const dbURI = 'mongodb+srv://dbUser:KimpAYUi1C1TrEYG@cluster0.tmypd.mongodb.net/main?retryWrites=true&w=majority';
 
 mongoose
 	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		app.listen(3000);
-		console.log('listening on port 3000 with db connected');
+		app.listen(3250);
+		console.log('listening on port 3250 with db connected');
 	})
 	.catch((err) => {
 		console.log(err);

@@ -13,7 +13,7 @@ const userSchema = new Schema(
 		userID: { type: String, default: 'UD_000' },
 		email: {
 			type: String,
-			required: [true, 'please enter a email'],
+			required: [true, 'Please enter a email'],
 			unique: true,
 			lowercase: true,
 			validate: [isEmail, 'Please enter a valid email'],
@@ -64,11 +64,16 @@ userSchema.statics.checkLogin = async function (email, password) {
 userSchema.statics.changeInfo = async function (userID, changes, req, next) {
 	const user = await this.findOne({ userID });
 
+	console.log(changes);
+
 	if (user) {
 		if (changes.email) user.email = sanitize(changes.email);
 
-		if (changes.address) user.address = sanitize(changes.address);
+		if (changes.address) {
+			user.address = sanitize(changes.address);
+		}
 		if (changes.name) user.name = sanitize(changes.name);
+
 		if (changes.phone) user.phone = sanitize(changes.phone);
 
 		//only send with Students

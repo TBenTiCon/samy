@@ -45,7 +45,7 @@ module.exports.createUser_post = async (req, res, next, userType) => {
 
 				if (userType === 'student') {
 					const jwt = createJWT(user.userID, 'student');
-					res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+					res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000 });
 				}
 
 				res.status(200).json({ status: `${userType}_created` });
@@ -86,7 +86,7 @@ module.exports.login_post = async (req, res) => {
 
 		const jwt = createJWT(user.userID, user.type);
 
-		res.cookie('jwt', jwt, { httpOnly: true, maxAge: maxAge * 1000 });
+		res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000, secure: false, sameSite: false });
 
 		res.status(200).json({ status: 'login successfull' });
 	} catch (err) {
