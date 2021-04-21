@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const auth = require('./middleware/authWare');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -20,6 +20,8 @@ mongoose
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(helmet());
 
 app.use(express.static('public'));
 
