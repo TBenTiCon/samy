@@ -42,3 +42,6 @@ app.use(cRouter);
 
 const pSettings = require('./Routes/pSettings');
 app.use(pSettings);
+
+const booking = require('./Routes/booking');
+app.use(booking);
