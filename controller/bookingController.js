@@ -13,27 +13,20 @@ module.exports.createAppointment = async (req, res) => {
 	console.log('tutorID: ' + tutor_id);
 
 	//get appointments
-	const slots = await Appointment.find({ tutor_ID: req.body.tutor_id, 'time.date': query }).sort({ 'time.time': -1 });
+	const slots = await Appointment.find({ tutor_ID: req.body.tutor_id, 'time.date': time.date }).sort({
+		'time.time': -1,
+	});
 
-	slots.forEach((slot) => {
+	console.log('checkSlots: ' + slots);
+
+	//serverside check for alreadyBookedSlots
+	await slots.forEach((slot) => {
 		if (slot.time.time === time.time) {
+			throw Error('alreadyBookedExeption');
+		} else if (time.time + time.duration >= slot.time.time) {
 			throw Error('alreadyBookedExeption');
 		}
 	});
-
-	//check if appointment is already booked
-	const checkExist = await Appointment.findOne({
-		tutor_ID: tutor_id,
-		'time.date': req.body.date,
-		'time.time': time.time,
-	});
-
-	console.log('checkExist: ' + checkExist + typeof checkExist);
-	console.log(checkExist);
-
-	if (checkExist !== null) {
-		throw Error('alreadyBookedExeption');
-	}
 
 	await Appointment.create({ tutor_ID: tutor_id, time });
 
