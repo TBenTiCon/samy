@@ -23,7 +23,7 @@ module.exports.createAppointment = async (req, res) => {
 	await slots.forEach((slot) => {
 		if (slot.time.time === time.time) {
 			throw Error('alreadyBookedExeption');
-		} else if (time.time + time.duration >= slot.time.time) {
+		} else if (slot.time.time > time.time && slot.time.time - time.duration < time.time) {
 			throw Error('alreadyBookedExeption');
 		}
 	});
