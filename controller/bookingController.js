@@ -14,9 +14,8 @@ module.exports.createAppointment = async (req, res) => {
 
 	//get appointments
 	const slots = await Appointment.find({ tutor_ID: req.body.tutor_id, 'time.date': time.date }).sort({
-		'time.time': -1,
+		'time.time': 1,
 	});
-
 	console.log('checkSlots: ' + slots);
 
 	//serverside check for alreadyBookedSlots
@@ -28,7 +27,7 @@ module.exports.createAppointment = async (req, res) => {
 		}
 	});
 
-	await Appointment.create({ tutor_ID: tutor_id, time });
+	await Appointment.create({ tutor_ID: tutor_id, student_ID: req.token.id, time });
 
 	res.status(200).json({ status: `appointment_created` });
 };
@@ -39,7 +38,7 @@ module.exports.getAppointments = async (req, res) => {
 
 	//737780
 
-	const slots = await Appointment.find({ tutor_ID: req.body.tutor_id, 'time.date': query }).sort({ 'time.time': -1 });
+	const slots = await Appointment.find({ tutor_ID: req.body.tutor_id, 'time.date': query }).sort({ 'time.time': 1 });
 
 	console.log(slots);
 

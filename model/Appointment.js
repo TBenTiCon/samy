@@ -7,6 +7,10 @@ const appointmentSchema = new Schema({
 		type: String,
 		required: [true, 'Failed to attach tutor_ID'],
 	},
+	student_ID: {
+		type: String,
+		required: [true, 'Failed to attach student'],
+	},
 	time: {
 		date: Number,
 		time: Number,
@@ -22,6 +26,8 @@ appointmentSchema.statics.createTime = function (date, time, duration) {
 
 	const timeInMin = hInMin + parseInt(times[1]);
 	console.log('timeInMin: ' + timeInMin);
+
+	console.log(date);
 
 	const timeObj = { date, time: timeInMin, duration };
 

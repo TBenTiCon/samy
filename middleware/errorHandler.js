@@ -83,5 +83,6 @@ module.exports.handleError = (err, res) => {
 		}
 	} catch (err) {
 		console.log('preventing double Header');
+		console.log(err);
 	}
 };
