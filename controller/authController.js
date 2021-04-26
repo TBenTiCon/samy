@@ -31,24 +31,39 @@ const setID = async () => {
 };
 
 module.exports.createUser_post = async (req, res, next, userType) => {
-	let { email, password } = req.body;
+	let { email, password, name, surname } = req.body;
 
 	email = sanitize(email);
 	password = sanitize(password);
+	name = sanitize(name);
+	surname = sanitize(surname);
+
+	let type;
+
+	const nameObj = { surname, name };
 
 	try {
 		await hashPassword(password, req, next);
 
 		await setID()
 			.then(async (id) => {
-				const user = await User.create({ userID: id, email, password: req.hash, type: userType });
+				const user = await User.create({
+					userID: id,
+					email,
+					password: req.hash,
+					type: userType,
+					name: nameObj,
+				});
+
+				type = 'tutor';
 
 				if (userType === 'student') {
 					const jwt = createJWT(user.userID, 'student');
 					res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000 });
+					type = 'student';
 				}
 
-				res.status(200).json({ status: `${userType}_created` });
+				res.status(200).json({ status: `${userType}_created`, name: nameObj, type });
 			})
 			.catch((err) => {
 				handleError(err, res);
@@ -88,7 +103,13 @@ module.exports.login_post = async (req, res) => {
 
 		res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000, secure: false, sameSite: false });
 
-		res.status(200).json({ status: 'login successfull' });
+		const surname = user.name.surname;
+		const name = user.name;
+		const type = user.type;
+
+		const nameObj = { surname, name };
+
+		res.status(200).json({ status: 'login successfull', name: nameObj, type });
 	} catch (err) {
 		handleError(err, res);
 	}
