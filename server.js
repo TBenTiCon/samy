@@ -45,3 +45,6 @@ app.use(pSettings);
 
 const booking = require('./Routes/booking');
 app.use(booking);
+
+const search = require('./Routes/search');
+app.use(search);

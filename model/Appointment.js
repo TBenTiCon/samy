@@ -16,6 +16,7 @@ const appointmentSchema = new Schema({
 		time: Number,
 		duration: Number,
 	},
+	zoom: { type: String, default: 'Unavailable' },
 });
 
 appointmentSchema.statics.createTime = function (date, time, duration) {
