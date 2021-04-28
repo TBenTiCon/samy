@@ -10,12 +10,14 @@ module.exports.getMyAppointments = async (req, res) => {
 	let past = false;
 	let post = false;
 	let date = false;
+	let SearchString = false;
 	let SearchObj = { student_ID: id };
 
 	if (body.max) max = body.max;
 	if (body.past) past = body.past;
 	if (body.post) post = body.post;
 	if (body.date) date = body.date;
+	if (body.SearchString) SearchString = body.SearchString;
 
 	if (past || post) {
 		if (post) {
@@ -31,6 +33,19 @@ module.exports.getMyAppointments = async (req, res) => {
 				'time.date': {
 					$lt: date,
 				},
+			};
+		}
+	}
+
+	if (SearchString) {
+		if (SearchString === '') {
+			SearchObj = {
+				student_ID: id,
+			};
+		} else {
+			SearchObj = {
+				student_ID: id,
+				tutor_ID: SearchString,
 			};
 		}
 	}
