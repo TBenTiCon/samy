@@ -50,6 +50,9 @@ module.exports.getMyAppointments = async (req, res) => {
 		}
 	}
 
+	console.log(SearchObj);
+	console.log('date: ' + date);
+
 	try {
 		const searchResult = await Appointment.find(SearchObj).limit(max).sort({
 			'time.time': 1,

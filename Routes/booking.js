@@ -17,4 +17,6 @@ router.post('/appointment/get', (req, res) => {
 	});
 });
 
+router.post('/appointment/delete', retrieveTokenInfo, controller.deleteAppointment);
+
 module.exports = router;

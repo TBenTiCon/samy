@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema({
+	appointment_ID: { type: String, required: [true, 'Failed to create appointment_ID'] },
 	tutor_ID: {
 		type: String,
 		required: [true, 'Failed to attach tutor_ID'],
