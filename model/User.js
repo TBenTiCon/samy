@@ -33,6 +33,37 @@ const userSchema = new Schema(
 		phone: String,
 		schoolType: String,
 		class: String,
+		classTaken: { type: String, default: '0' },
+		timeFrame: {
+			mo: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+			di: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+			mi: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+			do: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+			fr: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+			sa: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+			so: {
+				min: { type: Number, default: '600' },
+				max: { type: Number, default: '1185' },
+			},
+		},
 	},
 	{ timestamps: true }
 );
@@ -105,6 +136,46 @@ userSchema.statics.changeInfo = async function (userID, changes, req, next) {
 
 			return true;
 		}
+	} else {
+		throw Error('findUserErr');
+	}
+};
+
+userSchema.statics.getInfo = async function (userID) {
+	const user = await this.findOne({ userID });
+
+	if (user) {
+		const taken = user.classTaken;
+		const credits = user.credit;
+
+		return { taken, credits };
+	} else {
+		throw Error('findUserErr');
+	}
+};
+
+userSchema.statics.setTimeFrame = async function (userID, changes) {
+	const user = await this.findOne({ userID });
+
+	if (user) {
+		if (changes) {
+			user.timeFrame = changes;
+			user.save();
+
+			return true;
+		} else {
+			throw Error('noChangesErr');
+		}
+	} else {
+		throw Error('findUserErr');
+	}
+};
+
+userSchema.statics.getTimeFrame = async function (userID) {
+	const user = await this.findOne({ userID });
+
+	if (user) {
+		return user.timeFrame;
 	} else {
 		throw Error('findUserErr');
 	}

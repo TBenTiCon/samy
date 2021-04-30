@@ -50,9 +50,6 @@ module.exports.getMyAppointments = async (req, res) => {
 		}
 	}
 
-	console.log(SearchObj);
-	console.log('date: ' + date);
-
 	try {
 		const searchResult = await Appointment.find(SearchObj).limit(max).sort({
 			'time.time': 1,
@@ -61,8 +58,6 @@ module.exports.getMyAppointments = async (req, res) => {
 		if (searchResult === undefined || searchResult === '{}' || searchResult === {} || searchResult === []) {
 			throw Error('no Appointments available');
 		}
-
-		console.log(searchResult);
 
 		res.status(200).json({ result: searchResult });
 	} catch (err) {

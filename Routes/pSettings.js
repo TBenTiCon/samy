@@ -10,5 +10,8 @@ Router.use(retrieveTokenInfo, (req, res, next) => {
 
 Router.post('/user/settings', controller.getSettingsInfo_post);
 Router.post('/user/settings/pchange', controller.changeProfileInfo_post);
+Router.post('/user/settings/getMeta', controller.getMetaInfo);
+Router.post('/user/settings/setTimeFrame', controller.setTimeFrame);
+Router.post('/user/settings/getTimeFrame', controller.getTimeFrame);
 
 module.exports = Router;

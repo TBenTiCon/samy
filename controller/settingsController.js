@@ -35,3 +35,48 @@ module.exports.changeProfileInfo_post = async (req, res, next) => {
 		handleError(err, res);
 	}
 };
+
+module.exports.getMetaInfo = async (req, res) => {
+	try {
+		const id = req.token.id;
+		User.getInfo(id)
+			.then((data) => {
+				console.log('data: ');
+
+				res.status(200).json(data);
+			})
+			.catch((err) => {
+				throw Error(err.message);
+			});
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
+module.exports.setTimeFrame = async (req, res) => {
+	try {
+		await User.setTimeFrame(req.token.id, req.body)
+			.then(() => {
+				res.status(200).json({ status: 'Info Changed' });
+			})
+			.catch((err) => {
+				handleError(err, res);
+			});
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
+module.exports.getTimeFrame = async (req, res) => {
+	try {
+		await User.getTimeFrame(req.token.id)
+			.then((data) => {
+				res.status(200).json(data);
+			})
+			.catch((err) => {
+				handleError(err, res);
+			});
+	} catch (err) {
+		handleError(err, res);
+	}
+};
