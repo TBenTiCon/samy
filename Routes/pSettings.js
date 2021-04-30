@@ -13,5 +13,6 @@ Router.post('/user/settings/pchange', controller.changeProfileInfo_post);
 Router.post('/user/settings/getMeta', controller.getMetaInfo);
 Router.post('/user/settings/setTimeFrame', controller.setTimeFrame);
 Router.post('/user/settings/getTimeFrame', controller.getTimeFrame);
+Router.post('/user/settings/setTimeExclusion', controller.setTimeExclusion);
 
 module.exports = Router;

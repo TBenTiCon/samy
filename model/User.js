@@ -64,6 +64,7 @@ const userSchema = new Schema(
 				max: { type: Number, default: '1185' },
 			},
 		},
+		timeExclusion: Array,
 	},
 	{ timestamps: true }
 );
@@ -175,7 +176,35 @@ userSchema.statics.getTimeFrame = async function (userID) {
 	const user = await this.findOne({ userID });
 
 	if (user) {
-		return user.timeFrame;
+		const timeOBJ = { time: user.timeFrame, ex: user.timeExclusion };
+
+		return timeOBJ;
+	} else {
+		throw Error('findUserErr');
+	}
+};
+
+userSchema.statics.setExclusions = async function (userID, changes) {
+	const user = await this.findOne({ userID });
+
+	if (user) {
+		if (changes) {
+			console.log('timeExclusion: ');
+			console.log(user.timeExclusion);
+
+			console.log('changes: ');
+			console.log(changes);
+
+			console.log(user.timeExclusion[0]);
+
+			user.timeExclusion.push(changes);
+
+			user.save();
+
+			return true;
+		} else {
+			throw Error('noChangesErr');
+		}
 	} else {
 		throw Error('findUserErr');
 	}

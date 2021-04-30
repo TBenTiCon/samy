@@ -80,3 +80,20 @@ module.exports.getTimeFrame = async (req, res) => {
 		handleError(err, res);
 	}
 };
+
+module.exports.setTimeExclusion = async (req, res) => {
+	try {
+		console.log('req: ');
+		console.log(req.body);
+
+		await User.setExclusions(req.token.id, req.body)
+			.then(() => {
+				res.status(200).json({ status: 'Exclusion attached' });
+			})
+			.catch((err) => {
+				handleError(err, res);
+			});
+	} catch (err) {
+		handleError(err, res);
+	}
+};
