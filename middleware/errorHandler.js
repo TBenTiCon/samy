@@ -70,7 +70,7 @@ module.exports.handleError = (err, res) => {
 			res.status(401).json({ status: 'Invalid Token', error: 'true' });
 		}
 
-		//chekc if booked
+		//check if booked
 		else if (err.message.includes('alreadyBookedExeption')) {
 			console.log('alreadyBookedExeption');
 			res.status(401).json({ status: 'Da war wohl jemand schneller :/', error: 'true' });
