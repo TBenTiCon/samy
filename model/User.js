@@ -189,13 +189,10 @@ userSchema.statics.setExclusions = async function (userID, changes) {
 
 	if (user) {
 		if (changes) {
-			console.log('timeExclusion: ');
-			console.log(user.timeExclusion);
+			changes.id = userID + changes.date + changes.time.min + changes.time.max;
 
 			console.log('changes: ');
 			console.log(changes);
-
-			console.log(user.timeExclusion[0]);
 
 			user.timeExclusion.push(changes);
 

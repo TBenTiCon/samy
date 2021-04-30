@@ -97,3 +97,33 @@ module.exports.setTimeExclusion = async (req, res) => {
 		handleError(err, res);
 	}
 };
+
+module.exports.deleteTimeExclusion = async (req, res) => {
+	try {
+		const id = req.body.id;
+		const userID = req.token.id;
+
+		if (id.includes(userID)) {
+			const user = await User.findOne({ userID });
+
+			const newArray = {};
+
+			user.timeExclusion.forEach((obj) => {
+				if (obj.id === id) {
+				} else {
+					newArray.push(obj);
+				}
+			});
+
+			user.timeExclusion = newArray;
+
+			user.save();
+
+			res.status(200).json({ status: 'Deleted Successfully' });
+		} else {
+			throw Error('No permission to delete Appointment');
+		}
+	} catch (err) {
+		handleError(err, res);
+	}
+};
