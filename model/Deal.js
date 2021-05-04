@@ -13,7 +13,7 @@ const dealSchema = new Schema(
 		},
 		code: String,
 		imgLink: String,
-		logoLink: String,
+		cLink: String,
 		price: String,
 		oldPrice: String,
 		afLink: String,

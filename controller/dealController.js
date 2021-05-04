@@ -3,7 +3,11 @@ const Company = require('../model/Company');
 const { handleError } = require('../middleware/errorHandler');
 
 module.exports.createDeal = async (req, res) => {
-	const { titel, subTitle, code, price, oldPrice, afLink, categorie } = req.body;
+	const { titel, subTitle, code, price, company, oldPrice, afLink, categorie } = req.body;
+
+	const myCompany = await Company.findOne({ name: company });
+
+	console.log(myCompany);
 
 	console.log('filePath: ' + req.file.path);
 
@@ -13,8 +17,11 @@ module.exports.createDeal = async (req, res) => {
 	const imgLink = req.file.path.slice(7);
 	console.log('imgLink: ' + imgLink);
 
+	const cLink = await myCompany?.imgLink;
+	console.log(cLink);
+
 	try {
-		await Deal.create({ titel, subTitle, imgLink });
+		await Deal.create({ titel, subTitle, imgLink, cLink });
 		res.status(200).json({ status: `deal_created` });
 	} catch (err) {
 		handleError(err, res);
