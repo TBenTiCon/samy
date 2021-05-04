@@ -4,13 +4,9 @@ const { handleError } = require('./errorHandler');
 const authPath = (req, res, next, type) => {
 	try {
 		if (req.token != undefined) {
-			if (req.token.type == type) {
-				next();
-			} else if (type == '*') {
-				next();
-			} else {
-				throw Error('no permission');
-			}
+			next();
+		} else {
+			throw Error('no permission');
 		}
 	} catch (err) {
 		handleError(err, res);
@@ -19,13 +15,13 @@ const authPath = (req, res, next, type) => {
 
 const retrieveTokenInfo = async (req, res, next) => {
 	try {
-		const verifyToken = await jwt.verify(sliceToken(req), 'dajlka123jadhkejo842324afnds');
+		const verifyToken = await jwt.verify(req.cookies.jwt, 'dajlka123jadhkejo842324afnds');
 
 		req.token = verifyToken;
 
 		return next();
 	} catch (err) {
-		if ((err.message === 'missing token') | (err.message === 'jwt malformed') && req.type === 'student') {
+		if (err.message === 'missing token') {
 			req.token = undefined;
 
 			return next();

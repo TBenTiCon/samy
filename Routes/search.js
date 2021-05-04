@@ -8,8 +8,8 @@ Router.use(retrieveTokenInfo, (req, res, next) => {
 	gAuth.authPath(req, res, next, '*');
 });
 
-Router.post('/search/getdates', (req, res) => {
+/* Router.post('/search/getdates', (req, res) => {
 	controller.getMyAppointments(req, res);
-});
+}); */
 
 module.exports = Router;

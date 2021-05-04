@@ -82,7 +82,7 @@ module.exports.handleError = (err, res) => {
 			res.status(401).json({ status: err.message, error: 'true' });
 		}
 	} catch (err) {
-		console.log('preventing double Header');
+		console.log('unknown Error');
 		console.log(err);
 	}
 };

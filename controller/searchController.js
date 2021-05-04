@@ -1,4 +1,3 @@
-const Appointment = require('../model/Appointment');
 const { handleError } = require('../middleware/errorHandler');
 
 module.exports.getMyAppointments = async (req, res) => {
@@ -51,13 +50,13 @@ module.exports.getMyAppointments = async (req, res) => {
 	}
 
 	try {
-		const searchResult = await Appointment.find(SearchObj).limit(max).sort({
+		/* const searchResult = await Appointment.find(SearchObj).limit(max).sort({
 			'time.time': 1,
 		});
 
 		if (searchResult === undefined || searchResult === '{}' || searchResult === {} || searchResult === []) {
 			throw Error('no Appointments available');
-		}
+		} */
 
 		res.status(200).json({ result: searchResult });
 	} catch (err) {

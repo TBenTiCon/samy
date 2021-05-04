@@ -11,12 +11,6 @@ module.exports.getSettingsInfo_post = async (req, res) => {
 		} else {
 			res.json({
 				email: sanitize(user.email),
-				address: sanitize(user.address),
-				phone: sanitize(user.phone),
-				name: sanitize(user.name),
-				credit: sanitize(user.credit),
-				schoolType: sanitize(user.schoolType),
-				class: sanitize(user.class),
 			});
 		}
 	});
@@ -31,98 +25,6 @@ module.exports.changeProfileInfo_post = async (req, res, next) => {
 			.catch((err) => {
 				handleError(err, res);
 			});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.getMetaInfo = async (req, res) => {
-	try {
-		const id = req.token.id;
-		User.getInfo(id)
-			.then((data) => {
-				console.log('data: ');
-
-				res.status(200).json(data);
-			})
-			.catch((err) => {
-				throw Error(err.message);
-			});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.setTimeFrame = async (req, res) => {
-	try {
-		await User.setTimeFrame(req.token.id, req.body)
-			.then(() => {
-				res.status(200).json({ status: 'Info Changed' });
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.getTimeFrame = async (req, res) => {
-	try {
-		await User.getTimeFrame(req.token.id)
-			.then((data) => {
-				res.status(200).json(data);
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.setTimeExclusion = async (req, res) => {
-	try {
-		console.log('req: ');
-		console.log(req.body);
-
-		await User.setExclusions(req.token.id, req.body)
-			.then(() => {
-				res.status(200).json({ status: 'Exclusion attached' });
-			})
-			.catch((err) => {
-				handleError(err, res);
-			});
-	} catch (err) {
-		handleError(err, res);
-	}
-};
-
-module.exports.deleteTimeExclusion = async (req, res) => {
-	try {
-		const id = req.body.id;
-		const userID = req.token.id;
-
-		if (id.includes(userID)) {
-			const user = await User.findOne({ userID });
-
-			const newArray = {};
-
-			user.timeExclusion.forEach((obj) => {
-				if (obj.id === id) {
-				} else {
-					newArray.push(obj);
-				}
-			});
-
-			user.timeExclusion = newArray;
-
-			user.save();
-
-			res.status(200).json({ status: 'Deleted Successfully' });
-		} else {
-			throw Error('No permission to delete Appointment');
-		}
 	} catch (err) {
 		handleError(err, res);
 	}

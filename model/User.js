@@ -13,7 +13,7 @@ const userSchema = new Schema(
 		userID: { type: String, default: 'UD_000' },
 		email: {
 			type: String,
-			required: [true, 'Please enter a email'],
+			required: [true, 'Please enter an email'],
 			unique: true,
 			lowercase: true,
 			validate: [isEmail, 'Please enter a valid email'],
@@ -23,48 +23,6 @@ const userSchema = new Schema(
 			required: [true, 'Please enter a password'],
 			minlength: [6, 'Minimum length is 6 characters'],
 		},
-		type: { type: String, required: true },
-		credit: { type: Number, default: '0' },
-		address: { type: Object },
-		name: {
-			surname: String,
-			name: String,
-		},
-		phone: String,
-		schoolType: String,
-		class: String,
-		classTaken: { type: String, default: '0' },
-		timeFrame: {
-			mo: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-			di: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-			mi: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-			do: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-			fr: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-			sa: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-			so: {
-				min: { type: Number, default: '600' },
-				max: { type: Number, default: '1185' },
-			},
-		},
-		timeExclusion: Array,
 	},
 	{ timestamps: true }
 );
@@ -100,19 +58,6 @@ userSchema.statics.changeInfo = async function (userID, changes, req, next) {
 
 	if (user) {
 		if (changes.email) user.email = sanitize(changes.email);
-
-		if (changes.address) {
-			user.address = sanitize(changes.address);
-		}
-		if (changes.name) user.name = sanitize(changes.name);
-
-		if (changes.phone) user.phone = sanitize(changes.phone);
-
-		//only send with Students
-		if (req.token.type === 'student') {
-			if (changes.schoolType) user.schoolType = sanitize(changes.schoolType);
-			if (changes.class) user.class = sanitize(changes.class);
-		}
 
 		if (changes.password) {
 			try {
@@ -150,58 +95,6 @@ userSchema.statics.getInfo = async function (userID) {
 		const credits = user.credit;
 
 		return { taken, credits };
-	} else {
-		throw Error('findUserErr');
-	}
-};
-
-userSchema.statics.setTimeFrame = async function (userID, changes) {
-	const user = await this.findOne({ userID });
-
-	if (user) {
-		if (changes) {
-			user.timeFrame = changes;
-			user.save();
-
-			return true;
-		} else {
-			throw Error('noChangesErr');
-		}
-	} else {
-		throw Error('findUserErr');
-	}
-};
-
-userSchema.statics.getTimeFrame = async function (userID) {
-	const user = await this.findOne({ userID });
-
-	if (user) {
-		const timeOBJ = { time: user.timeFrame, ex: user.timeExclusion };
-
-		return timeOBJ;
-	} else {
-		throw Error('findUserErr');
-	}
-};
-
-userSchema.statics.setExclusions = async function (userID, changes) {
-	const user = await this.findOne({ userID });
-
-	if (user) {
-		if (changes) {
-			changes.id = userID + changes.date + changes.time.min + changes.time.max;
-
-			console.log('changes: ');
-			console.log(changes);
-
-			user.timeExclusion.push(changes);
-
-			user.save();
-
-			return true;
-		} else {
-			throw Error('noChangesErr');
-		}
 	} else {
 		throw Error('findUserErr');
 	}

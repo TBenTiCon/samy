@@ -7,87 +7,70 @@ const { sanitize } = require('../middleware/preventInjection');
 
 const maxAge = 3 * 24 * 60 * 60;
 
-const createJWT = (id, type) => {
-	return jwt.sign({ id, type }, secret, { expiresIn: maxAge });
+const createJWT = (id) => {
+	return jwt.sign({ id }, secret, { expiresIn: maxAge });
 };
 
 const setID = async () => {
-	let maxID = await User.findOne({}, {}, { sort: { createdAt: -1 } }, function (err, id) {
-		if (err) {
-			return 0;
+	try {
+		let maxID = await User.findOne({}, {}, { sort: { createdAt: -1 } }, function (err, id) {
+			if (err) {
+				return 0;
+			} else {
+				return id;
+			}
+		});
+
+		if (typeof maxID == 'object' && maxID !== null) {
+			maxID = maxID.userID.slice(3, maxID.length);
+			maxID = Number(maxID) + 1;
 		} else {
-			return id;
+			maxID = 0;
 		}
-	});
 
-	if (typeof maxID == 'object' && maxID !== null) {
-		maxID = maxID.userID.slice(3, maxID.length);
-		maxID = Number(maxID) + 1;
-	} else {
-		maxID = 0;
+		return `UD_${maxID}`;
+	} catch (err) {
+		throw Error('cannot create ID');
 	}
-
-	return `UD_${maxID}`;
 };
 
-module.exports.createUser_post = async (req, res, next, userType) => {
-	let { email, password, name, surname } = req.body;
+module.exports.createUser_post = async (req, res, next) => {
+	let { email, password } = req.body;
 
 	email = sanitize(email);
 	password = sanitize(password);
-	name = sanitize(name);
-	surname = sanitize(surname);
-
-	let type;
-
-	const nameObj = { surname, name };
 
 	try {
-		await hashPassword(password, req, next);
+		await hashPassword(password)
+			.then(async (pw) => {
+				await setID().then(async (id) => {
+					await User.create({
+						userID: id,
+						email,
+						password: pw,
+					});
 
-		await setID()
-			.then(async (id) => {
-				const user = await User.create({
-					userID: id,
-					email,
-					password: req.hash,
-					type: userType,
-					name: nameObj,
+					//console.log("trying to create")
+					res.status(200).json({ status: `${email}_created` });
 				});
-
-				type = 'tutor';
-
-				if (userType === 'student') {
-					const jwt = createJWT(user.userID, 'student');
-					res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000 });
-					type = 'student';
-				}
-
-				res.status(200).json({ status: `${userType}_created`, name: nameObj, type });
 			})
 			.catch((err) => {
+				console.log('inner handler');
 				handleError(err, res);
 			});
 	} catch (err) {
+		console.log('outer handler');
 		handleError(err, res);
 	}
 };
 
-module.exports.delProfile_post = async (req, res, type) => {
-	let id = req.token.id;
-
-	if (type === 'admin') {
-		id = req.query.id;
-	}
+module.exports.delProfile_post = async (req, res) => {
+	let id = req.query.id;
 
 	await User.deleteOne({ userID: id }, function (err, result) {
 		if (err) {
 			handleError(err, res);
 		} else {
-			if (type === 'student') {
-				res.cookie('jwt', '', { maxAge: 0 });
-			}
-
 			res.status(200).json({ status: `profile was deleted` });
 		}
 	});
@@ -99,17 +82,11 @@ module.exports.login_post = async (req, res) => {
 	try {
 		const user = await User.checkLogin(sanitize(email), sanitize(password));
 
-		const jwt = createJWT(user.userID, user.type);
+		const jwt = createJWT(user.userID);
 
 		res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000, secure: false, sameSite: false });
 
-		const surname = user.name.surname;
-		const name = user.name;
-		const type = user.type;
-
-		const nameObj = { surname, name };
-
-		res.status(200).json({ status: 'login successfull', name: nameObj, type });
+		res.status(200).send('Successfull');
 	} catch (err) {
 		handleError(err, res);
 	}
