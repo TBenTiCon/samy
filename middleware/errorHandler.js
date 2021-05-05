@@ -70,10 +70,10 @@ module.exports.handleError = (err, res) => {
 			res.status(401).json({ status: 'Invalid Token', error: 'true' });
 		}
 
-		//check if booked
-		else if (err.message.includes('alreadyBookedExeption')) {
-			console.log('alreadyBookedExeption');
-			res.status(401).json({ status: 'Da war wohl jemand schneller :/', error: 'true' });
+		//check if ParamsGiven
+		else if (err.message.includes('No Params given')) {
+			console.log('No Params given');
+			res.status(401).json({ status: 'No Params given', error: 'true' });
 		}
 
 		//check for permission
