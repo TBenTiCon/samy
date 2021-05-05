@@ -34,10 +34,6 @@ module.exports.delDeal = async (req, res) => {
 };
 
 module.exports.getDeal = async (req, res) => {
-	const cat = req.query.cat;
-	const id = req.query.id;
-	const key = req.query.key;
-	const date = req.query.date;
 	const max = req.query.max;
 
 	let maxAmount = 10;
@@ -45,25 +41,23 @@ module.exports.getDeal = async (req, res) => {
 	var conditions = {};
 
 	for (var key in req.query) {
-		if (req.query.hasOwnProperty(key)) {
-			conditions[key] = new RegExp('^' + req.query[key] + '$', 'i');
+		if (req.query.hasOwnProperty(key) && key !== 'max') {
+			conditions[key] = req.query[key];
 		}
 	}
 
-	var query = Character.find(conditions);
-	query.exec(function (err, characters) {
-		if (err) throw err;
-		res.send({ characters: characters });
-	});
+	if (conditions.titel) {
+		conditions.titel = { $regex: conditions.titel, $options: 'i' };
+	}
 
 	if (max) maxAmount = max;
 
 	try {
-		const deals = await Deal.find({
-			$or: [{ categorie: cat }, { _id: id }, { titel: { $regex: key, $options: 'i' } }],
-		}).limit(maxAmount);
+		if (Object.keys(conditions).length === 0) {
+			throw Error('No Params given');
+		}
 
-		console.log(deals);
+		const deals = await Deal.find(conditions).limit(maxAmount);
 
 		res.status(200).json({ status: deals });
 	} catch (err) {

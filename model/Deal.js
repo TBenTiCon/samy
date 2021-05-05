@@ -18,6 +18,7 @@ const dealSchema = new Schema(
 		oldPrice: String,
 		afLink: String,
 		categorie: String,
+		date: Number,
 	},
 	{ timestamps: true }
 );
