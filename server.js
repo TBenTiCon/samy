@@ -45,14 +45,14 @@ app.set('views', './views');
 
 app.use(morgan('dev'));
 
+const baseRouter = require('./Routes/base');
+app.use('/', baseRouter);
+
 const cRouter = require('./Routes/auth');
 app.use('/', cRouter);
 
 const pSettings = require('./Routes/pSettings');
 app.use(pSettings);
-
-const search = require('./Routes/search');
-app.use(search);
 
 const dHandler = require('./Routes/dealHandler');
 app.use(dHandler);

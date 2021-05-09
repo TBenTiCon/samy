@@ -5,15 +5,15 @@ form.addEventListener('submit', (e) => {
 
 	const formData = new FormData(form);
 
-	var res = form.date.value.split('-');
+	var selected = new Date(form.date.value);
 
-	var year = parseInt(res[0]) * 365;
-	var month = parseInt(res[1]) * 30;
-	var day = parseInt(res[2]);
+	var date = convertTimeToDays(selected);
+	console.log(date);
 
-	var date = year + month + day;
+	var time = convertToMinutes(form.time.value);
 
 	formData.set('date', date);
+	formData.set('time', time);
 
 	for (var pair of formData.entries()) {
 		console.log(pair[0] + ', ' + pair[1]);

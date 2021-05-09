@@ -3,7 +3,7 @@ const Company = require('../model/Company');
 const { handleError } = require('../middleware/errorHandler');
 
 module.exports.createDeal = async (req, res) => {
-	const { titel, subTitle, code, price, company, oldPrice, afLink, categorie, date } = req.body;
+	const { titel, subTitle, code, price, company, oldPrice, afLink, categorie, date, time } = req.body;
 
 	const myCompany = await Company.findOne({ name: company });
 
@@ -12,7 +12,7 @@ module.exports.createDeal = async (req, res) => {
 	const cLink = await myCompany?.imgLink;
 
 	try {
-		await Deal.create({ titel, subTitle, imgLink, cLink, date });
+		await Deal.create({ titel, subTitle, imgLink, cLink, date, price, oldPrice, afLink, time });
 		res.status(200).json({ status: `deal_created` });
 	} catch (err) {
 		handleError(err, res);
@@ -49,6 +49,18 @@ module.exports.getDeal = async (req, res) => {
 	if (conditions.titel) {
 		conditions.titel = { $regex: conditions.titel, $options: 'i' };
 	}
+
+	console.log('conditions ');
+	console.log(conditions);
+
+	if (conditions.date) {
+		conditions.date = {
+			$lt: conditions.date,
+		};
+	}
+
+	console.log('conditions ');
+	console.log(conditions);
 
 	if (max) maxAmount = max;
 

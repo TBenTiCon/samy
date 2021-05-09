@@ -6,7 +6,6 @@ const { hashPassword } = require('../middleware/hashingPw');
 const { sanitize } = require('../middleware/preventInjection');
 
 const bcrypt = require('bcrypt');
-const { handleError } = require('../middleware/errorHandler');
 
 const userSchema = new Schema(
 	{
