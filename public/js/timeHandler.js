@@ -1,12 +1,7 @@
 const convertTimeToDays = (date) => {
 	const year = date.getFullYear() * 365;
 
-	console.log('date: ' + date);
-
 	var day = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-
-	console.log('day: ' + day);
-	console.log('year: ' + year);
 
 	const moment = year + day;
 	return moment;
@@ -34,7 +29,7 @@ const convertToTime = (time) => {
 
 	const hours = Math.floor(timeInHours);
 	var minutes = timeInHours - Math.floor(timeInHours);
-	minutes = minutes * 60;
+	minutes = Math.round((minutes * 60 + Number.EPSILON) * 100) / 100;
 
 	if (minutes === 0) {
 		minutes = '00';
@@ -49,10 +44,8 @@ const convertToMinutes = (time) => {
 	const times = time.split(':');
 
 	const hInMin = parseInt(times[0]) * 60;
-	console.log('hInMin: ' + hInMin);
 
 	const timeInMin = hInMin + parseInt(times[1]);
-	console.log('timeInMin: ' + timeInMin);
 
 	return timeInMin;
 };
