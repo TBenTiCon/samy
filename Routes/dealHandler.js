@@ -12,20 +12,21 @@ Router.get('/deal/get', (req, res) => {
 	res.render('deals');
 });
 Router.post('/deal/get', controller.getDeal);
+Router.post('/company/get', controller.getCompany);
 
 Router.use(retrieveTokenInfo, (req, res, next) => {
 	gAuth.authPath(req, res, next, '*');
 });
 
 Router.get('/company/create', (req, res) => {
-	res.render('createCompany');
+	res.render('create');
 });
 
 Router.post('/company/create', upload.single('img'), controller.createCompany);
 Router.post('/company/delete', controller.delCompany);
 
 Router.get('/deal/create', (req, res) => {
-	res.render('createDeal');
+	res.render('list');
 });
 
 Router.post('/deal/create', upload.single('img'), controller.createDeal);

@@ -23,5 +23,7 @@ const multiPartFetch = async (data, url) => {
 		body: data,
 	};
 
-	await fetch(url, options);
+	const res = await fetch(url, options);
+
+	return res.json();
 };

@@ -3,7 +3,8 @@ const Company = require('../model/Company');
 const { handleError } = require('../middleware/errorHandler');
 
 module.exports.createDeal = async (req, res) => {
-	const { titel, subTitle, code, price, company, oldPrice, afLink, categorie, date, time } = req.body;
+	const { titel, subTitle, code, price, company, oldPrice, afLink, categorie, date, time, down, down_time } =
+		req.body;
 
 	const myCompany = await Company.findOne({ name: company });
 
@@ -12,7 +13,21 @@ module.exports.createDeal = async (req, res) => {
 	const cLink = await myCompany?.imgLink;
 
 	try {
-		await Deal.create({ titel, subTitle, imgLink, cLink, date, price, oldPrice, afLink, time });
+		await Deal.create({
+			titel,
+			subTitle,
+			imgLink,
+			cLink,
+			code,
+			down,
+			down_time,
+			categorie,
+			date,
+			price,
+			oldPrice,
+			afLink,
+			time,
+		});
 		res.status(200).json({ status: `deal_created` });
 	} catch (err) {
 		handleError(err, res);
@@ -36,12 +51,15 @@ module.exports.delDeal = async (req, res) => {
 module.exports.getDeal = async (req, res) => {
 	const max = req.query.max;
 
+	let admin = false;
+	if (req.query.admin) admin = req.query.admin;
+
 	let maxAmount = 10;
 
 	var conditions = {};
 
 	for (var key in req.query) {
-		if (req.query.hasOwnProperty(key) && key !== 'max') {
+		if (req.query.hasOwnProperty(key) && key !== 'max' && key !== 'admin') {
 			conditions[key] = req.query[key];
 		}
 	}
@@ -50,13 +68,14 @@ module.exports.getDeal = async (req, res) => {
 		conditions.titel = { $regex: conditions.titel, $options: 'i' };
 	}
 
-	console.log('conditions ');
-	console.log(conditions);
-
 	if (conditions.date) {
 		conditions.date = {
 			$lt: conditions.date,
 		};
+	}
+
+	if (admin && conditions.date) {
+		delete conditions.date;
 	}
 
 	console.log('conditions ');
@@ -65,13 +84,17 @@ module.exports.getDeal = async (req, res) => {
 	if (max) maxAmount = max;
 
 	try {
-		if (Object.keys(conditions).length === 0) {
+		/* if (Object.keys(conditions).length === 0) {
 			throw Error('No Params given');
+		} */
+
+		if (conditions != {}) {
+			const deals = await Deal.find(conditions).limit(maxAmount);
+			res.status(200).json({ status: deals });
+		} else {
+			const deals = await Deal.find().limit(maxAmount);
+			res.status(200).json({ status: deals });
 		}
-
-		const deals = await Deal.find(conditions).limit(maxAmount);
-
-		res.status(200).json({ status: deals });
 	} catch (err) {
 		handleError(err, res);
 	}
@@ -104,6 +127,26 @@ module.exports.delCompany = async (req, res) => {
 		await Company.deleteOne({ _id: id });
 
 		res.status(200).json({ status: `company_deleted` });
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
+module.exports.getCompany = async (req, res) => {
+	const max = req.query.max;
+
+	let maxAmount = 10;
+
+	if (max) maxAmount = max;
+
+	try {
+		if (req.query.name === 'undefined') {
+			const companys = await Company.find().limit(maxAmount);
+			res.status(200).json({ status: companys });
+		} else {
+			const companys = await Company.find({ name: { $regex: req.query.name, $options: 'i' } }).limit(maxAmount);
+			res.status(200).json({ status: companys });
+		}
 	} catch (err) {
 		handleError(err, res);
 	}

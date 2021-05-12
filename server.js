@@ -18,7 +18,11 @@ app.use(cookieParser());
 
 app.disable('etag');
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
+
+app.use('/', express.static(__dirname + '/public'));
+app.use('/deal', express.static(__dirname + '/public'));
+app.use('/company', express.static(__dirname + '/public'));
 
 const dbURI = 'mongodb+srv://dbUser:bfB1bnblRU01CmW2@cluster0.hkj6q.mongodb.net/sjMain?retryWrites=true&w=majority';
 

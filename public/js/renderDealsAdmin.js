@@ -4,6 +4,7 @@ const searchForm = document.querySelector('#search_form');
 const heading4 = document.querySelector('.heading-4');
 const catWrapper = document.querySelector('.cat-wrapper');
 const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
+const selectCompany = document.querySelector('#company');
 
 const renderDeals = (dealsArray) => {
 	dealWrapper.innerHTML = '';
@@ -58,9 +59,8 @@ const renderDeals = (dealsArray) => {
 										<h4 class="oldprice">${deal.oldPrice} €</h4>
 										<h4 class="percentcalc">(-${Math.round(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100))}%)</h4>
 									</div>
-									<div class="todealbtn">
-										<h4 class="heading-8">Zum Deal</h4>
-										<div class="div-block-11"></div>
+									<div class="deletedealbtn" data-_id=${deal._id}>
+										<h4 class="heading-8">Löschen</h4>
 									</div>
 								</div>
 							</div>
@@ -78,19 +78,52 @@ const renderDeals = (dealsArray) => {
 							</div>
 						</div>
 						<div class="todealbtn mobile">
-							<h4 class="heading-8"><a href=${deal.afLink}>Zum Deal</a></h4>
+							<h4 class="heading-8">Zum Deal</h4>
 							<div class="div-block-11"></div>
 						</div>
 					</div>
 				</div> `;
 		});
 	}
+
+	const deletedealbtn = document.getElementsByClassName('deletedealbtn');
+
+	const delBtnArray = Array.from(deletedealbtn);
+
+	delBtnArray.forEach((el) => {
+		el.addEventListener('click', (e) => {
+			console.log(e.target);
+			if (e.target?.className === 'deletedealbtn') {
+				postFetchData({}, `http://localhost:3250/deal/delete?id=${e.target.dataset._id}`);
+			}
+			if (e.target?.className === 'heading-8') {
+				const parent = e.target.parentElement;
+				postFetchData({}, `http://localhost:3250/deal/delete?id=${parent.dataset._id}`);
+			}
+		});
+	});
 };
 
 window.onload = () => {
 	const now = convertTimeToDays(new Date());
-	searchDeal(undefined, undefined, undefined, now).then((deals) => {
+	addCompanySelection();
+	searchDeal(undefined, undefined, undefined, now, true).then((deals) => {
 		renderDeals(deals);
+	});
+};
+
+const addCompanySelection = () => {
+	searchCompany(undefined).then((companys) => {
+		console.log(companys);
+		selectCompany.innerHTML = '<option value="">Anbieter Auswählen</option>';
+
+		companys.status.forEach((c) => {
+			selectCompany.innerHTML += `
+			
+				<option value=${c.name}>${c.name}</option>
+			
+			`;
+		});
 	});
 };
 
@@ -102,9 +135,7 @@ searchForm.addEventListener('submit', (e) => {
 		key = undefined;
 	}
 
-	heading4.innerHTML = `Ergebnisse für <strong>${key ? searchBar.value : 'alle'}</strong>`;
-
-	searchDeal(undefined, undefined, key ? searchBar.value : undefined, key ? undefined : now).then((deals) => {
+	searchDeal(undefined, undefined, key ? searchBar.value : undefined, key ? undefined : now, true).then((deals) => {
 		renderDeals(deals);
 	});
 });
@@ -123,12 +154,12 @@ const searchCat = (e) => {
 		let key = parent.querySelector('h5');
 		const now = convertTimeToDays(new Date());
 
-		heading4.innerHTML = `Ergebnisse für <strong>${key.textContent}</strong>`;
-
 		if (key.textContent === 'Alle') key = undefined;
 
-		searchDeal(key ? key.textContent : undefined, undefined, undefined, key ? undefined : now).then((deals) => {
-			renderDeals(deals);
-		});
+		searchDeal(key ? key.textContent : undefined, undefined, undefined, key ? undefined : now, true).then(
+			(deals) => {
+				renderDeals(deals);
+			}
+		);
 	}
 };

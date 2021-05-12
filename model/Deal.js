@@ -20,8 +20,10 @@ const dealSchema = new Schema(
 		categorie: String,
 		time: Number,
 		date: Number,
-		likes: Number,
-		dislikes: Number,
+		down: Number,
+		down_time: Number,
+		likes: { type: Number, default: '0' },
+		dislikes: { type: Number, default: '0' },
 	},
 	{ timestamps: true }
 );
