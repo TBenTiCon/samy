@@ -48,6 +48,36 @@ module.exports.delDeal = async (req, res) => {
 	}
 };
 
+module.exports.addLike = async (req, res) => {
+	const id = req.query.id;
+
+	try {
+		const deal = await Deal.findOne({ _id: id });
+
+		deal.likes += 1;
+		deal.save();
+
+		res.status(200).json({ status: `like_added` });
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
+module.exports.addDislike = async (req, res) => {
+	const id = req.query.id;
+
+	try {
+		const deal = await Deal.findOne({ _id: id });
+
+		deal.dislikes += 1;
+		deal.save();
+
+		res.status(200).json({ status: `dislike_added` });
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
 module.exports.getDeal = async (req, res) => {
 	const max = req.query.max;
 

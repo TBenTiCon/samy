@@ -16,6 +16,8 @@ const renderDeals = (dealsArray) => {
 		dealsArray.status.map((deal) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
 
+			console.log(deal._id);
+
 			dealWrapper.innerHTML += `
             <div class="result-item">
 					<div class="div-block-12">
@@ -41,14 +43,16 @@ const renderDeals = (dealsArray) => {
 										alt=""
 										class="result_company"
 									/>
-									<div class="result-meta">
+									<div class="result-meta" data-interacted="false">
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.likes}</h5>
-											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" />
+											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
 										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.dislikes}</h5>
-											<img src="/images/dislike.svg" loading="lazy" alt="" class="dislike_img" />
+											<img src="/images/dislike.svg" loading="lazy" alt="" class="dislike_img" data-_id="${
+												deal._id
+											}" data-interacted="false"/>
 										</div>
 									</div>
 								</div>
@@ -59,7 +63,7 @@ const renderDeals = (dealsArray) => {
 										<h4 class="percentcalc">(-${Math.round(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100))}%)</h4>
 									</div>
 									<div class="todealbtn">
-										<h4 class="heading-8">Zum Deal</h4>
+										<h4 class="heading-8"><a href="${deal.afLink}" style="text-decoration: none; color:white">Zum Deal</a></h4>
 										<div class="div-block-11"></div>
 									</div>
 								</div>
@@ -67,24 +71,68 @@ const renderDeals = (dealsArray) => {
 						</div>
 					</div>
 					<div class="div-block-13">
-						<div class="result-meta">
-							<div class="likebtncon">
+						<div class="result-meta" data-interacted="false">
+							<div class="likebtncon" >
 								<h5 class="likeamount">1</h5>
-								<img src="images/like.svg" loading="lazy" alt="" class="like_img" />
+								<img src="images/like.svg" loading="lazy" alt="like button" class="like_img " data-_id="${
+									deal._id
+								}" data-interacted="false"/>
 							</div>
 							<div class="likebtncon">
 								<h5 class="likeamount">1</h5>
-								<img src="images/dislike.svg" loading="lazy" alt="" class="dislike_img" />
+								<img src="images/dislike.svg" loading="lazy" alt="" class="dislike_img" data-_id=${deal._id} data-interacted="false"/>
 							</div>
 						</div>
 						<div class="todealbtn mobile">
-							<h4 class="heading-8"><a href=${deal.afLink}>Zum Deal</a></h4>
+							<h4 class="heading-8"><a href=${deal.afLink} style="text-decoration: none">Zum Deal</a></h4>
 							<div class="div-block-11"></div>
 						</div>
 					</div>
 				</div> `;
 		});
 	}
+
+	const like_img = document.getElementsByClassName('like_img');
+	const likeBtns = Array.from(like_img);
+
+	likeBtns.forEach((el) => {
+		el.addEventListener('click', (e) => {
+			if (e.target?.className === 'like_img') {
+				if (e.target.dataset.interacted === 'false') {
+					if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
+						console.log(e.target);
+						postFetchData({}, `http://localhost:3250/deal/like?id=${e.target.dataset._id}`);
+
+						const likeDisplay = e.target.parentElement.querySelector('h5');
+						likeDisplay.textContent = parseInt(likeDisplay.textContent) + 1;
+
+						e.target.dataset.interacted = 'true';
+						e.target.parentElement.parentElement.dataset.interacted = 'true';
+					}
+				}
+			}
+		});
+	});
+
+	const dislike_img = document.getElementsByClassName('dislike_img');
+	const dislikeBtns = Array.from(dislike_img);
+
+	dislikeBtns.forEach((el) => {
+		el.addEventListener('click', (e) => {
+			if (e.target.dataset.interacted === 'false') {
+				if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
+					console.log(e.target);
+					postFetchData({}, `http://localhost:3250/deal/dislike?id=${e.target.dataset._id}`);
+
+					const likeDisplay = e.target.parentElement.querySelector('h5');
+					likeDisplay.textContent = parseInt(likeDisplay.textContent) + 1;
+
+					e.target.dataset.interacted = 'true';
+					e.target.parentElement.parentElement.dataset.interacted = 'true';
+				}
+			}
+		});
+	});
 };
 
 window.onload = () => {
@@ -104,7 +152,7 @@ searchForm.addEventListener('submit', (e) => {
 
 	heading4.innerHTML = `Ergebnisse für <strong>${key ? searchBar.value : 'alle'}</strong>`;
 
-	searchDeal(undefined, undefined, key ? searchBar.value : undefined, key ? undefined : now).then((deals) => {
+	searchDeal(undefined, undefined, key ? searchBar.value : undefined, now).then((deals) => {
 		renderDeals(deals);
 	});
 });
@@ -127,7 +175,7 @@ const searchCat = (e) => {
 
 		if (key.textContent === 'Alle') key = undefined;
 
-		searchDeal(key ? key.textContent : undefined, undefined, undefined, key ? undefined : now).then((deals) => {
+		searchDeal(key ? key.textContent : undefined, undefined, undefined, now).then((deals) => {
 			renderDeals(deals);
 		});
 	}

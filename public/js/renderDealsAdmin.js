@@ -18,7 +18,7 @@ const renderDeals = (dealsArray) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
 
 			dealWrapper.innerHTML += `
-            <div class="result-item">
+            <div class="result-item-admin">
 					<div class="div-block-12">
 						<img src="/${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
 						<div class="result-content">
@@ -45,11 +45,11 @@ const renderDeals = (dealsArray) => {
 									<div class="result-meta">
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.likes}</h5>
-											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" />
+											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id=${deal._id}/>
 										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.dislikes}</h5>
-											<img src="/images/dislike.svg" loading="lazy" alt="" class="dislike_img" />
+											<img src="/images/dislike.svg" loading="lazy" alt="" class="dislike_img" data-_id=${deal._id}/>
 										</div>
 									</div>
 								</div>

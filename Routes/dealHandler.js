@@ -14,6 +14,9 @@ Router.get('/deal/get', (req, res) => {
 Router.post('/deal/get', controller.getDeal);
 Router.post('/company/get', controller.getCompany);
 
+Router.post('/deal/like', controller.addLike);
+Router.post('/deal/dislike', controller.addDislike);
+
 Router.use(retrieveTokenInfo, (req, res, next) => {
 	gAuth.authPath(req, res, next, '*');
 });

@@ -389,9 +389,9 @@
 .result-item {
   display: block;
   width: 350px;
-  height: 500px;
+  height: 450px;
   max-width: 350px;
-  min-height: 500px;
+  min-height: 450px;
   min-width: 350px;
   margin-right: 0px;
   margin-bottom: 60px;
@@ -1156,6 +1156,31 @@
   background-color: #fff;
 }
 
+.result-item-admin {
+  display: block;
+  width: 350px;
+  height: 500px;
+  max-width: 350px;
+  min-height: 500px;
+  min-width: 350px;
+  margin-right: 0px;
+  margin-bottom: 60px;
+  margin-left: 0px;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  -ms-grid-row-align: auto;
+  align-self: auto;
+  -webkit-box-ordinal-group: 1;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background-color: #fff;
+}
+
 @media screen and (max-width: 991px) {
   .outer-wrapper.hero {
     margin-right: 60px;
@@ -1307,6 +1332,21 @@
     -ms-flex-align: center;
     align-items: center;
   }
+
+  .result-item-admin {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 350px;
+    max-width: 100%;
+    min-height: 450px;
+    min-width: 350px;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -1326,6 +1366,14 @@
   }
 
   .company-item {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .result-item-admin {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
@@ -1907,6 +1955,23 @@
   }
 
   .company-item {
+    width: 100%;
+    height: 375px;
+    min-height: 0px;
+    min-width: 250px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    padding: 10px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+  }
+
+  .result-item-admin {
     width: 100%;
     height: 375px;
     min-height: 0px;
