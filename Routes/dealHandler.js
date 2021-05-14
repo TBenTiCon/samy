@@ -29,6 +29,7 @@ Router.post('/company/create', upload.single('img'), controller.createCompany);
 Router.post('/company/delete', controller.delCompany);
 
 Router.get('/deal/create', (req, res) => {
+	/* res.setHeader('Content-Security-Policy', "script-src 'self' https://apis.google.com"); */
 	res.render('list');
 });
 

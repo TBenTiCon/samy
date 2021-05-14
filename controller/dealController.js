@@ -3,10 +3,26 @@ const Company = require('../model/Company');
 const { handleError } = require('../middleware/errorHandler');
 
 module.exports.createDeal = async (req, res) => {
-	const { titel, subTitle, code, price, company, oldPrice, afLink, categorie, date, time, down, down_time } =
-		req.body;
+	const {
+		titel,
+		subTitle,
+		code,
+		price,
+		company,
+		oldPrice,
+		afLink,
+		categorie,
+		date,
+		time,
+		down,
+		down_time,
+		access_token,
+	} = req.body;
 
 	const myCompany = await Company.findOne({ name: company });
+
+	console.log('access_token: ');
+	console.log(access_token);
 
 	const imgLink = req.file.path.slice(7);
 

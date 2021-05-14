@@ -1,7 +1,6 @@
 const dealWrapper = document.querySelector('.result-wrapper');
 const searchBar = document.querySelector('.dealsearchbar');
 const searchForm = document.querySelector('#search_form');
-const heading4 = document.querySelector('.heading-4');
 const catWrapper = document.querySelector('.cat-wrapper');
 const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
 const selectCompany = document.querySelector('#company');

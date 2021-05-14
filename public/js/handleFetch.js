@@ -9,12 +9,26 @@ const postFetchData = async (data, url) => {
 	return response.json();
 };
 
+const postFB = async (data, url) => {
+	const response = await fetch(url, {
+		method: 'POST',
+	});
+
+	return response.json();
+};
+
 const getFetchData = async (url) => {
 	await fetch(url, {
 		method: 'GET',
-		credentials: 'include',
-		headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + getCookie('jwt') },
 	});
+};
+
+const getFB = async (url) => {
+	const response = await fetch(url, {
+		method: 'GET',
+	});
+
+	return response.json();
 };
 
 const multiPartFetch = async (data, url) => {

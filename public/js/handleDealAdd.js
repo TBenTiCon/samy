@@ -1,5 +1,6 @@
 const form = document.querySelector('#dealForm');
-const btn = document.querySelector('.addDealBtn');
+const btn = document.querySelector('#addDealBtn');
+let access_token = '';
 
 form.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -14,6 +15,8 @@ form.addEventListener('submit', (e) => {
 	formData.set('date', date);
 	formData.set('time', time);
 
+	formData.set('access_token', access_token);
+
 	formData.set('down', convertTimeToDays(new Date(form.down.value)));
 	formData.set('down_time', convertToMinutes(form.down_time.value));
 
@@ -21,8 +24,22 @@ form.addEventListener('submit', (e) => {
 		console.log(pair[0] + ', ' + pair[1]);
 	}
 
-	multiPartFetch(formData, 'http://localhost:3250/deal/create').then((data) => {
-		console.log('success');
-		btn.value = 'Deal Erstellt';
-	});
+	multiPartFetch(formData, 'https://localhost:3250/deal/create')
+		.then((data) => {
+			console.log('success');
+			btn.value = 'Deal Erstellt';
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
+
+function checkLoginState() {
+	FB.getLoginStatus(function (response) {
+		if (response.status === 'connected') {
+			access_token = response.authResponse.accessToken;
+
+			console.log(access_token);
+		}
+	});
+}
