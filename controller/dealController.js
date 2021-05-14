@@ -46,7 +46,9 @@ module.exports.createDeal = async (req, res) => {
 
 		//Create Photo post
 		const res3 = await fetch(
-			`https://graph.facebook.com/105151565090283/photos?url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&access_token=${page_access_token}&caption=${'Just another Photo'}`,
+			`https://graph.facebook.com/105151565090283/photos?url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&access_token=${page_access_token}&caption=${`* Deal des Tages *: \r\n\r\n ${titel} \r\n ${subTitle} \r\n\r\n **${price}EUR** statt ${oldPrice}EUR \r\n\r\n ${Math.round(
+				100 - parseFloat(price) / (parseFloat(oldPrice) / 100)
+			)}% Rabatt \r\n\r\n ${afLink}`}`,
 			{ method: 'POST' }
 		);
 

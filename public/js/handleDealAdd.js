@@ -13,6 +13,7 @@ form.addEventListener('submit', (e) => {
 	var time = convertToMinutes(form.time.value);
 
 	formData.set('date', date);
+
 	formData.set('time', time);
 
 	formData.set('access_token', access_token);

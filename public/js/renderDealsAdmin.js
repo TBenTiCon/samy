@@ -17,7 +17,7 @@ const renderDeals = (dealsArray) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
 
 			dealWrapper.innerHTML += `
-            <div class="result-item-admin">
+            <div class="result-item-admin" style="max-width: 350px">
 					<div class="div-block-12">
 						<img src="/${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
 						<div class="result-content">
