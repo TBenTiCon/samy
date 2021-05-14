@@ -39,7 +39,23 @@ function checkLoginState() {
 		if (response.status === 'connected') {
 			access_token = response.authResponse.accessToken;
 
-			console.log(access_token);
+			//handleFBPost();
 		}
 	});
 }
+
+const handleFBPost = async () => {
+	const res = await getFB(
+		`https://graph.facebook.com/105151565090283?fields=access_token&access_token=${access_token}`
+	);
+
+	const data = await res;
+	console.log(data);
+
+	const res2 = await fetch(
+		`https://graph.facebook.com/105151565090283/feed?message=Hello Fans!&access_token=${data.access_token}`,
+		{ method: 'POST' }
+	);
+
+	console.log(res2);
+};

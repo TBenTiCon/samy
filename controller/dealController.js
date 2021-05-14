@@ -1,6 +1,7 @@
 const Deal = require('../model/Deal');
 const Company = require('../model/Company');
 const { handleError } = require('../middleware/errorHandler');
+const fetch = require('node-fetch');
 
 module.exports.createDeal = async (req, res) => {
 	const {
@@ -17,14 +18,40 @@ module.exports.createDeal = async (req, res) => {
 		down,
 		down_time,
 		access_token,
+		Facebook,
 	} = req.body;
 
 	const myCompany = await Company.findOne({ name: company });
 
-	console.log('access_token: ');
-	console.log(access_token);
-
 	const imgLink = req.file.path.slice(7);
+
+	//check for Facebook
+	if (Facebook === 'on') {
+		console.log('access_token: ');
+		console.log(access_token);
+
+		//get Page Access
+		const res = await fetch(
+			`https://graph.facebook.com/105151565090283?fields=access_token&access_token=${access_token}`
+		);
+
+		const data = await res.json();
+
+		const page_access_token = data.access_token;
+
+		console.log('page_access_token:');
+		console.log(page_access_token);
+
+		console.log(imgLink);
+
+		//Create Photo post
+		const res3 = await fetch(
+			`https://graph.facebook.com/105151565090283/photos?url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&access_token=${page_access_token}&caption=${'Just another Photo'}`,
+			{ method: 'POST' }
+		);
+
+		console.log(await res3.json());
+	}
 
 	const cLink = await myCompany?.imgLink;
 
