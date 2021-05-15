@@ -86,7 +86,7 @@ module.exports.createDeal = async (req, res) => {
 	const imgLink = req.file.path.slice(7);
 
 	//check for Facebook
-	if (Facebook === 'on') {
+	if (Facebook === 'on' && access_token) {
 		await PostToSocialMedia(req);
 	}
 
