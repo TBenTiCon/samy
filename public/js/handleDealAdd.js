@@ -46,17 +46,29 @@ function checkLoginState() {
 }
 
 const handleFBPost = async () => {
-	const res = await getFB(
-		`https://graph.facebook.com/105151565090283?fields=access_token&access_token=${access_token}`
+	const IGKey = await fetch(
+		`https://graph.facebook.com/v10.0/105151565090283?fields=instagram_business_account&access_token=${access_token}`,
+		{
+			method: 'GET',
+		}
 	);
 
-	const data = await res;
-	console.log(data);
+	const Key = await IGKey.json();
 
-	const res2 = await fetch(
-		`https://graph.facebook.com/105151565090283/feed?message=Hello Fans!&access_token=${data.access_token}`,
+	const uploadIG = await fetch(
+		`https://graph.facebook.com/${Key.instagram_business_account?.id}/media?image_url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&caption="Hello WorldText"&access_token=${access_token}`,
 		{ method: 'POST' }
 	);
 
-	console.log(res2);
+	const IGPOSTContainer = await uploadIG.json();
+	const PostID = await IGPOSTContainer.id;
+	console.log(PostID);
+
+	//POST IMG
+	const postIG = await fetch(
+		`https://graph.facebook.com/${Key.instagram_business_account?.id}/media_publish?creation_id=${PostID}&access_token=${access_token}`,
+		{ method: 'POST' }
+	);
+
+	console.log(await postIG.json());
 };

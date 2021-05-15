@@ -3,6 +3,66 @@ const Company = require('../model/Company');
 const { handleError } = require('../middleware/errorHandler');
 const fetch = require('node-fetch');
 
+const PostToSocialMedia = async (req) => {
+	const { titel, subTitle, code, price, oldPrice, afLink, access_token } = req.body;
+
+	const imgLink = req.file.path.slice(7);
+	/* 
+		FaceBook Posting 
+	*/
+
+	//get Page Access
+	const fbPageAccess = await fetch(
+		`https://graph.facebook.com/105151565090283?fields=access_token&access_token=${access_token}`
+	);
+
+	const fbPageAccessJSON = await fbPageAccess.json();
+	const page_access_token = fbPageAccessJSON.access_token;
+
+	console.log(imgLink);
+
+	//Create FB_PhotoPost
+	await fetch(
+		`https://graph.facebook.com/105151565090283/photos?url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&access_token=${page_access_token}&caption=${`* Deal des Tages * \r\n\r\n ${titel} \r\n ${subTitle} \r\n\r\n **${price}EUR** statt ${oldPrice}EUR \r\n\r\n ${Math.round(
+			100 - parseFloat(price) / (parseFloat(oldPrice) / 100)
+		)}% Rabatt \r\n\r\n ${code ? 'Code: ' + code : ''} \r\n\r\n ${afLink}`}`,
+		{ method: 'POST' }
+	);
+
+	/* 
+		Instagram Posting 
+	*/
+
+	//get IG access
+	const IGKeyReq = await fetch(
+		`https://graph.facebook.com/v10.0/105151565090283?fields=instagram_business_account&access_token=${access_token}`,
+		{
+			method: 'GET',
+		}
+	);
+
+	const IGKey = await IGKeyReq.json();
+
+	//Upload IMG
+	const uploadIG = await fetch(
+		`https://graph.facebook.com/${
+			IGKey.instagram_business_account?.id
+		}/media?image_url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&access_token=${access_token}&caption=${`\r\n\r\n * Deal des Tages * \r\n\r\n ${titel} \r\n ${subTitle} \r\n\r\n **${price}EUR** statt ${oldPrice}EUR \r\n\r\n ${Math.round(
+			100 - parseFloat(price) / (parseFloat(oldPrice) / 100)
+		)}% Rabatt \r\n\r\n ${code ? 'Code: ' + code : ''} \r\n\r\n ${afLink}`}`,
+		{ method: 'POST' }
+	);
+
+	const IGPOSTContainer = await uploadIG.json();
+	const PostID = await IGPOSTContainer.id;
+
+	//POST IMG
+	await fetch(
+		`https://graph.facebook.com/${IGKey.instagram_business_account?.id}/media_publish?creation_id=${PostID}&access_token=${access_token}`,
+		{ method: 'POST' }
+	);
+};
+
 module.exports.createDeal = async (req, res) => {
 	const {
 		titel,
@@ -27,32 +87,7 @@ module.exports.createDeal = async (req, res) => {
 
 	//check for Facebook
 	if (Facebook === 'on') {
-		console.log('access_token: ');
-		console.log(access_token);
-
-		//get Page Access
-		const res = await fetch(
-			`https://graph.facebook.com/105151565090283?fields=access_token&access_token=${access_token}`
-		);
-
-		const data = await res.json();
-
-		const page_access_token = data.access_token;
-
-		console.log('page_access_token:');
-		console.log(page_access_token);
-
-		console.log(imgLink);
-
-		//Create Photo post
-		const res3 = await fetch(
-			`https://graph.facebook.com/105151565090283/photos?url=https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg&access_token=${page_access_token}&caption=${`* Deal des Tages *: \r\n\r\n ${titel} \r\n ${subTitle} \r\n\r\n **${price}EUR** statt ${oldPrice}EUR \r\n\r\n ${Math.round(
-				100 - parseFloat(price) / (parseFloat(oldPrice) / 100)
-			)}% Rabatt \r\n\r\n ${afLink}`}`,
-			{ method: 'POST' }
-		);
-
-		console.log(await res3.json());
+		await PostToSocialMedia(req);
 	}
 
 	const cLink = await myCompany?.imgLink;
