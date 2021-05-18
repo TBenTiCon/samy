@@ -36,8 +36,8 @@ mongoose
 	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
 		const server = https.createServer({ key: key, cert: cert }, app);
-		server.listen(3250);
-		console.log('listening on port 3250 with db connected');
+		server.listen(3720);
+		console.log('listening on port 3720 with db connected');
 	})
 	.catch((err) => {
 		console.log(err);
@@ -74,14 +74,17 @@ app.use(
 const baseRouter = require('./Routes/base');
 app.use('/', baseRouter);
 
+const newsletter = require('./Routes/newsletter');
+app.use(newsletter);
+
 const cRouter = require('./Routes/auth');
 app.use('/', cRouter);
 
-const pSettings = require('./Routes/pSettings');
-app.use(pSettings);
-
 const dHandler = require('./Routes/dealHandler');
 app.use(dHandler);
+
+const pSettings = require('./Routes/pSettings');
+app.use(pSettings);
 
 app.post('*', (req, res) => {
 	console.log('404!!!!');

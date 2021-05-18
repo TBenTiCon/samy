@@ -138,6 +138,26 @@
 
 .inner-wrapper.create {
   min-width: 750px;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 auto;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+}
+
+.inner-wrapper.create.login {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .searchbar-top {
@@ -233,7 +253,34 @@
   width: 16px;
   height: 16px;
   margin-right: 5px;
-  background-color: #000;
+  background-color: transparent;
+  background-image: url('../images/distributed.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.div-block-3._1 {
+  background-image: url('../images/cpu.png');
+}
+
+.div-block-3._2 {
+  background-image: url('../images/clothes-hanger.png');
+}
+
+.div-block-3._3 {
+  background-image: url('../images/home.png');
+}
+
+.div-block-3._4 {
+  background-image: url('../images/running.png');
+}
+
+.div-block-3._5 {
+  background-image: url('../images/plane.png');
+}
+
+.div-block-3._6 {
+  background-image: url('../images/briefcase.png');
 }
 
 .heading {
@@ -941,6 +988,13 @@
   text-decoration: none;
 }
 
+.navitem.hidden {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .image-6 {
   width: 16px;
   height: 16px;
@@ -1005,9 +1059,20 @@
   display: flex;
 }
 
+.form-3.login {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 .div-block-23 {
   width: 50%;
   margin-right: 25px;
+}
+
+.div-block-23.login {
+  margin-right: 0px;
 }
 
 .div-block-24 {
@@ -1068,6 +1133,10 @@
 
 .heading-11 {
   margin-bottom: 40px;
+}
+
+.heading-11.login {
+  text-align: center;
 }
 
 .heading-12 {
@@ -1181,6 +1250,30 @@
   background-color: #fff;
 }
 
+.image-7 {
+  width: 256px;
+}
+
+.heading-13 {
+  width: 100%;
+  text-align: center;
+}
+
+.heading-14 {
+  text-align: center;
+}
+
+.html-embed {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 991px) {
   .outer-wrapper.hero {
     margin-right: 60px;
@@ -1212,7 +1305,7 @@
     display: -ms-flexbox;
     display: flex;
     width: 350px;
-    max-width: 100%;
+    max-width: 350px;
     min-height: 450px;
     min-width: 350px;
     -webkit-box-align: center;

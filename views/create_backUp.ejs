@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Tue May 18 2021 16:21:48 GMT+0000 (Coordinated Universal Time)  -->
+<!--  Last Published: Wed May 12 2021 14:41:41 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="609969fbe9c2bee20f43011c" data-wf-site="60969041812c1b8249b707b1">
 	<head>
 		<meta charset="utf-8" />
@@ -26,9 +26,27 @@
 		<link href="images/webclip.png" rel="apple-touch-icon" />
 	</head>
 	<body class="body">
-		<%-include("./partials/nav.ejs")%>
+		<div class="navbar">
+			<div class="div-block-22">
+				<a href="#" class="navitem w-inline-block"
+					><img src="images/magnifying-glass.svg" loading="lazy" alt="" class="image-6 search"
+				/></a>
+				<a href="#" class="navitem w-inline-block"
+					><img src="images/building.svg" loading="lazy" alt="" class="image-6"
+				/></a>
+				<a href="#" class="navitem w-inline-block"
+					><img src="images/hinzufugen.svg" loading="lazy" alt="" class="image-6"
+				/></a>
+				<a href="#" class="navitem w-inline-block"
+					><img src="images/gear-option.svg" loading="lazy" alt="" class="image-6 settings"
+				/></a>
+				<a href="#" class="navitem w-inline-block"
+					><img src="images/logout.svg" loading="lazy" alt="" class="image-6 logout"
+				/></a>
+			</div>
+		</div>
 
-		<div class="create_outer-wrapper hero">
+		<div class="create_outer-wrapper hero" style="min-height: 500px!important;">
 			<div class="inner-wrapper create">
 				<h1 class="heading-11">Anbieter Erstellen</h1>
 				<div class="form-block-3 w-form">
@@ -39,7 +57,7 @@
 								class="text-field w-input"
 								maxlength="256"
 								name="name"
-								data-name="Name"
+								data-name="name"
 								placeholder="name"
 								id="name"
 							/><input
@@ -58,6 +76,7 @@
 							/>
 						</div>
 					</form>
+
 				</div>
 			</div>
 		</div>
@@ -81,6 +100,12 @@
 							/>
 						</div>
 					</form>
+					<div class="w-form-done">
+						<div>Thank you! Your submission has been received!</div>
+					</div>
+					<div class="w-form-fail">
+						<div>Oops! Something went wrong while submitting the form.</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -236,7 +261,6 @@
 		<script src="/js/handleFetch.js"></script>
 		<script src="/js/dealSearch.js"></script>
 		<script src="/js/handleCompanyAdd.js"></script>
-
 		<!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 	</body>
 </html>

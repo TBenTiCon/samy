@@ -25,7 +25,7 @@ form.addEventListener('submit', (e) => {
 		console.log(pair[0] + ', ' + pair[1]);
 	}
 
-	multiPartFetch(formData, 'https://localhost:3250/deal/create')
+	multiPartFetch(formData, 'https://localhost:3720/deal/create')
 		.then((data) => {
 			console.log('success');
 			btn.value = 'Deal Erstellt';

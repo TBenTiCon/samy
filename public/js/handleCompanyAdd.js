@@ -8,7 +8,7 @@ form.addEventListener('submit', (e) => {
 
 	const formData = new FormData(form);
 
-	multiPartFetch(formData, 'http://localhost:3250/company/create').then((data) => {
+	multiPartFetch(formData, 'http://localhost:3720/company/create').then((data) => {
 		console.log('success');
 		btn.value = 'Anbieter Erstellt';
 	});
@@ -87,11 +87,11 @@ const renderCompanys = (resultArray) => {
 		el.addEventListener('click', (e) => {
 			console.log(e.target);
 			if (e.target?.className === 'deletedealbtn') {
-				postFetchData({}, `http://localhost:3250/company/delete?id=${e.target.dataset._id}`);
+				postFetchData({}, `http://localhost:3720/company/delete?id=${e.target.dataset._id}`);
 			}
 			if (e.target?.className === 'heading-8') {
 				const parent = e.target.parentElement;
-				postFetchData({}, `http://localhost:3250/company/delete?id=${parent.dataset._id}`);
+				postFetchData({}, `http://localhost:3720/company/delete?id=${parent.dataset._id}`);
 			}
 		});
 	});

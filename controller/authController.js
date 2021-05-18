@@ -86,7 +86,7 @@ module.exports.login_post = async (req, res) => {
 
 		res.cookie('jwt', jwt, { httpOnly: false, maxAge: maxAge * 1000, secure: false, sameSite: false });
 
-		res.status(200).send('Successfull');
+		res.status(200).json({ status: 'successfull' });
 	} catch (err) {
 		handleError(err, res);
 	}

@@ -16,8 +16,6 @@ const renderDeals = (dealsArray) => {
 		dealsArray.status.map((deal) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
 
-			console.log(deal._id);
-
 			dealWrapper.innerHTML += `
             <div class="result-item">
 					<div class="div-block-12">
@@ -44,6 +42,9 @@ const renderDeals = (dealsArray) => {
 										class="result_company"
 									/>
 									<div class="result-meta" data-interacted="false">
+									<div class="html-embed w-embed">
+									<div class="fb-share-button" data-href="https://dealsale.de" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdealsale.de%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>
+										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.likes}</h5>
 											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
@@ -72,6 +73,9 @@ const renderDeals = (dealsArray) => {
 					</div>
 					<div class="div-block-13">
 						<div class="result-meta" data-interacted="false">
+						<div class="html-embed w-embed">
+						<div class="fb-share-button" data-href="https://dealsale.de" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdealsale.de%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>
+										</div>
 							<div class="likebtncon" >
 								<h5 class="likeamount">1</h5>
 								<img src="images/like.svg" loading="lazy" alt="like button" class="like_img " data-_id="${
@@ -101,7 +105,7 @@ const renderDeals = (dealsArray) => {
 				if (e.target.dataset.interacted === 'false') {
 					if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
 						console.log(e.target);
-						postFetchData({}, `http://localhost:3250/deal/like?id=${e.target.dataset._id}`);
+						postFetchData({}, `https://localhost:3720/deal/like?id=${e.target.dataset._id}`);
 
 						const likeDisplay = e.target.parentElement.querySelector('h5');
 						likeDisplay.textContent = parseInt(likeDisplay.textContent) + 1;
@@ -122,7 +126,7 @@ const renderDeals = (dealsArray) => {
 			if (e.target.dataset.interacted === 'false') {
 				if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
 					console.log(e.target);
-					postFetchData({}, `http://localhost:3250/deal/dislike?id=${e.target.dataset._id}`);
+					postFetchData({}, `https://localhost:3720/deal/dislike?id=${e.target.dataset._id}`);
 
 					const likeDisplay = e.target.parentElement.querySelector('h5');
 					likeDisplay.textContent = parseInt(likeDisplay.textContent) + 1;
@@ -179,4 +183,22 @@ const searchCat = (e) => {
 			renderDeals(deals);
 		});
 	}
+};
+
+const nlInputDesktop = document.getElementById('desktop-newsletter-input');
+const nlInputMobile = document.querySelectorAll('#mobile-newsletter-input-3');
+
+const nlBtnDesktop = document.getElementById('nl_btn_desktop');
+const nlBtnMobile = document.querySelectorAll('.nlicon');
+
+console.log(nlBtnDesktop);
+
+nlBtnDesktop.addEventListener('click', (e) => {
+	console.log('click');
+	addEmail(nlInputDesktop.value);
+});
+
+const addEmail = async (email) => {
+	console.log(email);
+	await fetch(`https://localhost:3720/subscribe?email=${email}`, { method: 'POST' });
 };

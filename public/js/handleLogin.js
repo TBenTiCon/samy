@@ -11,7 +11,14 @@ form.addEventListener('submit', (e) => {
 		password,
 	};
 
-	postFetchData(dataObj, 'http://localhost:3250/login').then(() => {
-		window.location.href = '/deal/create';
+	postFetchData(dataObj, 'https://localhost:3720/login').then((data) => {
+		console.log(data);
+
+		if (!data.error) {
+			window.location.href = '/deal/create';
+		} else {
+			document.querySelector('#loginBtn').value = 'Fehler: Email oder Passwort nicht gefunden';
+		}
+		//window.location.href = '/deal/create';
 	});
 });
