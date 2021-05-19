@@ -4,11 +4,10 @@ const searchForm = document.querySelector('#search_form');
 const heading4 = document.querySelector('.heading-4');
 const catWrapper = document.querySelector('.cat-wrapper');
 const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
+const catNav = document.querySelector('.cat_nav');
 
 const renderDeals = (dealsArray) => {
 	dealWrapper.innerHTML = '';
-
-	console.log(dealsArray);
 
 	if (dealsArray.status === undefined || dealsArray.status.length === 0) {
 		dealWrapper.innerHTML = 'Keine Deals gefunden';
@@ -42,8 +41,8 @@ const renderDeals = (dealsArray) => {
 										class="result_company"
 									/>
 									<div class="result-meta" data-interacted="false">
-									<div class="html-embed w-embed">
-									<div class="fb-share-button" data-href="https://dealsale.de" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdealsale.de%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>
+										<div class="html-embed w-embed">
+											<div class="fb-share-button"></div>
 										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.likes}</h5>
@@ -73,9 +72,9 @@ const renderDeals = (dealsArray) => {
 					</div>
 					<div class="div-block-13">
 						<div class="result-meta" data-interacted="false">
-						<div class="html-embed w-embed">
-						<div class="fb-share-button" data-href="https://dealsale.de" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdealsale.de%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>
-										</div>
+							<div class="html-embed w-embed">
+								<div class="fb-share-button"></div>
+							</div>
 							<div class="likebtncon" >
 								<h5 class="likeamount">1</h5>
 								<img src="images/like.svg" loading="lazy" alt="like button" class="like_img " data-_id="${
@@ -95,6 +94,23 @@ const renderDeals = (dealsArray) => {
 				</div> `;
 		});
 	}
+
+	const shareBtn = document.getElementsByClassName('fb-share-button');
+	const shareBtns = Array.from(shareBtn);
+
+	shareBtns.forEach((el) => {
+		el.addEventListener('click', (e) => {
+			if (e.target?.className === 'fb-share-button') {
+				FB.ui(
+					{
+						method: 'share',
+						href: 'https://dealsale.de',
+					},
+					function (response) {}
+				);
+			}
+		});
+	});
 
 	const like_img = document.getElementsByClassName('like_img');
 	const likeBtns = Array.from(like_img);
@@ -169,6 +185,10 @@ mobileCatWrapper.addEventListener('click', (e) => {
 	searchCat(e);
 });
 
+catNav.addEventListener('click', (e) => {
+	searchCat(e);
+});
+
 const searchCat = (e) => {
 	if (e.target.className === 'clickhandler') {
 		const parent = e.target.parentElement;
@@ -190,8 +210,6 @@ const nlInputMobile = document.querySelectorAll('#mobile-newsletter-input-3');
 
 const nlBtnDesktop = document.getElementById('nl_btn_desktop');
 const nlBtnMobile = document.querySelectorAll('.nlicon');
-
-console.log(nlBtnDesktop);
 
 nlBtnDesktop.addEventListener('click', (e) => {
 	console.log('click');

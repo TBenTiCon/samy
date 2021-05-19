@@ -20,7 +20,7 @@ module.exports.sendNewsLetter = async (req, res) => {
 			targets,
 		};
 
-		await fetch(`http://localhost:3626/send`, {
+		await fetch(`http://localhost:3721/send`, {
 			method: 'post',
 			body: JSON.stringify(body),
 			headers: { 'Content-Type': 'application/json' },

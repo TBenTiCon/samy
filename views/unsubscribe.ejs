@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
 <!--  Last Published: Tue May 18 2021 16:21:48 GMT+0000 (Coordinated Universal Time)  -->
-<html data-wf-page="60a3e9481784c35dbbca14cc" data-wf-site="60969041812c1b8249b707b1">
+<html data-wf-page="60a3e89b18978b6a2ad0e692" data-wf-site="60969041812c1b8249b707b1">
 	<head>
 		<meta charset="utf-8" />
-		<title>Newsletter</title>
-		<meta content="Newsletter" property="og:title" />
-		<meta content="Newsletter" property="twitter:title" />
+		<title>unsubscribe</title>
+		<meta content="unsubscribe" property="og:title" />
+		<meta content="unsubscribe" property="twitter:title" />
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 		<meta content="Webflow" name="generator" />
 		<link href="css/normalize.css" rel="stylesheet" type="text/css" />
@@ -26,10 +26,6 @@
 		<link href="images/webclip.png" rel="apple-touch-icon" />
 	</head>
 	<body class="body">
-
-		<%-include("./partials/nav.ejs")%>
-
-		
 		<div class="create_outer-wrapper hero">
 			<div class="inner-wrapper create login">
 				<img
@@ -48,17 +44,24 @@
 				<div class="form-block-3 w-form">
 					<form id="email-form" name="email-form" data-name="Email Form" class="form-3 login">
 						<div class="div-block-23 login">
-							<h1 class="heading-14">Newsletter Senden</h1>
+							<h1 class="heading-13">Abmelden</h1>
 							<input
+								type="text"
+								class="text-field w-input"
+								maxlength="256"
+								name="Email"
+								data-name="Email"
+								placeholder="Email"
+								id="Email"
+							/><input
 								type="submit"
-								value="Jetzt Senden"
+								value="Abmelden"
 								data-wait="Please wait..."
 								class="create_company w-button"
-								id="sendNewsBtn"
+								id="unsubBtn"
 							/>
 						</div>
 					</form>
-
 				</div>
 			</div>
 		</div>
@@ -72,7 +75,7 @@
 
 		<script src="/js/cookieHandler.js"></script>
 		<script src="/js/handleFetch.js"></script>
-		<script src="/js/sendNewsLetter.js"></script>
+		<script src="/js/handleUnsub.js"></script>
 		<!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 	</body>
 </html>

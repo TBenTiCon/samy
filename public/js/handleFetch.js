@@ -9,23 +9,15 @@ const postFetchData = async (data, url) => {
 	return response.json();
 };
 
-const postFB = async (data, url) => {
-	const response = await fetch(url, {
-		method: 'POST',
-	});
-
-	return response.json();
-};
-
 const getFetchData = async (url) => {
 	await fetch(url, {
 		method: 'GET',
 	});
 };
 
-const getFB = async (url) => {
+const delFetchData = async (url) => {
 	const response = await fetch(url, {
-		method: 'GET',
+		method: 'DELETE',
 	});
 
 	return response.json();
