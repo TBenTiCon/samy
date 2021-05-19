@@ -93,11 +93,11 @@ const renderDeals = (dealsArray) => {
 		el.addEventListener('click', (e) => {
 			console.log(e.target);
 			if (e.target?.className === 'deletedealbtn') {
-				postFetchData({}, `http://localhost:3720/deal/delete?id=${e.target.dataset._id}`);
+				postFetchData({}, `deal/delete?id=${e.target.dataset._id}`);
 			}
 			if (e.target?.className === 'heading-8') {
 				const parent = e.target.parentElement;
-				postFetchData({}, `http://localhost:3720/deal/delete?id=${parent.dataset._id}`);
+				postFetchData({}, `deal/delete?id=${parent.dataset._id}`);
 			}
 		});
 	});

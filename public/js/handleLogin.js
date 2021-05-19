@@ -11,7 +11,7 @@ form.addEventListener('submit', (e) => {
 		password,
 	};
 
-	postFetchData(dataObj, 'https://localhost:3720/login').then((data) => {
+	postFetchData(dataObj, 'login').then((data) => {
 		console.log(data);
 
 		if (!data.error) {

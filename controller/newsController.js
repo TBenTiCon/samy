@@ -9,7 +9,8 @@ module.exports.sendNewsLetter = async (req, res) => {
 		const deals = await Deal.find().limit(6);
 
 		deals.forEach((deal) => {
-			deal.imgLink = `https://localhost:3720/${deal.imgLink}`;
+			//deal.imgLink = `https://localhost:3720/${deal.imgLink}`;
+			deal.imgLink = `https://samy.reversedstudios/${deal.imgLink}`;
 		});
 
 		const targets = await newsletter.find();
@@ -20,7 +21,7 @@ module.exports.sendNewsLetter = async (req, res) => {
 			targets,
 		};
 
-		await fetch(`http://localhost:3721/send`, {
+		await fetch(`https://mail.samy.reversedstudios.com/send`, {
 			method: 'post',
 			body: JSON.stringify(body),
 			headers: { 'Content-Type': 'application/json' },

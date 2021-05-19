@@ -3,7 +3,7 @@ const form = document.querySelector('#email-form');
 form.addEventListener('submit', (e) => {
 	e.preventDefault();
 
-	postFetchData({}, `https://localhost:3720/sendMails`).then((data) => {
+	postFetchData({}, `sendMails`).then((data) => {
 		console.log(data);
 
 		if (!data.error) {

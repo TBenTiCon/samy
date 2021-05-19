@@ -121,7 +121,7 @@ const renderDeals = (dealsArray) => {
 				if (e.target.dataset.interacted === 'false') {
 					if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
 						console.log(e.target);
-						postFetchData({}, `https://localhost:3720/deal/like?id=${e.target.dataset._id}`);
+						postFetchData({}, `deal/like?id=${e.target.dataset._id}`);
 
 						const likeDisplay = e.target.parentElement.querySelector('h5');
 						likeDisplay.textContent = parseInt(likeDisplay.textContent) + 1;
@@ -142,7 +142,7 @@ const renderDeals = (dealsArray) => {
 			if (e.target.dataset.interacted === 'false') {
 				if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
 					console.log(e.target);
-					postFetchData({}, `https://localhost:3720/deal/dislike?id=${e.target.dataset._id}`);
+					postFetchData({}, `deal/dislike?id=${e.target.dataset._id}`);
 
 					const likeDisplay = e.target.parentElement.querySelector('h5');
 					likeDisplay.textContent = parseInt(likeDisplay.textContent) + 1;
@@ -218,5 +218,5 @@ nlBtnDesktop.addEventListener('click', (e) => {
 
 const addEmail = async (email) => {
 	console.log(email);
-	await fetch(`https://localhost:3720/subscribe?email=${email}`, { method: 'POST' });
+	await fetch(`subscribe?email=${email}`, { method: 'POST' });
 };

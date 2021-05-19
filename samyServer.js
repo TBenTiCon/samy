@@ -21,8 +21,8 @@ app.use(cookieParser());
 app.disable('etag');
 
 const fs = require('fs');
-const key = fs.readFileSync('./ssl/localhost.key');
-const cert = fs.readFileSync('./ssl/localhost.crt');
+/* const key = fs.readFileSync('./ssl/localhost.key');
+const cert = fs.readFileSync('./ssl/localhost.crt'); */
 
 //app.use(express.static('public'));
 
@@ -35,8 +35,11 @@ const dbURI = 'mongodb+srv://dbUser:bfB1bnblRU01CmW2@cluster0.hkj6q.mongodb.net/
 mongoose
 	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		const server = https.createServer({ key: key, cert: cert }, app);
-		server.listen(3720);
+		/* const server = https.createServer({ key: key, cert: cert }, app);
+		server.listen(3720); */
+
+		app.listen(3720);
+
 		console.log('listening on port 3720 with db connected');
 	})
 	.catch((err) => {

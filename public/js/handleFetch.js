@@ -1,5 +1,8 @@
+//const serverURL = 'https://localhost:3720/';
+const serverURL = 'https://samy.reversedstudios.com/';
+
 const postFetchData = async (data, url) => {
-	const response = await fetch(url, {
+	const response = await fetch(`${serverURL}${url}`, {
 		method: 'POST',
 		credentials: 'include',
 		headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + getCookie('jwt') },
@@ -10,13 +13,13 @@ const postFetchData = async (data, url) => {
 };
 
 const getFetchData = async (url) => {
-	await fetch(url, {
+	await fetch(`${serverURL}${url}`, {
 		method: 'GET',
 	});
 };
 
 const delFetchData = async (url) => {
-	const response = await fetch(url, {
+	const response = await fetch(`${serverURL}${url}`, {
 		method: 'DELETE',
 	});
 
@@ -29,7 +32,7 @@ const multiPartFetch = async (data, url) => {
 		body: data,
 	};
 
-	const res = await fetch(url, options);
+	const res = await fetch(`${serverURL}${url}`, options);
 
 	return res.json();
 };
