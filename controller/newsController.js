@@ -2,7 +2,6 @@ const Deal = require('../model/Deal');
 const fetch = require('node-fetch');
 const newsletter = require('../model/Newsletter');
 const { handleError } = require('../middleware/errorHandler');
-const { json } = require('body-parser');
 
 module.exports.sendNewsLetter = async (req, res) => {
 	try {

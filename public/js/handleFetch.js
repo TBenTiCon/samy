@@ -1,4 +1,4 @@
-//const serverURL = 'https://localhost:3720/';
+//const serverURL = 'http://localhost:3720/';
 const serverURL = 'https://samy.reversedstudios.com/';
 
 const postFetchData = async (data, url) => {

@@ -5,6 +5,7 @@ const heading4 = document.querySelector('.heading-4');
 const catWrapper = document.querySelector('.cat-wrapper');
 const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
 const catNav = document.querySelector('.cat_nav');
+const fCatCon = document.querySelector('.footer_cat_con');
 
 const renderDeals = (dealsArray) => {
 	dealWrapper.innerHTML = '';
@@ -187,6 +188,19 @@ mobileCatWrapper.addEventListener('click', (e) => {
 
 catNav.addEventListener('click', (e) => {
 	searchCat(e);
+});
+
+fCatCon.addEventListener('click', (e) => {
+	if (e.target.className === 'link') {
+		let key = e.target.textContent;
+		const now = convertTimeToDays(new Date());
+
+		heading4.innerHTML = `Ergebnisse für <strong>${key}</strong>`;
+
+		searchDeal(key, undefined, undefined, now).then((deals) => {
+			renderDeals(deals);
+		});
+	}
 });
 
 const searchCat = (e) => {
