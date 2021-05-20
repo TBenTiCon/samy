@@ -15,10 +15,11 @@ const searchDeal = async (cat, id, key, date, admin, max) => {
 
 	if (admin) {
 		url = `${url}&admin=${admin}`;
-		console.log(url);
 	}
 
 	url = `${url}&max=${max}`;
+
+	console.log('url: ' + url);
 
 	const data = await postFetchData({}, url);
 

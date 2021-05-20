@@ -6,6 +6,7 @@ const catWrapper = document.querySelector('.cat-wrapper');
 const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
 const catNav = document.querySelector('.cat_nav');
 const fCatCon = document.querySelector('.footer_cat_con');
+const loadMore = document.getElementById('loadMoreBtn');
 
 let counter = 12;
 let cat = false;
@@ -185,10 +186,12 @@ searchForm.addEventListener('submit', (e) => {
 
 //loadMoreBtn
 
-document.getElementById('loadMoreBtn').addEventListener('submit', (e) => {
+loadMore.addEventListener('click', (e) => {
 	e.preventDefault();
 
 	console.log('clicker');
+
+	let key = false;
 
 	counter += 24;
 
@@ -197,17 +200,21 @@ document.getElementById('loadMoreBtn').addEventListener('submit', (e) => {
 	if (cat) {
 		if (cat === 'Alle') cat === false;
 	} else {
-		let key = searchBar.value;
 		if (key === '') {
+			key = searchBar.value;
 			key = undefined;
 		}
 	}
 
 	heading4.innerHTML = `Ergebnisse für <strong>${key ? searchBar.value : 'alle'}</strong>`;
 
-	searchDeal(cat ? cat : undefined, undefined, key ? searchBar.value : undefined, now, counter).then((deals) => {
-		renderDeals(deals);
-	});
+	console.log('counter:' + counter);
+
+	searchDeal(cat ? cat : undefined, undefined, key ? searchBar.value : undefined, now, undefined, counter).then(
+		(deals) => {
+			renderDeals(deals);
+		}
+	);
 });
 
 catWrapper.addEventListener('click', (e) => {
@@ -230,6 +237,7 @@ fCatCon.addEventListener('click', (e) => {
 		heading4.innerHTML = `Ergebnisse für <strong>${key}</strong>`;
 
 		cat = key;
+		counter = 9;
 
 		searchDeal(key, undefined, undefined, now).then((deals) => {
 			renderDeals(deals);
@@ -251,6 +259,8 @@ const searchCat = (e) => {
 		} else {
 			cat = key.textContent;
 		}
+
+		counter = 9;
 
 		searchDeal(key ? key.textContent : undefined, undefined, undefined, now).then((deals) => {
 			renderDeals(deals);

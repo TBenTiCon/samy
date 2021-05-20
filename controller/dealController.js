@@ -199,7 +199,7 @@ module.exports.getDeal = async (req, res) => {
 	console.log('conditions ');
 	console.log(conditions);
 
-	if (max && max !== 'undefined') maxAmount = max;
+	if (max && max !== 'undefined') maxAmount = Number(max);
 
 	console.log('max: ' + maxAmount);
 
