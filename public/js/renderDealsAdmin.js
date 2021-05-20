@@ -4,6 +4,10 @@ const searchForm = document.querySelector('#search_form');
 const catWrapper = document.querySelector('.cat-wrapper');
 const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
 const selectCompany = document.querySelector('#company');
+const loadMore = document.getElementById('loadMoreBtn');
+
+let counter = 12;
+let cat = false;
 
 const renderDeals = (dealsArray) => {
 	dealWrapper.innerHTML = '';
@@ -153,7 +157,14 @@ const searchCat = (e) => {
 		let key = parent.querySelector('h5');
 		const now = convertTimeToDays(new Date());
 
-		if (key.textContent === 'Alle') key = undefined;
+		if (key.textContent === 'Alle') {
+			key = undefined;
+			cat = false;
+		} else {
+			cat = key.textContent;
+		}
+
+		counter = 9;
 
 		searchDeal(key ? key.textContent : undefined, undefined, undefined, key ? undefined : now, true).then(
 			(deals) => {
@@ -162,3 +173,36 @@ const searchCat = (e) => {
 		);
 	}
 };
+
+/* LoadMore */
+
+//loadMoreBtn
+
+loadMore.addEventListener('click', (e) => {
+	e.preventDefault();
+
+	console.log('clicker');
+
+	let key = false;
+
+	counter += 24;
+
+	const now = convertTimeToDays(new Date());
+
+	if (cat) {
+		if (cat === 'Alle') cat === false;
+	} else {
+		if (key === '') {
+			key = searchBar.value;
+			key = undefined;
+		}
+	}
+
+	console.log('counter:' + counter);
+
+	searchDeal(cat ? cat : undefined, undefined, key ? searchBar.value : undefined, now, undefined, counter).then(
+		(deals) => {
+			renderDeals(deals);
+		}
+	);
+});
