@@ -5,7 +5,7 @@ const { handleError } = require('../middleware/errorHandler');
 
 module.exports.sendNewsLetter = async (req, res) => {
 	try {
-		const deals = await Deal.find().limit(6);
+		const deals = await Deal.find({ newsletter: true }).limit(6);
 
 		deals.forEach((deal) => {
 			//deal.imgLink = `https://localhost:3720/${deal.imgLink}`;

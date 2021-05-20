@@ -24,6 +24,7 @@ const dealSchema = new Schema(
 		down_time: Number,
 		likes: { type: Number, default: '0' },
 		dislikes: { type: Number, default: '0' },
+		newsletter: { type: Boolean, default: 'false' },
 	},
 	{ timestamps: true }
 );

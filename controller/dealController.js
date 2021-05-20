@@ -79,6 +79,7 @@ module.exports.createDeal = async (req, res) => {
 		down_time,
 		access_token,
 		Facebook,
+		Newsletter,
 	} = req.body;
 
 	const myCompany = await Company.findOne({ name: company });
@@ -88,6 +89,12 @@ module.exports.createDeal = async (req, res) => {
 	//check for Facebook
 	if (Facebook === 'on' && access_token) {
 		await PostToSocialMedia(req);
+	}
+
+	let isNewsLetter = false;
+
+	if (Newsletter === 'on') {
+		isNewsLetter = true;
 	}
 
 	const cLink = await myCompany?.imgLink;
@@ -107,6 +114,7 @@ module.exports.createDeal = async (req, res) => {
 			oldPrice,
 			afLink,
 			time,
+			newsletter: isNewsLetter,
 		});
 		res.status(200).json({ status: `deal_created` });
 	} catch (err) {
