@@ -9,7 +9,8 @@ module.exports.sendNewsLetter = async (req, res) => {
 
 		deals.forEach((deal) => {
 			//deal.imgLink = `https://localhost:3720/${deal.imgLink}`;
-			deal.imgLink = `https://samy.reversedstudios/${deal.imgLink}`;
+			deal.imgLink = `https://samy.reversedstudios.com/${deal.imgLink}`;
+			console.log(deal.imgLink);
 		});
 
 		const targets = await newsletter.find();
