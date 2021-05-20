@@ -231,6 +231,14 @@ nlBtnDesktop.addEventListener('click', (e) => {
 });
 
 const addEmail = async (email) => {
+	const status = document.querySelector('.newsletter_status');
+
 	console.log(email);
-	await fetch(`subscribe?email=${email}`, { method: 'POST' });
+	const res = await fetch(`subscribe?email=${email}`, { method: 'POST' });
+
+	if (res.status === 200) {
+		status.textContent = 'Du wurdest erfolgreich angemeldet';
+	} else {
+		status.textContent = '';
+	}
 };

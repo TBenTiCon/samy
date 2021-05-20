@@ -343,6 +343,7 @@
   margin-bottom: 0px;
   color: #fff;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .nl_btn {
@@ -363,6 +364,7 @@
   align-items: center;
   border-radius: 0% 100px 100px 0%;
   background-color: #3bb0be;
+  cursor: pointer;
 }
 
 .heading-3 {
