@@ -7,6 +7,9 @@ const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
 const catNav = document.querySelector('.cat_nav');
 const fCatCon = document.querySelector('.footer_cat_con');
 
+let counter = 12;
+let cat = false;
+
 const renderDeals = (dealsArray) => {
 	dealWrapper.innerHTML = '';
 
@@ -178,6 +181,35 @@ searchForm.addEventListener('submit', (e) => {
 	});
 });
 
+/* LoadMore */
+
+//loadMoreBtn
+
+document.getElementById('loadMoreBtn').addEventListener('submit', (e) => {
+	e.preventDefault();
+
+	console.log('clicker');
+
+	counter += 24;
+
+	const now = convertTimeToDays(new Date());
+
+	if (cat) {
+		if (cat === 'Alle') cat === false;
+	} else {
+		let key = searchBar.value;
+		if (key === '') {
+			key = undefined;
+		}
+	}
+
+	heading4.innerHTML = `Ergebnisse für <strong>${key ? searchBar.value : 'alle'}</strong>`;
+
+	searchDeal(cat ? cat : undefined, undefined, key ? searchBar.value : undefined, now, counter).then((deals) => {
+		renderDeals(deals);
+	});
+});
+
 catWrapper.addEventListener('click', (e) => {
 	searchCat(e);
 });
@@ -197,6 +229,8 @@ fCatCon.addEventListener('click', (e) => {
 
 		heading4.innerHTML = `Ergebnisse für <strong>${key}</strong>`;
 
+		cat = key;
+
 		searchDeal(key, undefined, undefined, now).then((deals) => {
 			renderDeals(deals);
 		});
@@ -211,7 +245,12 @@ const searchCat = (e) => {
 
 		heading4.innerHTML = `Ergebnisse für <strong>${key.textContent}</strong>`;
 
-		if (key.textContent === 'Alle') key = undefined;
+		if (key.textContent === 'Alle') {
+			key = undefined;
+			cat = false;
+		} else {
+			cat = key.textContent;
+		}
 
 		searchDeal(key ? key.textContent : undefined, undefined, undefined, now).then((deals) => {
 			renderDeals(deals);
@@ -226,12 +265,11 @@ const nlBtnDesktop = document.getElementById('nl_btn_desktop');
 const nlBtnMobile = document.querySelectorAll('.nlicon');
 
 nlBtnDesktop.addEventListener('click', (e) => {
-	console.log('click');
 	addEmail(nlInputDesktop.value);
 });
 
 const addEmail = async (email) => {
-	const status = document.querySelector('.newsletter_status');
+	const status = document.getElementById('nlStatusDesktop');
 
 	console.log(email);
 	const res = await fetch(`subscribe?email=${email}`, { method: 'POST' });

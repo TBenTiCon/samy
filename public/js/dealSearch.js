@@ -1,6 +1,6 @@
 const dealContainer = document.querySelector('.dealContainer');
 
-const searchDeal = async (cat, id, key, date, admin) => {
+const searchDeal = async (cat, id, key, date, admin, max) => {
 	let url;
 
 	if (cat) {
@@ -17,6 +17,8 @@ const searchDeal = async (cat, id, key, date, admin) => {
 		url = `${url}&admin=${admin}`;
 		console.log(url);
 	}
+
+	url = `${url}&max=${max}`;
 
 	const data = await postFetchData({}, url);
 

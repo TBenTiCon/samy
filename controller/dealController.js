@@ -172,7 +172,7 @@ module.exports.getDeal = async (req, res) => {
 	let admin = false;
 	if (req.query.admin) admin = req.query.admin;
 
-	let maxAmount = 10;
+	let maxAmount = 12;
 
 	var conditions = {};
 
@@ -199,7 +199,9 @@ module.exports.getDeal = async (req, res) => {
 	console.log('conditions ');
 	console.log(conditions);
 
-	if (max) maxAmount = max;
+	if (max && max !== 'undefined') maxAmount = max;
+
+	console.log('max: ' + maxAmount);
 
 	try {
 		/* if (Object.keys(conditions).length === 0) {
