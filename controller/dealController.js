@@ -223,14 +223,10 @@ module.exports.getDeal = async (req, res) => {
 module.exports.createCompany = async (req, res) => {
 	const { name } = req.body;
 
-	console.log('filePath: ' + req.file.path);
-
-	console.log('name: ' + name);
-
-	const imgLink = req.file.path.slice(7);
-	console.log('imgLink: ' + imgLink);
-
 	try {
+		const imgLink = req.file.path.slice(7);
+		console.log('imgLink: ' + imgLink);
+
 		await Company.create({ name, imgLink });
 		res.status(200).json({ status: `company_created` });
 	} catch (err) {

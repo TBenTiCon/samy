@@ -9,8 +9,12 @@ form.addEventListener('submit', (e) => {
 	const formData = new FormData(form);
 
 	multiPartFetch(formData, 'company/create').then((data) => {
-		console.log('success');
-		btn.value = 'Anbieter Erstellt';
+		if (data.error) {
+			btn.value = data.status;
+		} else {
+			btn.value = 'Anbieter Erstellt';
+			window.location.href = '/company/create';
+		}
 	});
 });
 
@@ -43,8 +47,12 @@ const renderCompanys = (resultArray) => {
 	if (resultArray.status === undefined || resultArray.status.length === 0) {
 		companyWrapper.innerHTML = 'Keine Anbieter gefunden';
 	} else {
+		console.log(resultArray);
+
 		resultArray.status.map((company) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
+
+			console.log(company.imgLink);
 
 			companyWrapper.innerHTML += `
             <div class="company-item">
@@ -53,15 +61,9 @@ const renderCompanys = (resultArray) => {
 							<div class="div-block-6">
 								<div class="div-block-7">
 									<img
-										src=${company.imgLink}
+										src="/${company.imgLink}"
 										loading="lazy"
 										sizes="(max-width: 479px) 100vw, (max-width: 991px) 127.984375px, 164px"
-										srcset="
-											images/DealSale-Logo-p-500.png   500w,
-											images/DealSale-Logo-p-800.png   800w,
-											images/DealSale-Logo-p-1080.png 1080w,
-											images/DealSale-Logo.png        1441w
-										"
 										alt=""
 										class="result_company"
 									/>
@@ -88,10 +90,12 @@ const renderCompanys = (resultArray) => {
 			console.log(e.target);
 			if (e.target?.className === 'deletedealbtn') {
 				postFetchData({}, `company/delete?id=${e.target.dataset._id}`);
+				window.location.href = '/company/create';
 			}
 			if (e.target?.className === 'heading-8') {
 				const parent = e.target.parentElement;
 				postFetchData({}, `company/delete?id=${parent.dataset._id}`);
+				window.location.href = '/company/create';
 			}
 		});
 	});
