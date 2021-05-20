@@ -46,12 +46,15 @@ const renderDeals = (dealsArray) => {
 										class="result_company"
 									/>
 									<div class="result-meta" data-interacted="false">
-										<div class="html-embed w-embed">
-											<div class="fb-share-button"></div>
-										</div>
-										<div class="likebtncon">
-											<h5 class="likeamount">${deal.likes}</h5>
-											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
+										<div class="div-block-28">
+											<div class="html-embed w-embed">
+												<div class="fb-share-button"></div>
+											</div>
+											<div class="sharelink"></div>
+											<div class="likebtncon">
+												<h5 class="likeamount">${deal.likes}</h5>
+												<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
+											</div>
 										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.dislikes}</h5>
