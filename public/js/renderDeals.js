@@ -29,6 +29,7 @@ const renderDeals = (dealsArray) => {
 								<h6 class="result_time">${dayToDate(deal.date)} | ${convertToTime(deal.time)} Uhr</h6>
 								<h4 class="result_heading">${deal.titel}</h4>
 								<h4 class="subheading">${deal.subTitle}</h4>
+								<h4 class="codeline">Gutschein: ${deal.code ? deal.code : 'Nicht benötigt'}</h4>
 							</div>
 							<div class="div-block-6">
 								<div class="div-block-7">
@@ -51,10 +52,10 @@ const renderDeals = (dealsArray) => {
 												<div class="fb-share-button"></div>
 											</div>
 											<div class="sharelink"></div>
-											<div class="likebtncon">
-												<h5 class="likeamount">${deal.likes}</h5>
-												<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
-											</div>
+										</div>
+										<div class="likebtncon">
+											<h5 class="likeamount">${deal.likes}</h5>
+											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
 										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.dislikes}</h5>
@@ -127,7 +128,11 @@ const renderDeals = (dealsArray) => {
 		el.addEventListener('click', (e) => {
 			if (e.target?.className === 'like_img') {
 				if (e.target.dataset.interacted === 'false') {
+					console.log('like');
+
 					if (e.target.parentElement.parentElement.dataset.interacted === 'false') {
+						console.log('like2');
+
 						console.log(e.target);
 						postFetchData({}, `deal/like?id=${e.target.dataset._id}`);
 
