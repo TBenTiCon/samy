@@ -1493,7 +1493,10 @@
   width: 16px;
   height: 16px;
   margin-left: 5px;
-  background-color: #b8b8b8;
+  background-color: transparent;
+  background-image: url('../images/verknupfung.png');
+  background-position: 0px 0px;
+  background-size: cover;
   cursor: pointer;
 }
 
@@ -1533,6 +1536,44 @@
   font-size: 12px;
   font-weight: 400;
   white-space: pre-wrap;
+}
+
+.countdown-container {
+  position: absolute;
+  left: auto;
+  top: 0%;
+  right: 0%;
+  bottom: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30%;
+  height: 7.5%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #3bb0be;
+}
+
+.heading-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0px 2px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-family: Aileron, sans-serif;
+  color: #fff;
+  font-weight: 700;
 }
 
 @media screen and (max-width: 991px) {

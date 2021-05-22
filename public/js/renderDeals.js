@@ -17,12 +17,32 @@ const renderDeals = (dealsArray) => {
 	if (dealsArray.status === undefined || dealsArray.status.length === 0) {
 		dealWrapper.innerHTML = 'Keine Deals gefunden';
 	} else {
+		console.log(dealsArray);
+
 		dealsArray.status.map((deal) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
+
+			let isDownable = false;
+
+			//console.log(convertTimeToDays(new Date()) + '=>' + deal.down);
+
+			if (convertTimeToDays(new Date()) === deal.down) {
+				console.log('downable');
+				isDownable = true;
+				var res = convertToTime(deal.down_time).split('.');
+				console.log(res);
+			}
 
 			dealWrapper.innerHTML += `
             <div class="result-item">
 					<div class="div-block-12">
+						<div class="countdown-container ${isDownable ? 'show' : 'hidden'}" id="I${deal._id}">
+							<h4 class="heading-17 timermin">00</h4>
+							<h4 class="heading-17">:</h4>
+							<h4 class="heading-17 timersec">00</h4>
+							<h4 class="heading-17">:</h4>
+							<h4 class="heading-17 timerSeconds">00</h4>
+						</div>
 						<img src="/${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
 						<div class="result-content">
 							<div>
@@ -101,6 +121,21 @@ const renderDeals = (dealsArray) => {
 						</div>
 					</div>
 				</div> `;
+
+			//setTimer
+
+			if (isDownable) {
+				var res = convertToTime(deal.down_time).split('.');
+
+				const elHour = document.querySelector(`#I${deal._id} .timermin`);
+				const elMin = document.querySelector(`#I${deal._id} .timersec`);
+				const elSec = document.querySelector(`#I${deal._id} .timerSeconds`);
+
+				const timer = new Timer(res[0], res[1], elHour, elMin, elSec);
+
+				console.log(timer);
+				timer.countDown();
+			}
 		});
 	}
 
