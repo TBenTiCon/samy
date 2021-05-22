@@ -20,6 +20,8 @@ const renderDeals = (dealsArray) => {
 		timerArray.forEach((timer) => {
 			timer.stopInterval();
 		});
+
+		timerArray = [];
 	}
 
 	if (dealsArray.status === undefined || dealsArray.status.length === 0) {
