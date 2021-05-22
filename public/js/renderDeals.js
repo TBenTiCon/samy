@@ -11,13 +11,21 @@ const loadMore = document.getElementById('loadMoreBtn');
 let counter = 12;
 let cat = false;
 
+let timerArray = [];
+
 const renderDeals = (dealsArray) => {
 	dealWrapper.innerHTML = '';
+
+	if (timerArray.length > 0) {
+		timerArray.forEach((timer) => {
+			timer.stopInterval();
+		});
+	}
 
 	if (dealsArray.status === undefined || dealsArray.status.length === 0) {
 		dealWrapper.innerHTML = 'Keine Deals gefunden';
 	} else {
-		console.log(dealsArray);
+		//console.log(dealsArray);
 
 		dealsArray.status.map((deal) => {
 			//console.log(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100));
@@ -67,9 +75,9 @@ const renderDeals = (dealsArray) => {
 									<div class="result-meta" data-interacted="false">
 										<div class="div-block-28">
 											<div class="html-embed w-embed">
-												<div class="fb-share-button"></div>
+												<div class="fb-share-button" data-afLink=${deal.afLink}></div>
 											</div>
-											<div class="sharelink"></div>
+											<div class="sharelink" data-afLink=${deal.afLink}></div>
 										</div>
 										<div class="likebtncon">
 											<h5 class="likeamount">${deal.likes}</h5>
@@ -84,9 +92,9 @@ const renderDeals = (dealsArray) => {
 									</div>
 								</div>
 								<div class="div-block-8">
-									<h3 class="deal-price">${deal.price} €</h3>
+									<h3 class="deal-price">${deal.price.replace('.', ',')}€</h3>
 									<div class="div-block-9">
-										<h4 class="oldprice">${deal.oldPrice} €</h4>
+										<h4 class="oldprice">${deal.oldPrice.replace('.', ',')} €</h4>
 										<h4 class="percentcalc">(-${Math.round(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100))}%)</h4>
 									</div>
 									<div class="todealbtn">
@@ -99,8 +107,11 @@ const renderDeals = (dealsArray) => {
 					</div>
 					<div class="div-block-13">
 						<div class="result-meta" data-interacted="false">
-							<div class="html-embed w-embed">
-								<div class="fb-share-button"></div>
+							<div class="div-block-28">
+								<div class="html-embed w-embed">
+									<div class="fb-share-button" data-afLink=${deal.afLink}></div>
+								</div>
+								<div class="sharelink" data-afLink=${deal.afLink}></div>
 							</div>
 							<div class="likebtncon" >
 								<h5 class="likeamount">1</h5>
@@ -124,11 +135,17 @@ const renderDeals = (dealsArray) => {
 
 			if (isDownable) {
 				console.log('timer for ID: ' + deal._id);
-				const timer = new Timer(deal.down_time, deal._id);
+				timerArray.push(new Timer(deal.down_time, deal._id));
 
-				console.log(timer);
-				timer.countDown();
+				console.log(timerArray);
+
+				//console.log(timer);
+				//timer.countDown();
 			}
+		});
+
+		timerArray.forEach((timer) => {
+			timer.countDown();
 		});
 	}
 
@@ -138,10 +155,12 @@ const renderDeals = (dealsArray) => {
 	shareBtns.forEach((el) => {
 		el.addEventListener('click', (e) => {
 			if (e.target?.className === 'fb-share-button') {
+				//console.log(e.target.dataset.aflink);
+
 				FB.ui(
 					{
 						method: 'share',
-						href: 'https://dealsale.de',
+						href: `${e.target.dataset.aflink}`,
 					},
 					function (response) {}
 				);
@@ -191,6 +210,17 @@ const renderDeals = (dealsArray) => {
 					e.target.dataset.interacted = 'true';
 					e.target.parentElement.parentElement.dataset.interacted = 'true';
 				}
+			}
+		});
+	});
+
+	const linkButtons = document.getElementsByClassName('sharelink');
+	const linkBtns = Array.from(linkButtons);
+
+	linkBtns.forEach((el) => {
+		el.addEventListener('click', (e) => {
+			if (e.target?.className === 'sharelink') {
+				copyToClipboard(e.target.dataset.afLink);
 			}
 		});
 	});
@@ -326,3 +356,24 @@ const addEmail = async (email) => {
 		status.textContent = '';
 	}
 };
+
+function copyToClipboard(text) {
+	if (window.clipboardData && window.clipboardData.setData) {
+		// Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+		return window.clipboardData.setData('Text', text);
+	} else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
+		var textarea = document.createElement('textarea');
+		textarea.textContent = text;
+		textarea.style.position = 'fixed'; // Prevent scrolling to bottom of page in Microsoft Edge.
+		document.body.appendChild(textarea);
+		textarea.select();
+		try {
+			return document.execCommand('copy'); // Security exception may be thrown by some browsers.
+		} catch (ex) {
+			console.warn('Copy to clipboard failed.', ex);
+			return false;
+		} finally {
+			document.body.removeChild(textarea);
+		}
+	}
+}

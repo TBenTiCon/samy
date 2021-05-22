@@ -169,13 +169,6 @@
 								placeholder="Gutscheincode"
 								id="code"
 							/>
-							<div class="w-embed">
-								<fb:login-button
-									scope="public_profile,email,instagram_basic,instagram_content_publish,pages_read_engagement,pages_show_list,pages_manage_posts,ads_management,business_management "
-									onlogin="checkLoginState();"
-								>
-								</fb:login-button>
-							</div>
 						</div>
 						<div class="div-block-24">
 							<input
@@ -239,7 +232,13 @@
 									name="Facebook"
 									data-name="Facebook"
 									class="w-checkbox-input checkbox"
-								/><span for="Facebook" class="w-form-label">Facebook/Instagram</span></label
+								/><span for="Facebook" class="w-form-label">Facebook/Instagram</span> 							<div class="w-embed">
+									<fb:login-button
+										scope="public_profile,email,instagram_basic,instagram_content_publish,pages_read_engagement,pages_show_list,pages_manage_posts,ads_management,business_management "
+										onlogin="checkLoginState();"
+									>
+									</fb:login-button>
+								</div></label
 							><label class="w-checkbox"
 							><input
 								type="checkbox"

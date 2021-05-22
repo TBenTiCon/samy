@@ -209,10 +209,10 @@ module.exports.getDeal = async (req, res) => {
 		} */
 
 		if (conditions != {}) {
-			const deals = await Deal.find(conditions).limit(maxAmount);
+			const deals = await Deal.find(conditions).sort({ date: -1, time: -1 }).limit(maxAmount);
 			res.status(200).json({ status: deals });
 		} else {
-			const deals = await Deal.find().limit(maxAmount);
+			const deals = await Deal.find().sort({ date: -1, time: -1 }).limit(maxAmount);
 			res.status(200).json({ status: deals });
 		}
 	} catch (err) {
