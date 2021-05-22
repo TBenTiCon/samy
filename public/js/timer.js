@@ -1,11 +1,13 @@
 class Timer {
-	constructor(h, min, elHour, elMin, elSec) {
-		this.d = new Date();
-		this.currentHour = this.d.getHours();
-		this.currentMinute = this.d.getMinutes();
+	constructor(timeObj, id) {
+		const currentTime = new Date().getHours() * 60 + new Date().getMinutes();
 
-		this.hour = h - this.currentHour;
-		this.minute = min - this.currentMinute;
+		var time = timeObj - currentTime;
+
+		var newTime = convertToTime(time).split('.');
+
+		this.hour = newTime[0];
+		this.minute = newTime[1];
 
 		if (this.minute < 0) {
 			this.minute = 0;
@@ -14,18 +16,15 @@ class Timer {
 			this.hour = 0;
 		}
 
-		this.minute = 0;
-		this.second = this.d.getSeconds();
-		this.elementHour = elHour;
-		this.elementMin = elMin;
-		this.elementSec = elSec;
+		this.second = new Date().getSeconds();
+
+		this.id = id;
 	}
 
 	async countDown() {
 		const countDownInt = await setInterval(() => {
 			if (this.minute === 0 && this.hour === 0 && this.second === 0) {
 				clearInterval(countDownInt);
-				console.log('canceling timer');
 			}
 
 			if (this.second > 0) {
@@ -45,21 +44,21 @@ class Timer {
 			//draw
 
 			if (this.hour < 10) {
-				this.elementHour.textContent = '0' + this.hour;
+				document.querySelector(`#I${this.id} .timermin`).textContent = '0' + this.hour;
 			} else {
-				this.elementHour.textContent = this.hour;
+				document.querySelector(`#I${this.id} .timermin`).textContent = this.hour;
 			}
 
 			if (this.minute < 10) {
-				this.elementMin.textContent = '0' + this.minute;
+				document.querySelector(`#I${this.id} .timersec`).textContent = '0' + this.minute;
 			} else {
-				this.elementMin.textContent = this.minute;
+				document.querySelector(`#I${this.id} .timersec`).textContent = this.minute;
 			}
 
 			if (this.second < 10) {
-				this.elementSec.textContent = '0' + this.second;
+				document.querySelector(`#I${this.id} .timerSeconds`).textContent = '0' + this.second;
 			} else {
-				this.elementSec.textContent = this.second;
+				document.querySelector(`#I${this.id} .timerSeconds`).textContent = this.second;
 			}
 		}, 1000);
 	}

@@ -29,8 +29,6 @@ const renderDeals = (dealsArray) => {
 			if (convertTimeToDays(new Date()) === deal.down) {
 				console.log('downable');
 				isDownable = true;
-				var res = convertToTime(deal.down_time).split('.');
-				console.log(res);
 			}
 
 			dealWrapper.innerHTML += `
@@ -125,13 +123,8 @@ const renderDeals = (dealsArray) => {
 			//setTimer
 
 			if (isDownable) {
-				var res = convertToTime(deal.down_time).split('.');
-
-				const elHour = document.querySelector(`#I${deal._id} .timermin`);
-				const elMin = document.querySelector(`#I${deal._id} .timersec`);
-				const elSec = document.querySelector(`#I${deal._id} .timerSeconds`);
-
-				const timer = new Timer(res[0], res[1], elHour, elMin, elSec);
+				console.log('timer for ID: ' + deal._id);
+				const timer = new Timer(deal.down_time, deal._id);
 
 				console.log(timer);
 				timer.countDown();

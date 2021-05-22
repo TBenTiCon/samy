@@ -41,6 +41,8 @@ const convertToTime = (time) => {
 };
 
 const convertToMinutes = (time) => {
+	console.log(time);
+
 	const times = time.split(':');
 
 	const hInMin = parseInt(times[0]) * 60;
