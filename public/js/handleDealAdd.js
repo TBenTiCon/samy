@@ -92,7 +92,7 @@ form.addEventListener('submit', (e) => {
 		multiPartFetch(formData, 'deal/create')
 			.then((data) => {
 				//console.log('success');
-				//window.location.href = '/deal/create';
+				window.location.href = '/deal/create';
 			})
 			.catch((err) => {
 				console.log(err);
