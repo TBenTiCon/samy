@@ -85,6 +85,7 @@ const updateDeal = async (req, res, id, data) => {
 		if (afLink) deal.afLink = afLink;
 		if (categorie) deal.categorie = categorie;
 		if (date && typeof date === 'string' && date !== 'NaN') deal.date = date;
+		if (date && typeof date === 'string') deal.view_date = await dayToDate(date);
 		if (time && typeof time === 'string' && time !== 'NaN') deal.time = time;
 		if (down && typeof down === 'string' && down !== 'NaN') deal.down = down;
 		if (down_time && typeof down_time === 'string' && down_time !== 'NaN') deal.down_time = down_time;
@@ -153,6 +154,7 @@ module.exports.createDeal = async (req, res) => {
 				afLink,
 				time,
 				newsletter: isNewsLetter,
+				view_date: await dayToDate(date),
 			});
 			res.status(200).json({ status: `deal_created` });
 		} catch (err) {
@@ -316,4 +318,17 @@ module.exports.getCompany = async (req, res) => {
 	} catch (err) {
 		handleError(err, res);
 	}
+};
+
+const dayToDate = async (days) => {
+	const timeInYears = days / 365;
+	const year = Math.floor(timeInYears);
+	var day = timeInYears - Math.floor(timeInYears);
+	day = day * 365;
+	day = Math.round(day);
+
+	const date = new Date(year, 0, 0);
+	date.setDate(date.getDate() + day);
+
+	return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
 };

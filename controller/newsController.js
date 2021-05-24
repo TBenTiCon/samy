@@ -5,12 +5,11 @@ const { handleError } = require('../middleware/errorHandler');
 
 module.exports.sendNewsLetter = async (req, res) => {
 	try {
-		const deals = await Deal.find({ newsletter: true }).limit(6);
+		const deals = await Deal.find({ newsletter: true }).limit(16);
 
-		deals.forEach((deal) => {
-			//deal.imgLink = `https://localhost:3720/${deal.imgLink}`;
-			deal.imgLink = `https://samy.reversedstudios.com/${deal.imgLink}`;
-			console.log(deal.imgLink);
+		deals.forEach(async (deal) => {
+			deal.imgLink = `http://localhost:3720/${deal.imgLink}`;
+			//deal.imgLink = `https://samy.reversedstudios.com/${deal.imgLink}`;
 		});
 
 		const targets = await newsletter.find();
@@ -21,7 +20,7 @@ module.exports.sendNewsLetter = async (req, res) => {
 			targets,
 		};
 
-		await fetch(`https://mail.samy.reversedstudios.com/send`, {
+		await fetch(`http://localhost:3721/send`, {
 			method: 'post',
 			body: JSON.stringify(body),
 			headers: { 'Content-Type': 'application/json' },

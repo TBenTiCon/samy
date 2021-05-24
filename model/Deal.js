@@ -20,6 +20,7 @@ const dealSchema = new Schema(
 		categorie: String,
 		time: Number,
 		date: Number,
+		view_date: String,
 		down: Number,
 		down_time: Number,
 		likes: { type: Number, default: '0' },
