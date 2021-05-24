@@ -12,6 +12,7 @@ Router.get('/deal/get', (req, res) => {
 	res.render('deals');
 });
 Router.post('/deal/get', controller.getDeal);
+Router.get('/deal/get/single', controller.singleDeal);
 Router.post('/company/get', controller.getCompany);
 
 Router.post('/deal/like', controller.addLike);

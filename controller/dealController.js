@@ -63,6 +63,41 @@ const PostToSocialMedia = async (req) => {
 	);
 };
 
+const updateDeal = async (req, res, id, data) => {
+	try {
+		const { titel, subTitle, code, price, company, oldPrice, afLink, categorie, date, time, down, down_time } =
+			data;
+
+		const deal = await Deal.findOne({ _id: id });
+
+		const myCompany = await Company.findOne({ name: company });
+		const imgLink = req.file?.path?.slice(7);
+		const cLink = await myCompany?.imgLink;
+
+		console.log(typeof date);
+
+		if (titel) deal.titel = titel;
+		if (subTitle) deal.subTitle = subTitle;
+		if (cLink) deal.cLink = cLink;
+		if (code) deal.code = code;
+		if (price) deal.price = price;
+		if (oldPrice) deal.oldPrice = oldPrice;
+		if (afLink) deal.afLink = afLink;
+		if (categorie) deal.categorie = categorie;
+		if (date && typeof date === 'string' && date !== 'NaN') deal.date = date;
+		if (time && typeof time === 'string' && time !== 'NaN') deal.time = time;
+		if (down && typeof down === 'string' && down !== 'NaN') deal.down = down;
+		if (down_time && typeof down_time === 'string' && down_time !== 'NaN') deal.down_time = down_time;
+		if (imgLink && imgLink !== 'NaN') deal.imgLink = imgLink;
+
+		deal.save();
+
+		res.status(200).json({ status: 'deal_updated' });
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
 module.exports.createDeal = async (req, res) => {
 	const {
 		titel,
@@ -82,43 +117,47 @@ module.exports.createDeal = async (req, res) => {
 		Newsletter,
 	} = req.body;
 
-	const myCompany = await Company.findOne({ name: company });
+	if (req.query.id) {
+		updateDeal(req, res, req.query.id, req.body);
+	} else {
+		try {
+			const myCompany = await Company.findOne({ name: company });
 
-	const imgLink = req.file.path.slice(7);
+			const imgLink = req.file.path.slice(7);
 
-	//check for Facebook
-	if (Facebook === 'on' && access_token) {
-		await PostToSocialMedia(req);
-	}
+			//check for Facebook
+			if (Facebook === 'on' && access_token) {
+				await PostToSocialMedia(req);
+			}
 
-	let isNewsLetter = false;
+			let isNewsLetter = false;
 
-	if (Newsletter === 'on') {
-		isNewsLetter = true;
-	}
+			if (Newsletter === 'on') {
+				isNewsLetter = true;
+			}
 
-	const cLink = await myCompany?.imgLink;
+			const cLink = await myCompany?.imgLink;
 
-	try {
-		await Deal.create({
-			titel,
-			subTitle,
-			imgLink,
-			cLink,
-			code,
-			down,
-			down_time,
-			categorie,
-			date,
-			price,
-			oldPrice,
-			afLink,
-			time,
-			newsletter: isNewsLetter,
-		});
-		res.status(200).json({ status: `deal_created` });
-	} catch (err) {
-		handleError(err, res);
+			await Deal.create({
+				titel,
+				subTitle,
+				imgLink,
+				cLink,
+				code,
+				down,
+				down_time,
+				categorie,
+				date,
+				price,
+				oldPrice,
+				afLink,
+				time,
+				newsletter: isNewsLetter,
+			});
+			res.status(200).json({ status: `deal_created` });
+		} catch (err) {
+			handleError(err, res);
+		}
 	}
 };
 
@@ -215,6 +254,17 @@ module.exports.getDeal = async (req, res) => {
 			const deals = await Deal.find().sort({ date: -1, time: -1 }).limit(maxAmount);
 			res.status(200).json({ status: deals });
 		}
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
+module.exports.singleDeal = async (req, res) => {
+	const id = req.query.id;
+
+	try {
+		const deal = await Deal.findOne({ _id: id });
+		res.status(200).json({ status: deal });
 	} catch (err) {
 		handleError(err, res);
 	}

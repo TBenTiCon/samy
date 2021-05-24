@@ -65,6 +65,9 @@ const renderDeals = (dealsArray) => {
 									<div class="deletedealbtn" data-_id=${deal._id}>
 										<h4 class="heading-8">Löschen</h4>
 									</div>
+									<div class="editbtn" data-_id=${deal._id}>
+										<h4 class="heading-8">Bearbeiten</h4>
+									</div>
 								</div>
 							</div>
 						</div>

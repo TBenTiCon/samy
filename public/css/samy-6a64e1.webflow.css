@@ -915,6 +915,7 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  min-width: 90%;
   margin-bottom: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -1263,7 +1264,7 @@
   width: 350px;
   height: 450px;
   max-width: 350px;
-  min-height: 450px;
+  min-height: 500px;
   min-width: 350px;
   margin-right: 0px;
   margin-bottom: 60px;
@@ -1574,6 +1575,28 @@
   font-family: Aileron, sans-serif;
   color: #fff;
   font-weight: 700;
+}
+
+.editbtn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 90%;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 100px;
+  background-color: #3bb0be;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 991px) {
@@ -2474,6 +2497,19 @@
   .codeline {
     margin-bottom: 0px;
     font-size: 10px;
+  }
+
+  .editbtn {
+    display: none;
+  }
+
+  .editbtn.mobile {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding-right: 15px;
+    padding-left: 15px;
   }
 }
 
