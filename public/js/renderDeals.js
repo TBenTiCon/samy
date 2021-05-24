@@ -222,7 +222,9 @@ const renderDeals = (dealsArray) => {
 	linkBtns.forEach((el) => {
 		el.addEventListener('click', (e) => {
 			if (e.target?.className === 'sharelink') {
-				copyToClipboard(e.target.dataset.afLink);
+				const text = e.target.dataset.aflink;
+				copyToClipboard(text);
+				window.alert('Link zur Zwischenablage hinzugefügt');
 			}
 		});
 	});

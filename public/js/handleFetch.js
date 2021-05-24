@@ -9,6 +9,9 @@ const postFetchData = async (data, url) => {
 		body: JSON.stringify(data),
 	});
 
+	if (response.status !== 200) {
+		throw Error('Failed to Fetch');
+	}
 	return response.json();
 };
 
@@ -17,6 +20,9 @@ const getFetchData = async (url) => {
 		method: 'GET',
 	});
 
+	if (response.status !== 200) {
+		throw Error('Failed to Fetch');
+	}
 	return response.json();
 };
 
@@ -25,6 +31,9 @@ const delFetchData = async (url) => {
 		method: 'DELETE',
 	});
 
+	if (response.status !== 200) {
+		throw Error('Failed to Fetch');
+	}
 	return response.json();
 };
 
@@ -36,5 +45,8 @@ const multiPartFetch = async (data, url) => {
 
 	const res = await fetch(`${serverURL}${url}`, options);
 
+	if (res.status !== 200) {
+		throw Error('Failed to Fetch');
+	}
 	return res.json();
 };

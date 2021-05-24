@@ -18,6 +18,8 @@ resultWrapper.addEventListener('click', async (e) => {
 		form.oldPrice.value = data.status.oldPrice;
 		form.afLink.value = data.status.afLink;
 		form.categorie.value = data.status.categorie;
+
+		btn.value = 'Aktualisieren';
 	}
 	if (e.target?.className === 'heading-8') {
 		const parent = e.target.parentElement;
@@ -32,6 +34,8 @@ resultWrapper.addEventListener('click', async (e) => {
 		form.oldPrice.value = data.status.oldPrice;
 		form.afLink.value = data.status.afLink;
 		form.categorie.value = data.status.categorie;
+
+		btn.value = 'Aktualisieren';
 	}
 });
 
@@ -51,12 +55,12 @@ const updateDeal = async () => {
 	multiPartFetch(formData, `deal/create?id=${id}`)
 		.then((data) => {
 			console.log('success');
-			btn.value = 'Deal Updated';
+			window.location.href = '/deal/create';
 			id = false;
 		})
 		.catch((err) => {
 			console.log(err);
-			btn.value = 'Fehler: Bitte Seite Neuladen';
+			btn.value = 'Fehler - Falscheingaben überprüfen';
 			id = false;
 		});
 };
@@ -87,11 +91,12 @@ form.addEventListener('submit', (e) => {
 
 		multiPartFetch(formData, 'deal/create')
 			.then((data) => {
-				console.log('success');
-				btn.value = 'Deal Erstellt';
+				//console.log('success');
+				window.location.href = '/deal/create';
 			})
 			.catch((err) => {
 				console.log(err);
+				btn.value = 'Fehler - Falscheingaben überprüfen';
 			});
 	} else if (id) {
 		updateDeal();

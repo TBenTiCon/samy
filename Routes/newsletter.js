@@ -17,6 +17,8 @@ router.get('/unsubscribe', (req, res) => {
 router.post('/subscribe', controller.addEmail);
 router.delete('/subscribe', controller.deleteEmail);
 
+router.get('/newsletter/amount', controller.getNAmount);
+
 router.post('/sendMails', retrieveTokenInfo, controller.sendNewsLetter);
 
 module.exports = router;

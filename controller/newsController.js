@@ -55,3 +55,13 @@ module.exports.deleteEmail = async (req, res) => {
 		handleError(err, res);
 	}
 };
+
+module.exports.getNAmount = async (req, res) => {
+	try {
+		Deal.find({ newsletter: true }).count(function (err, count) {
+			res.json(`${count}`);
+		});
+	} catch (err) {
+		handleError(err, res);
+	}
+};

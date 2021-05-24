@@ -227,7 +227,7 @@ module.exports.getDeal = async (req, res) => {
 
 	if (conditions.date) {
 		conditions.date = {
-			$lt: conditions.date,
+			$lte: conditions.date,
 		};
 	}
 
