@@ -1,5 +1,5 @@
-const serverURL = 'http://localhost:3720/';
-//const serverURL = 'https://samy.reversedstudios.com/';
+//const serverURL = 'http://localhost:3720/';
+const serverURL = 'https://samy.reversedstudios.com/';
 
 const postFetchData = async (data, url) => {
 	const response = await fetch(`${serverURL}${url}`, {
