@@ -27,6 +27,11 @@ module.exports.sendNewsLetter = async (req, res) => {
 		});
 
 		res.json({ status: 'success' });
+
+		deals.forEach(async (deal) => {
+			deal.newsletter = false;
+			await deal.save();
+		});
 	} catch (err) {
 		handleError(err, res);
 	}
