@@ -13,8 +13,6 @@ var whitelist = ['http://localhost:3720', 'http://localhost:3722'];
 
 var corsOptions = {
 	origin: function (origin, callback) {
-		console.log(origin);
-
 		if (!origin || whitelist.indexOf(origin) !== -1) {
 			callback(null, true);
 		} else {
