@@ -51,7 +51,7 @@ const renderDeals = (dealsArray) => {
 							<h4 class="heading-17">:</h4>
 							<h4 class="heading-17 timerSeconds">00</h4>
 						</div>
-						<img src="/${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
+						<img src="${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
 						<div class="result-content">
 							<div>
 								<h6 class="result_time">${dayToDate(deal.date)} | ${convertToTime(deal.time)} Uhr</h6>

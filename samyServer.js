@@ -9,13 +9,21 @@ const { expressCspHeader, INLINE, NONE, SELF, EVAL } = require('express-csp-head
 
 const app = express();
 
-/* var corsOptions = {
-	origin: 'http://localhost:3250',
+var whitelist = ['http://localhost:3722', 'http://localhost:3720'];
+
+var corsOptions = {
+	origin: function (origin, callback) {
+		if (whitelist.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
+		}
+	},
 	optionsSuccessStatus: 200,
 	credentials: true, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(cors(corsOptions)); */
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 app.disable('etag');
