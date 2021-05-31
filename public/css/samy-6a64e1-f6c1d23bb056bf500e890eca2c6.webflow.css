@@ -2061,8 +2061,7 @@
 @media screen and (max-width: 479px) {
   .outer-wrapper.hero {
     min-height: 25vh;
-    margin-right: 0px;
-    margin-left: 0px;
+    margin: 0vh 0px 5vh;
   }
 
   .outer-wrapper.body {
