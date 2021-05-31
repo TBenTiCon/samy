@@ -137,8 +137,10 @@ label.btn {
 }
 
 .preview-lg {
-	height: 9rem;
-	width: 16rem;
+	/* height: 9rem; */
+	height: 256px;
+	width: 256px;
+	/* width: 16rem; */
 }
 
 .preview-md {

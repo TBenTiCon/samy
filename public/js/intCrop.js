@@ -11,12 +11,14 @@ window.onload = function () {
 	var dataY = document.getElementById('dataY');
 	var dataHeight = document.getElementById('dataHeight');
 	var dataWidth = document.getElementById('dataWidth');
-	var dataRotate = document.getElementById('dataRotate');
-	var dataScaleX = document.getElementById('dataScaleX');
-	var dataScaleY = document.getElementById('dataScaleY');
+
 	var options = {
 		aspectRatio: 321 / 180,
 		preview: '.img-preview',
+		viewMode: 1,
+		minCropBoxWidth: 256,
+		minCropBoxHeight: 256,
+		center: true,
 		ready: function (e) {
 			console.log(e.type);
 		},
@@ -32,20 +34,17 @@ window.onload = function () {
 		crop: function (e) {
 			var data = e.detail;
 
-			console.log(e.type);
 			dataX.value = Math.round(data.x);
 			dataY.value = Math.round(data.y);
 			dataHeight.value = Math.round(data.height);
 			dataWidth.value = Math.round(data.width);
-			dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
-			dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : '';
-			dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
 		},
 		zoom: function (e) {
 			console.log(e.type, e.detail.ratio);
 		},
 	};
 	var cropper = new Cropper(image, options);
+	console.log(Cropper);
 	var originalImageURL = image.src;
 	var uploadedImageType = 'image/jpeg';
 	var uploadedImageURL;
