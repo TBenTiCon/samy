@@ -9,7 +9,7 @@ const { expressCspHeader, INLINE, NONE, SELF, EVAL } = require('express-csp-head
 
 const app = express();
 
-var whitelist = ['http://localhost:3722', 'http://localhost:3720'];
+var whitelist = ['http://localhost:3722', 'http://localhost:3720', 'http://localhost:3720/'];
 
 var corsOptions = {
 	origin: function (origin, callback) {
