@@ -9,11 +9,13 @@ const { expressCspHeader, INLINE, NONE, SELF, EVAL } = require('express-csp-head
 
 const app = express();
 
-var whitelist = ['http://localhost:3722', 'http://localhost:3720', 'http://localhost:3720/'];
+var whitelist = ['http://localhost:3720', 'http://localhost:3722'];
 
 var corsOptions = {
 	origin: function (origin, callback) {
-		if (whitelist.indexOf(origin) !== -1) {
+		console.log(origin);
+
+		if (!origin || whitelist.indexOf(origin) !== -1) {
 			callback(null, true);
 		} else {
 			callback(new Error('Not allowed by CORS'));
