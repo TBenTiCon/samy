@@ -4,7 +4,7 @@ let number = 0;
 form.addEventListener('submit', (e) => {
 	e.preventDefault();
 
-	if (number >= 0) {
+	if (number >= 16) {
 		postFetchData({}, `sendMails`).then((data) => {
 			console.log(data);
 
