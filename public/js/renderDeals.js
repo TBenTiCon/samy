@@ -65,12 +65,6 @@ const renderDeals = (dealsArray) => {
 										src=${deal.cLink}
 										loading="lazy"
 										sizes="(max-width: 479px) 100vw, (max-width: 991px) 128px, 165px"
-										srcset="
-											images/DealSale-Logo-p-500.png   500w,
-											images/DealSale-Logo-p-800.png   800w,
-											images/DealSale-Logo-p-1080.png 1080w,
-											images/DealSale-Logo.png        1441w
-										"
 										alt=""
 										class="result_company"
 									/>
