@@ -6,7 +6,7 @@ const mobileCatWrapper = document.querySelector('.mobile-cat-wrapper');
 const selectCompany = document.querySelector('#company');
 const loadMore = document.getElementById('loadMoreBtn');
 
-let counter = 12;
+let counter = 32;
 let cat = false;
 
 const renderDeals = (dealsArray) => {
@@ -119,7 +119,7 @@ const renderDeals = (dealsArray) => {
 window.onload = () => {
 	const now = convertTimeToDays(new Date());
 	addCompanySelection();
-	searchDeal(undefined, undefined, undefined, now, true).then((deals) => {
+	searchDeal(undefined, undefined, undefined, now, true, counter).then((deals) => {
 		renderDeals(deals);
 	});
 };
@@ -147,9 +147,11 @@ searchForm.addEventListener('submit', (e) => {
 		key = undefined;
 	}
 
-	searchDeal(undefined, undefined, key ? searchBar.value : undefined, key ? undefined : now, true).then((deals) => {
-		renderDeals(deals);
-	});
+	searchDeal(undefined, undefined, key ? searchBar.value : undefined, key ? undefined : now, true, counter).then(
+		(deals) => {
+			renderDeals(deals);
+		}
+	);
 });
 
 catWrapper.addEventListener('click', (e) => {
@@ -173,9 +175,9 @@ const searchCat = (e) => {
 			cat = key.textContent;
 		}
 
-		counter = 9;
+		counter = 32;
 
-		searchDeal(key ? key.textContent : undefined, undefined, undefined, key ? undefined : now, true).then(
+		searchDeal(key ? key.textContent : undefined, undefined, undefined, key ? undefined : now, true, counter).then(
 			(deals) => {
 				renderDeals(deals);
 			}

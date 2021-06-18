@@ -1391,8 +1391,14 @@
   color: #333;
   font-size: 16px;
   line-height: 120%;
+  font-style: normal;
   font-weight: 400;
   text-decoration: none;
+}
+
+.link.subpage {
+  color: rgba(0, 0, 0, 0.68);
+  font-style: italic;
 }
 
 .link-2 {
@@ -1692,9 +1698,9 @@
   margin-bottom: 0px;
   font-family: Aileron, sans-serif;
   color: #000;
-  font-size: 4vw;
+  font-size: 3.75vw;
   line-height: 120%;
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
   letter-spacing: 7.5px;
 }
@@ -1721,6 +1727,15 @@
   margin-right: 10px;
   margin-left: 10px;
   background-color: #000;
+  -webkit-transform: rotate(10deg);
+  -ms-transform: rotate(10deg);
+  transform: rotate(10deg);
+}
+
+.footer_divider.default {
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .footer_divider_hz {
@@ -1769,10 +1784,10 @@
   margin-top: 0px;
   margin-bottom: 0px;
   font-family: Aileron, sans-serif;
-  color: #000;
+  color: rgba(0, 0, 0, 0.68);
   font-size: 18px;
   line-height: 120%;
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
 }
 
@@ -1795,40 +1810,40 @@
 }
 
 .link-block-2.app {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   background-image: url('../images/appstore.png');
   background-position: 0px 0px;
   background-size: cover;
 }
 
 .link-block-2.play {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   background-image: url('../images/playstore.png');
   background-position: 0px 0px;
   background-size: cover;
 }
 
 .link-block-2.facebook {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   background-image: url('../images/facebook.png');
   background-position: 0px 0px;
   background-size: cover;
 }
 
 .link-block-2.ig {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   background-image: url('../images/instagram.png');
   background-position: 0px 0px;
   background-size: cover;
 }
 
 .link-block-2.tw {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   background-image: url('../images/twitter.png');
   background-position: 0px 0px;
   background-size: cover;
@@ -1849,7 +1864,13 @@
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  color: rgba(51, 51, 51, 0.44);
+  font-style: normal;
   text-align: left;
+}
+
+.paragraph {
+  margin-bottom: 0px;
 }
 
 @media screen and (max-width: 991px) {

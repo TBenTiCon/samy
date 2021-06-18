@@ -8,7 +8,7 @@ const catNav = document.querySelector('.cat_nav');
 const fCatCon = document.querySelector('.footer_cat_con');
 const loadMore = document.getElementById('loadMoreBtn');
 
-let counter = 12;
+let counter = 32;
 let cat = false;
 
 let timerArray = [];
@@ -225,7 +225,7 @@ const renderDeals = (dealsArray) => {
 
 window.onload = () => {
 	const now = convertTimeToDays(new Date());
-	searchDeal(undefined, undefined, undefined, now).then((deals) => {
+	searchDeal(undefined, undefined, undefined, now, undefined, counter).then((deals) => {
 		renderDeals(deals);
 	});
 };
@@ -240,7 +240,7 @@ searchForm.addEventListener('submit', (e) => {
 
 	heading4.innerHTML = `Ergebnisse für <strong>${key ? searchBar.value : 'alle'}</strong>`;
 
-	searchDeal(undefined, undefined, key ? searchBar.value : undefined, now).then((deals) => {
+	searchDeal(undefined, undefined, key ? searchBar.value : undefined, now, undefined, counter).then((deals) => {
 		renderDeals(deals);
 	});
 });
@@ -302,7 +302,7 @@ fCatCon.addEventListener('click', (e) => {
 		cat = key;
 		counter = 9;
 
-		searchDeal(key, undefined, undefined, now).then((deals) => {
+		searchDeal(key, undefined, undefined, now, undefined, counter).then((deals) => {
 			renderDeals(deals);
 		});
 	}
@@ -323,9 +323,9 @@ const searchCat = (e) => {
 			cat = key.textContent;
 		}
 
-		counter = 9;
+		counter = 32;
 
-		searchDeal(key ? key.textContent : undefined, undefined, undefined, now).then((deals) => {
+		searchDeal(key ? key.textContent : undefined, undefined, undefined, now, undefined, counter).then((deals) => {
 			renderDeals(deals);
 		});
 	}
