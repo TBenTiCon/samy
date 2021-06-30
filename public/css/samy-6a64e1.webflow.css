@@ -628,7 +628,7 @@
   display: -ms-flexbox;
   display: flex;
   max-width: 145px;
-  min-width: 145px;
+  min-width: 140px;
   padding-top: 7px;
   padding-bottom: 7px;
   -webkit-box-pack: center;
@@ -655,7 +655,7 @@
   margin-bottom: 0px;
   font-family: Aileron, sans-serif;
   color: #fff;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
 }
 
@@ -1710,10 +1710,11 @@
   margin-bottom: 0px;
   font-family: Aileron, sans-serif;
   color: #000;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 120%;
   font-weight: 400;
   text-align: center;
+  letter-spacing: 1.5px;
 }
 
 .link-3 {
@@ -1871,6 +1872,14 @@
 
 .paragraph {
   margin-bottom: 0px;
+}
+
+.heading-19 {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-family: Aileron, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 991px) {
