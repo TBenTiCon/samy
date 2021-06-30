@@ -56,46 +56,6 @@ const renderDeals = (dealsArray) => {
 								<h4 class="subheading">${deal.subTitle}</h4>
 								<h4 class="codeline">Gutschein: ${deal.code ? deal.code : 'Nicht benötigt'}</h4>
 							</div>
-							<div class="div-block-6">
-								<div class="div-block-7">
-									<img
-										src=${deal.cLink}
-										loading="lazy"
-										sizes="(max-width: 479px) 100vw, (max-width: 991px) 128px, 165px"
-										alt=""
-										class="result_company"
-									/>
-									<div class="result-meta" data-interacted="false">
-										<div class="div-block-28">
-											<div class="html-embed w-embed">
-												<div class="fb-share-button" data-afLink=${deal.afLink}></div>
-											</div>
-											<div class="sharelink" data-afLink=${deal.afLink}></div>
-										</div>
-										<div class="likebtncon">
-											<h5 class="likeamount">${deal.likes}</h5>
-											<img src="/images/like.svg" loading="lazy" alt="" class="like_img" data-_id="${deal._id}" data-interacted="false"/>
-										</div>
-										<div class="likebtncon">
-											<h5 class="likeamount">${deal.dislikes}</h5>
-											<img src="/images/dislike.svg" loading="lazy" alt="" class="dislike_img" data-_id="${
-												deal._id
-											}" data-interacted="false"/>
-										</div>
-									</div>
-								</div>
-								<div class="div-block-8">
-									<h3 class="deal-price">${deal.price.replace('.', ',')}€</h3>
-									<div class="div-block-9">
-										<h4 class="oldprice">${deal.oldPrice.replace('.', ',')} €</h4>
-										<h4 class="percentcalc">(-${Math.round(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100))}%)</h4>
-									</div>
-									<div class="todealbtn">
-										<h4 class="heading-8"><a href="${deal.afLink}" style="text-decoration: none; color:white">Zum Deal</a></h4>
-										<div class="div-block-11"></div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 					<div class="div-block-13">
