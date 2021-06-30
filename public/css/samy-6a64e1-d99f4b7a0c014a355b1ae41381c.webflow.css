@@ -1777,12 +1777,17 @@
 }
 
 .div-block-31 {
+  position: fixed;
+  left: auto;
+  top: 0%;
+  right: 0%;
+  bottom: auto;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
   margin-top: 10px;
+  margin-right: 10px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -2243,7 +2248,7 @@
 
   .subheading {
     margin-bottom: 0px;
-    font-size: 10px;
+    font-size: 3.25vw;
   }
 
   .div-block-6 {
@@ -2272,13 +2277,13 @@
 
   .deal-price {
     padding-right: 10px;
-    font-size: 16px;
+    font-size: 5vw;
   }
 
   .percentcalc {
     display: block;
     overflow: visible;
-    font-size: 12px;
+    font-size: 4vw;
   }
 
   .div-block-9 {
@@ -2286,7 +2291,7 @@
   }
 
   .oldprice {
-    font-size: 16px;
+    font-size: 5vw;
   }
 
   .todealbtn {
@@ -2303,7 +2308,7 @@
   }
 
   .heading-8 {
-    font-size: 12px;
+    font-size: 17px;
   }
 
   .result-meta {
@@ -2315,7 +2320,7 @@
   }
 
   .result_heading {
-    font-size: 15px;
+    font-size: 5vw;
     line-height: 120%;
   }
 
@@ -2804,7 +2809,7 @@
 
   .codeline {
     margin-bottom: 0px;
-    font-size: 10px;
+    font-size: 3.25vw;
   }
 
   .editbtn {
@@ -2864,6 +2869,26 @@
 
   .footersubinfotext {
     font-size: 20px;
+  }
+
+  .div-block-31 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .link-block-2.facebook {
+    width: 24px;
+    height: 24px;
+  }
+
+  .link-block-2.ig {
+    width: 24px;
+    height: 24px;
+  }
+
+  .link-block-2.tw {
+    width: 24px;
+    height: 24px;
   }
 
   .form-4 {
