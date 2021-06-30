@@ -37,6 +37,39 @@ module.exports.sendNewsLetter = async (req, res) => {
 	}
 };
 
+module.exports.sendTest = async (req, res) => {
+	try {
+		const deals = await Deal.find({ newsletter: true }).limit(16);
+
+		deals.forEach(async (deal) => {
+			deal.imgLink = `https://samy.reversedstudios.com/${deal.imgLink}`;
+		});
+
+		const targets = await newsletter.find({ email: 'plausch@attain-it.de' });
+
+		const body = {
+			email: 'test@benticon.de',
+			deals,
+			targets,
+		};
+
+		await fetch(`https://mail.samy.reversedstudios.com/send`, {
+			method: 'post',
+			body: JSON.stringify(body),
+			headers: { 'Content-Type': 'application/json' },
+		});
+
+		res.json({ status: 'success' });
+
+		deals.forEach(async (deal) => {
+			deal.newsletter = false;
+			await deal.save();
+		});
+	} catch (err) {
+		handleError(err, res);
+	}
+};
+
 module.exports.addEmail = async (req, res) => {
 	try {
 		if (req.query.email) {

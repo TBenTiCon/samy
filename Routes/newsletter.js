@@ -20,5 +20,6 @@ router.delete('/subscribe', controller.deleteEmail);
 router.get('/newsletter/amount', controller.getNAmount);
 
 router.post('/sendMails', retrieveTokenInfo, controller.sendNewsLetter);
+router.post('/testMails', retrieveTokenInfo, controller.sendTest);
 
 module.exports = router;

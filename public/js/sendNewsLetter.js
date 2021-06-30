@@ -1,4 +1,5 @@
 const form = document.querySelector('#email-form');
+const testBtn = document.querySelector('#sendTestNwsBtn');
 let number = 0;
 
 form.addEventListener('submit', (e) => {
@@ -16,6 +17,22 @@ form.addEventListener('submit', (e) => {
 		});
 	} else {
 		document.querySelector('#sendNewsBtn').value = '16 Deals benötigt';
+	}
+});
+
+testBtn.addEventListener('click', (e) => {
+	if (number >= 16) {
+		postFetchData({}, `testMails`).then((data) => {
+			console.log(data);
+
+			if (!data.error) {
+				document.querySelector('#testBtn').value = 'Newsletter versended';
+			} else {
+				document.querySelector('#testBtn').value = 'Versenden Fehlgeschlagen';
+			}
+		});
+	} else {
+		document.querySelector('#testBtn').value = '16 Deals benötigt';
 	}
 });
 
