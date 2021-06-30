@@ -56,6 +56,15 @@ const renderDeals = (dealsArray) => {
 								<h4 class="subheading">${deal.subTitle}</h4>
 								<h4 class="codeline">Gutschein: ${deal.code ? deal.code : 'Nicht benötigt'}</h4>
 							</div>
+							<div class="div-block-6">
+								<div class="div-block-8">
+									<h3 class="deal-price">${deal.price.replace('.', ',')}€</h3>
+									<div class="div-block-9">
+										<h4 class="oldprice">${deal.oldPrice.replace('.', ',')} €</h4>
+										<h4 class="percentcalc">(-${Math.round(100 - parseFloat(deal.price) / (parseFloat(deal.oldPrice) / 100))}%)</h4>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="div-block-13">
