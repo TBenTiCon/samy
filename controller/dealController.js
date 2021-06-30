@@ -158,6 +158,7 @@ module.exports.createDeal = async (req, res) => {
 			});
 			res.status(200).json({ status: `deal_created` });
 		} catch (err) {
+			console.log(err);
 			handleError(err, res);
 		}
 	}
