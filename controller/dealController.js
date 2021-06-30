@@ -140,7 +140,13 @@ module.exports.createDeal = async (req, res) => {
 			const cLink = await myCompany?.imgLink;
 
 			if (down == 'NaN') {
-				console.log('down is NaN');
+				down = 1;
+				down_time = 1;
+			}
+
+			if (down_time == 'NaN') {
+				down = 1;
+				down_time = 1;
 			}
 			await Deal.create({
 				titel,
