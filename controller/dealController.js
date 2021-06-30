@@ -148,6 +148,11 @@ module.exports.createDeal = async (req, res) => {
 				down = 1;
 				down_time = 1;
 			}
+
+			if (time == 'NaN') {
+				time = 0;
+			}
+
 			await Deal.create({
 				titel,
 				subTitle,
