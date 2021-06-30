@@ -100,7 +100,7 @@ const updateDeal = async (req, res, id, data) => {
 };
 
 module.exports.createDeal = async (req, res) => {
-	const {
+	let {
 		titel,
 		subTitle,
 		code,
