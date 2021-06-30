@@ -139,6 +139,9 @@ module.exports.createDeal = async (req, res) => {
 
 			const cLink = await myCompany?.imgLink;
 
+			if (down == 'NaN') {
+				console.log('down is NaN');
+			}
 			await Deal.create({
 				titel,
 				subTitle,
@@ -156,6 +159,7 @@ module.exports.createDeal = async (req, res) => {
 				newsletter: isNewsLetter,
 				view_date: await dayToDate(date),
 			});
+
 			res.status(200).json({ status: `deal_created` });
 		} catch (err) {
 			console.log(err);
