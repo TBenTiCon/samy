@@ -48,7 +48,7 @@ const renderDeals = (dealsArray) => {
 							<h4 class="heading-17">:</h4>
 							<h4 class="heading-17 timerSeconds">00</h4>
 						</div>
-						<img src="${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
+						<img src="https://samy.reversedstudios.com/${deal.imgLink}" loading="lazy" alt="" class="dealimg" />
 						<div class="result-content">
 							<div>
 								<h6 class="result_time">${dayToDate(deal.date)} | ${convertToTime(deal.time)} Uhr</h6>
@@ -62,12 +62,6 @@ const renderDeals = (dealsArray) => {
 										src=${deal.cLink}
 										loading="lazy"
 										sizes="(max-width: 479px) 100vw, (max-width: 991px) 128px, 165px"
-										srcset="
-											images/DealSale-Logo-p-500.png   500w,
-											images/DealSale-Logo-p-800.png   800w,
-											images/DealSale-Logo-p-1080.png 1080w,
-											images/DealSale-Logo.png        1441w
-										"
 										alt=""
 										class="result_company"
 									/>
