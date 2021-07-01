@@ -27,7 +27,14 @@ const dayToDate = (days) => {
 const convertToTime = (time) => {
 	const timeInHours = time / 60;
 
+	console.log('time: ' + time);
+
+	console.log('timeInHours: ' + timeInHours);
+
 	const hours = Math.floor(timeInHours);
+
+	console.log('hours: ' + hours);
+
 	var minutes = timeInHours - Math.floor(timeInHours);
 	minutes = Math.round((minutes * 60 + Number.EPSILON) * 100) / 100;
 

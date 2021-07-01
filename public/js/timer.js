@@ -1,10 +1,21 @@
 class Timer {
-	constructor(timeObj, id) {
+	constructor(timeObj, id, timeDate) {
 		const currentTime = new Date().getHours() * 60 + new Date().getMinutes();
 
 		var time = timeObj - currentTime;
 
-		var newTime = convertToTime(time).split('.');
+		console.log('time: ' + time);
+		console.log('timeObj: ' + timeObj);
+		console.log('currentTime: ' + currentTime);
+
+		const dateDif = Math.round((timeDate - convertTimeToDays(new Date())) * 24);
+		const dateDifInMin = Math.round(dateDif * 60);
+
+		console.log('dateDifInMin: ' + dateDifInMin);
+
+		var newTime = convertToTime(time + dateDifInMin).split('.');
+
+		console.log('newTime: ' + newTime);
 
 		this.hour = newTime[0];
 		this.minute = newTime[1];
