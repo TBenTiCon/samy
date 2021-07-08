@@ -45,7 +45,7 @@ module.exports.sendTest = async (req, res) => {
 			deal.imgLink = `https://samy.reversedstudios.com/${deal.imgLink}`;
 		});
 
-		const targets = await newsletter.find({ email: 'plausch@attain-it.de' });
+		const targets = await newsletter.find({ email: 'aniteymedia@gmail.com' });
 
 		const body = {
 			email: 'test@benticon.de',
