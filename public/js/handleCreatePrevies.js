@@ -7,6 +7,6 @@ console.log('title:' + title);
 console.log('subTitle:' + subTitle);
 
 title.addEventListener('keydown', (e) => {
-	console.log('eVlaue:' + e.target.value);
+	console.log('eValue:' + title.value);
 	prevTitle.textContent = title.value;
 });
