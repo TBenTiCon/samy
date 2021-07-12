@@ -2064,14 +2064,14 @@
 @media screen and (max-width: 479px) {
   .outer-wrapper.hero {
     min-height: 25vh;
-    margin: 0vh 0px 5vh;
+    margin: 0vh 0px;
   }
 
   .inner-wrapper.hero {
     max-width: 100%;
     min-width: 0px;
     margin-top: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   .inner-wrapper.create.login {
@@ -2391,10 +2391,7 @@
   }
 
   .cat_nav {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+    display: none;
     margin-bottom: 0px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -2437,6 +2434,7 @@
 
   .div-block-14 {
     width: 100%;
+    margin-bottom: 30px;
   }
 
   .closebtn {
@@ -2565,10 +2563,7 @@
   }
 
   .mobile-cat-wrapper {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+    display: none;
     width: 100%;
     -webkit-justify-content: space-around;
     -ms-flex-pack: distribute;
@@ -2811,6 +2806,10 @@
     font-size: 3.25vw;
   }
 
+  .countdown-container {
+    background-color: #ff3737;
+  }
+
   .editbtn {
     display: none;
   }
@@ -2871,6 +2870,7 @@
   }
 
   .div-block-31 {
+    z-index: 7500;
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -2895,9 +2895,12 @@
   }
 
   .link-4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-left: 15px;
     font-family: Aileron, sans-serif;
     color: #333;
+    font-size: 24px;
     font-weight: 600;
     text-decoration: none;
   }
