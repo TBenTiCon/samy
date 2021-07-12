@@ -131,6 +131,10 @@ module.exports.createDeal = async (req, res) => {
 				await PostToSocialMedia(req);
 			}
 
+			if (categorie == 'Kategorie') {
+				categorie = 'alle';
+			}
+
 			let isNewsLetter = false;
 
 			if (Newsletter === 'on') {
