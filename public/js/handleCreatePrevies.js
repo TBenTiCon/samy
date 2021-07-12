@@ -1,6 +1,6 @@
 const prevForm = document.querySelector('#dealForm');
-const title = document.querySelector('#title');
-const subTitle = document.querySelector('#subTitle');
+const title = document.getElementById('titel');
+const subTitle = document.getElementById('subTitle');
 
 console.log('title:' + title);
 console.log('subTitle:' + subTitle);
