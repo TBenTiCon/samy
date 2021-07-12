@@ -6,7 +6,7 @@ const prevTitle = document.querySelector('.prevheading');
 console.log('title:' + title);
 console.log('subTitle:' + subTitle);
 
-title.addEventListener('keydown', (e) => {
+title.addEventListener('keyup', (e) => {
 	console.log('eValue:' + title.value);
 	prevTitle.textContent = title.value;
 });
