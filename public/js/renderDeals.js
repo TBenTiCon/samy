@@ -33,7 +33,7 @@ const renderDeals = (dealsArray) => {
 
 			//console.log(convertTimeToDays(new Date()) + '=>' + deal.down);
 
-			if (convertTimeToDays(new Date()) === deal.down) {
+			if (convertTimeToDays(new Date()) <= deal.down) {
 				console.log('downable');
 				isDownable = true;
 			}
@@ -96,7 +96,7 @@ const renderDeals = (dealsArray) => {
 
 			if (isDownable) {
 				console.log('timer for ID: ' + deal._id);
-				timerArray.push(new Timer(deal.down_time, deal._id));
+				timerArray.push(new Timer(deal.down_time, deal._id, deal.down));
 
 				console.log(timerArray);
 
