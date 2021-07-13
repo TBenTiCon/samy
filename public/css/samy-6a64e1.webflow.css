@@ -179,12 +179,12 @@
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  border-style: none;
+  border-style: solid;
   border-width: 1px;
-  border-color: #d6d6d6;
+  border-color: #e4e4e4;
   border-radius: 100px;
   background-color: #fff;
-  box-shadow: -1px 3px 10px 0 rgba(82, 82, 82, 0.1);
+  box-shadow: -1px 3px 10px 0 rgba(82, 82, 82, 0.3);
 }
 
 .dealsearchbar {
