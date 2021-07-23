@@ -257,12 +257,12 @@ module.exports.getDeal = async (req, res) => {
 		delete conditions.date;
 	}
 
-	console.log('conditions ');
-	console.log(conditions);
+	//console.log('conditions ');
+	//console.log(conditions);
 
 	if (max && max !== 'undefined') maxAmount = Number(max);
 
-	console.log('max: ' + maxAmount);
+	//console.log('max: ' + maxAmount);
 
 	try {
 		/* if (Object.keys(conditions).length === 0) {
@@ -271,6 +271,9 @@ module.exports.getDeal = async (req, res) => {
 
 		if (conditions != {}) {
 			const deals = await Deal.find(conditions).sort({ date: -1, time: -1 }).limit(maxAmount);
+
+			console.log(deals.length);
+
 			res.status(200).json({ status: deals });
 		} else {
 			const deals = await Deal.find().sort({ date: -1, time: -1 }).limit(maxAmount);
