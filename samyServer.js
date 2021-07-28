@@ -23,6 +23,7 @@ var whitelist = [
   "https://app.samy.reversedstudios.com",
   "https://app.dealsale.de",
   "https://dealsale.de",
+  "https://www.dealsale.de",
 ];
 
 var corsOptions = {
