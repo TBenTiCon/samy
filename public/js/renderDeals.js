@@ -136,7 +136,7 @@ const renderDeals = (dealsArray) => {
 						<div class="todealbtn mobile">
 							<h4 class="heading-8"><a href=${
                 deal.afLink
-              } style="text-decoration: none">Zum Deal</a></h4>
+              } style="text-decoration: none; color: white" >Zum Deal</a></h4>
 						</div>
 					</div>
 				</div> `;

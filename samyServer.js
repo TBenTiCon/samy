@@ -53,9 +53,11 @@ app.use("/", express.static(__dirname + "/public"));
 app.use("/deal", express.static(__dirname + "/public"));
 app.use("/company", express.static(__dirname + "/public"));
 
-const dbURI =
+/* const dbURI =
   "mongodb+srv://dbUser:bfB1bnblRU01CmW2@cluster0.hkj6q.mongodb.net/sjMain?retryWrites=true&w=majority";
-
+ */
+const dbURI =
+  "mongodb+srv://root:DealSale2021!@cluster0.pu1q8.mongodb.net/DealSale_Main?retryWrites=true&w=majority";
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
