@@ -104,7 +104,7 @@ const renderDeals = (dealsArray) => {
                     )}%)</h4>
 									</div>
 									<div class="todealbtn">
-										<h4 class="heading-8"><a href="${
+										<h4 class="heading-8"><a target="_blank" rel="noopener noreferrer" href="${
                       deal.afLink
                     }" style="text-decoration: none; color:white">Zum Deal</a></h4>
 									</div>
@@ -134,7 +134,7 @@ const renderDeals = (dealsArray) => {
 							</div>
 						</div>
 						<div class="todealbtn mobile">
-							<h4 class="heading-8"><a href=${
+							<h4 class="heading-8"><a target="_blank" rel="noopener noreferrer" href=${
                 deal.afLink
               } style="text-decoration: none; color: white" >Zum Deal</a></h4>
 						</div>
